@@ -1,0 +1,44 @@
+help
+install
+return
+quit
+list
+clear
+web
+network
+info
+password
+exploit
+nikto
+rapidscan
+arachni
+sqlmap
+slowloris
+pwnloris
+atscan
+apwps
+snmp
+pyphi
+stmp
+sslstrip
+nmap
+xsstrike
+doork
+crips
+wpscan
+setoolkit
+host2ip
+cupp
+leviathan
+microsploit
+weeman
+sb0x
+nxcrypt
+revsh
+ls
+brutex
+
+show title
+show logo
+show version
+show credits
