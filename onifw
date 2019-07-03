@@ -1,4 +1,3 @@
 #!/usr/bin/python3
 import os
-
 os.system("python3 $HOME/.onifw/oni.py")
