@@ -160,7 +160,7 @@ class onifw:
         if not os.path.isdir(toolDir):  os.makedirs(toolDir)
         if not os.path.isdir(logDir):   os.makedirs(logDir)
 
-        completer = auto.Autocomp(readfile("api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input(onifw_cmd + color.OKGREEN)
@@ -211,7 +211,7 @@ class onifw:
             
         elif prompt == "show_credits":
             print("All tools belong to their corresponding authors")
-            out = readfile("doc/Credits.txt")
+            out = readfile(installDir + "doc/Credits.txt")
             print(color.BOLD + color.OKBLUE)
             for i in range(len(out)):
                 print(out[i])
@@ -246,7 +246,7 @@ class onifw:
 
 class webfw:
     def __init__(self):
-        completer = auto.Autocomp(readfile("api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input("onifw.web > " + color.WHITE)
@@ -325,7 +325,7 @@ class webfw:
 
 class netfw:
     def __init__(self):
-        completer = auto.Autocomp(readfile("api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input("onifw.network > " + color.WHITE)
@@ -391,7 +391,7 @@ class netfw:
 
 class infofw:
     def __init__(self):
-        completer = auto.Autocomp(readfile("api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input("onifw.info > " + color.WHITE)
@@ -465,7 +465,7 @@ class infofw:
 
 class pwdfw:
     def __init__(self):
-        completer = auto.Autocomp(readfile("api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input("onifw.password > " + color.WHITE)
@@ -519,7 +519,7 @@ class pwdfw:
 
 class expfw:
     def __init__(self):
-        completer = auto.Autocomp(readfile("api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input("onifw.exploit > " + color.WHITE)
