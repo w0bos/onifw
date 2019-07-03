@@ -134,18 +134,22 @@ def modhelp(msg):
     print(color.WHITE)
 
 def help():
-    print(color.NOTICE + '''
+    print(color.LOGGING + color.BOLD)
+    print("    Command             Description")
+    print("    -------             -----------" + color.END)
+    print(color.OKBLUE + '''
     help                shows help
     info                starts info gathering module
     web                 starts the web module
     network             starts the network module
     exploit             starts the exploit module
+    password            starts the password module
+    show_[option]       [logo] [title] [version] [credits]
+    return              {while in a module} returns to the main module
     install             starts the installer, use install [package] if you
                         want to install specific packages
-
-    show                misc
-                        [logo] [title] [version] [credits]
-
+    list                {while in a module} shows all packages available
+                        in the current module
     quit                quit program
         ''' + color.WHITE)
 
@@ -159,7 +163,7 @@ class onifw:
         completer = auto.Autocomp(readfile("api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
-        prompt = input(onifw_cmd + color.WHITE)
+        prompt = input(onifw_cmd + color.OKGREEN)
         
         
         if prompt == "help":            
@@ -167,6 +171,8 @@ class onifw:
             self.__init__()
 
         elif prompt == "quit":
+            clearScr()
+            print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(1)
 
         elif prompt == "clear":
@@ -188,22 +194,22 @@ class onifw:
         elif prompt == "exploit":
             expfw()
             
-        elif prompt == "show title":
+        elif prompt == "show_title":
             print(onifw_title)
             self.__init__()
 
-        elif prompt == "show logo":
+        elif prompt == "show_logo":
             print(color.BOLD + color.IMPORTANT)
             readvisual()
             print(color.END + color.WHITE)
             self.__init__()
         
-        elif prompt == "show version":
+        elif prompt == "show_version":
             print(color_random[random.randint(0,len(color_random)-1)])
             print(version)
             self.__init__()
             
-        elif prompt == "show credits":
+        elif prompt == "show_credits":
             print("All tools belong to their corresponding authors")
             out = readfile("doc/Credits.txt")
             print(color.BOLD + color.OKBLUE)
@@ -213,9 +219,7 @@ class onifw:
             print(color.OKGREEN + "Framework created by w0bos" + color.END + color.WHITE)
             self.__init__()
             
-        # INSTALLER
         elif prompt[:7] == "install":
-
             if len(prompt) == 7:
                 print(color.NOTICE)
                 print("[*] - Usage : install [package] [-all]")
@@ -240,8 +244,6 @@ class onifw:
             print(color.WARNING + "[!] - %s : unknown command" % prompt)
             self.__init__()
 
-
-
 class webfw:
     def __init__(self):
         completer = auto.Autocomp(readfile("api/dict.txt"))
@@ -253,6 +255,8 @@ class webfw:
             onifw()
 
         elif prompt == 'quit':
+            clearScr()
+            print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(0)
 
         elif prompt == "clear":
@@ -265,8 +269,6 @@ class webfw:
         elif prompt == "help":
             self.help()
 
-
-        #Tools
         elif prompt == "nikto":
             web.nikto()
             self.__init__()
@@ -332,6 +334,8 @@ class netfw:
             onifw()
 
         elif prompt == 'quit':
+            clearScr()
+            print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(0)
 
         elif prompt == "clear":
@@ -396,6 +400,8 @@ class infofw:
             onifw()
 
         elif prompt == 'quit':
+            clearScr()
+            print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(0)
 
         elif prompt == "clear":
@@ -408,8 +414,6 @@ class infofw:
         elif prompt == "help":
             self.help()
 
-
-        #Tools  
         elif prompt == "nmap":
             ig.nmap()
             self.__init__()
@@ -434,8 +438,8 @@ class infofw:
             ig.setoolkit()
             self.__init__()
 
-        elif prompt == "host2ip":
-            ig.host2ip()
+        elif prompt == "ipfinder":
+            ig.ipfind()
             self.__init__()
 
         else:
@@ -455,7 +459,7 @@ class infofw:
         crips
         wpscan
         setoolkit
-        host2ip                        
+        ipfinder                        
         ''' + color.WHITE)
         self.__init__()    
 
@@ -470,6 +474,8 @@ class pwdfw:
             onifw()
 
         elif prompt == 'quit':
+            clearScr()
+            print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(0)
 
         elif prompt == "clear":
@@ -482,7 +488,6 @@ class pwdfw:
         elif prompt == "help":
             self.help()
 
-        #Tools  
         elif prompt == "cupp":
             pwd.cupp()
             self.__init__()
@@ -523,6 +528,8 @@ class expfw:
             onifw()
 
         elif prompt == 'quit':
+            clearScr()
+            print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(0)
 
         elif prompt == "clear":
@@ -534,8 +541,7 @@ class expfw:
 
         elif prompt == "help":
             self.help()
-
-        #Tools  
+ 
         elif prompt == "microsploit":
             ex.microsploit()
             self.__init__()
@@ -585,13 +591,14 @@ if __name__ == "__main__":
         argeement()
         clearScr()
         print(onifw_title + version + color.WHITE)
-        print("[ ] - Checking connectivity...")
+        print("[*] - Checking connectivity...")
         if check_connectivity():
             print(color.OKGREEN + "[*] - Connected to a network")
         else :
+            print(color.BOLD)
             print(color.RED + "[!] - No connectivity!" + color.WHITE)
-            print(color.RED + "[!] - Some tools might not work as intended" + color.WHITE)
+            print(color.RED + "[!] - Some tools might not work as intended" + color.END)
         onifw()
-
     except KeyboardInterrupt:
-        print("\n"+ color.LOGGING + "Leaving...\n" + color.WHITE)
+        print("\n"+ color.LOGGING + color.BOLD)
+        print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)

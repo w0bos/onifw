@@ -27,7 +27,7 @@ doork
 crips
 wpscan
 setoolkit
-host2ip
+ipfinder
 cupp
 leviathan
 microsploit
@@ -38,7 +38,7 @@ revsh
 ls
 brutex
 
-show title
-show logo
-show version
-show credits
+show_title
+show_logo
+show_version
+show_credits

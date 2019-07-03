@@ -226,9 +226,9 @@ class setoolkit:
     def run(self):
         os.system("sudo setoolkit")
 
-class host2ip:
+class ipfind:
     def __init__(self):
-        host = input(color.LOGGING + "host2ip > Enter a Host: " + color.WHITE)
+        host = input(color.LOGGING + "IPfinder > Enter URL: " + color.WHITE)
         ip = socket.gethostbyname(host)
-        print("[*] - %s has the IP of %s" % (host, ip))
+        print("[*] - The IP of %s is: %s" % (host, ip))
 

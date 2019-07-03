@@ -12,7 +12,7 @@ SEToolkit       trustedsec
 cupp            Mebus
 BruteX          1N3
 leviathan       tearsecurity
-ssltrip         arnolix
+sslstrip        arnolix
 sqlmap          sqlmapproject
 slowloris       gkbrk
 pwnloris        h0ussni
