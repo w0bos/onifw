@@ -19,12 +19,12 @@ import lib.web          as web
 import lib.net          as nt
 
 def readcred():
-    f = open("doc/Credits.txt")
+    f = open(installDir + "doc/Credits.txt")
     content = [line.rstrip('\n') for line in f]
     return content
 
 def readvisual():
-    f = open("doc/logo.txt")
+    f = open(installDir + "doc/logo.txt")
     content = [line.rstrip('\n') for line in f]
     for i in content:
         print(i)
