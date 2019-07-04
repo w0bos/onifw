@@ -140,9 +140,7 @@ class Installer:
             print("\033[32m" + "\nScripts\n" + "\033[93m")
             for i in range(len(self.scripts)):
                 print("%s" % self.scripts[i][0])
-            print("\033[97m")
-        
-        
+            print("\033[97m")    
 
     def completed(self):
         input(color.LOGGING + "[*] - Installation completed, press [return] to go back" + color.WHITE)

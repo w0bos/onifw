@@ -9,8 +9,7 @@ class Autocomp(object):
             if text:
                 self.matches = [s for s in self.options if s and s.startswith(text)]
             else :
-                self.matches = self.options[:]
-                
+                self.matches = self.options[:]               
         try :
             return self.matches[state]
         except IndexError:

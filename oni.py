@@ -63,14 +63,14 @@ color_random = [color.HEADER, color.IMPORTANT, color.NOTICE, color.OKBLUE,
 random.shuffle(color_random)
 
 onifw_title = color_random[0] + '''
- $$$$$$\  $$\   $$\ $$$$$$\ $$$$$$$$\ $$\      $$\ 
-$$  __$$\ $$$\  $$ |\_$$  _|$$  _____|$$ | $\  $$ |
-$$ /  $$ |$$$$\ $$ |  $$ |  $$ |      $$ |$$$\ $$ |
-$$ |  $$ |$$ $$\$$ |  $$ |  $$$$$\    $$ $$ $$\$$ |
-$$ |  $$ |$$ \$$$$ |  $$ |  $$  __|   $$$$  _$$$$ |
-$$ |  $$ |$$ |\$$$ |  $$ |  $$ |      $$$  / \$$$ |
- $$$$$$  |$$ | \$$ |$$$$$$\ $$ |      $$  /   \$$ |
- \______/ \__|  \__|\______|\__|      \__/     \__|\n                                                                           
+ $$$$$$\  $$\   $$\ $$$$$$\    $$$$$$$$\ $$\      $$\ 
+$$  __$$\ $$$\  $$ |\_$$  _|   $$  _____|$$ | $\  $$ |
+$$ /  $$ |$$$$\ $$ |  $$ |     $$ |      $$ |$$$\ $$ |
+$$ |  $$ |$$ $$\$$ |  $$ |     $$$$$\    $$ $$ $$\$$ |
+$$ |  $$ |$$ \$$$$ |  $$ |     $$  __|   $$$$  _$$$$ |
+$$ |  $$ |$$ |\$$$ |  $$ |     $$ |      $$$  / \$$$ |
+ $$$$$$  |$$ | \$$ |$$$$$$\    $$ |      $$  /   \$$ |
+ \______/ \__|  \__|\______|   \__|      \__/     \__|\n                                                                           
 '''
 
 onifw_cmd = "onifw > "
@@ -150,6 +150,9 @@ def help():
                         want to install specific packages
     list                {while in a module} shows all packages available
                         in the current module
+
+    uninstall           Uninstall onifw
+
     quit                quit program
         ''' + color.WHITE)
 
@@ -166,14 +169,22 @@ class onifw:
         prompt = input(onifw_cmd + color.OKGREEN)
         
         
-        if prompt == "help":            
-            help()
+        if prompt[:4] == "help":            
+            if len(prompt) == 4:
+                help()
+            else:
+                mod = prompt[5:]
+                print(mod)
             self.__init__()
 
         elif prompt == "quit":
             clearScr()
             print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(1)
+
+        elif prompt == "uninstall":
+            clearScr()
+            os.sys("./uninstall.sh")
 
         elif prompt == "clear":
             clearScr()
@@ -346,9 +357,7 @@ class netfw:
             self.showlist()
 
         elif prompt == "help":
-            self.help()
-
-
+            self.help
         #Tools  
         elif prompt == "apwps":
             nt.apwps()
