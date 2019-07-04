@@ -1,5 +1,12 @@
 clear
-echo "ONIFW INSTALLER";
+echo "
+   ___    __ _____  ___  __    __    _____    __  __  _____  _      __    __    __  __  
+  /___\/\ \ \\\\_   \/ __\/ / /\ \ \   \_   \/\ \ \/ _\/__   \/_\    / /   / /   /__\/__\ 
+ //  //  \/ / / /\/ _\  \ \/  \/ /    / /\/  \/ /\ \   / /\//_\\\\  / /   / /   /_\ / \// 
+/ \_// /\  /\/ /_/ /     \  /\  /  /\/ /_/ /\  / _\ \ / / /  _  \/ /___/ /___//__/ _  \ 
+\___/\_\ \/\____/\/       \/  \/   \____/\_\ \/  \__/ \/  \_/ \_/\____/\____/\__/\/ \_/ 
+                                                                                        
+";
 sudo chmod +x uninstall
 sudo chmod +x onifw
 
@@ -10,12 +17,6 @@ if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
     TERMUX=true
 
     pkg install -y git python3 python2 perl gcc ruby
-
-elif [ "$(uname)" = "Darwin" ]; then
-    INSTALL_DIR="/usr/local/onifw"
-    BIN_DIR="/usr/local/bin/"
-    BASH_PATH="/bin/bash"
-    TERMUX=false
 
 else
     INSTALL_DIR="$HOME/.onifw"
