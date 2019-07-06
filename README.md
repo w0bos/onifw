@@ -9,7 +9,7 @@
 
 A Linux debian-based distribution is recommended (Ubuntu, Kubuntu, Lubuntu, Debian, Kali...).
 
-Clone this repository:
+Clone this repository and start the installer :
 
 ```bash
 git clone https://github.com/w0bos/onifw
@@ -39,7 +39,7 @@ cd onifw/
 - `selenium web driver`
 
 
-  - **Ubuntu** (Ou basé Debian)
+  - **Ubuntu**
 
     ```bash
     apt-get install python2 python perl gcc ruby git
