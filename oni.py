@@ -184,7 +184,7 @@ class onifw:
 
         elif prompt == "uninstall":
             clearScr()
-            os.sys("./uninstall.sh")
+            os.sys("./uninstall")
 
         elif prompt == "clear":
             clearScr()
