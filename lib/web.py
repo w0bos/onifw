@@ -136,7 +136,7 @@ class slowloris:
 
 
     def run(self,target):
-        os.system("python %s/slowloris.py %s" % (self.installDir, target))
+        os.system("python3 %s/slowloris.py %s" % (self.installDir, target))
 
 class pwnloris:
     def __init__(self):
@@ -155,7 +155,7 @@ class pwnloris:
 
 
     def run(self,target):
-        os.system("python %s/pwnloris.py %s" % (self.installDir, target))
+        os.system("python3 %s/pwnloris.py %s" % (self.installDir, target))
 
 class atscan:
     def __init__(self):
@@ -192,4 +192,4 @@ class hyde:
 
 
     def run(self):
-        os.system("python %s/hyde/main.py" % (self.installDir))
+        os.system("python3 %s/hyde/main.py" % (self.installDir))

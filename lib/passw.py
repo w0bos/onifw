@@ -49,7 +49,7 @@ class cupp:
         instl.Installer(0, installDir, ["cupp"])
 
     def run(self):
-        os.system("python %s/cupp.py -i" % self.installDir)
+        os.system("python3 %s/cupp.py -i" % self.installDir)
 
 class brutex:
     def __init__(self):

@@ -103,9 +103,9 @@ class xsstrike:
 
     def run(self, response):
         if not len(response):
-            os.system("python %s/xsstrike.py -h" % (self.installDir))
+            os.system("python3 %s/xsstrike.py -h" % (self.installDir))
         else :
-            os.system("python %s/xsstrike.py %s" % (self.installDir, response))
+            os.system("python3 %s/xsstrike.py %s" % (self.installDir, response))
 
 class doork:
     def __init__(self):

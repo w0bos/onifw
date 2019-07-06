@@ -7,7 +7,7 @@ echo "
 \___/\_\ \/\____/\/       \/  \/   \____/\_\ \/  \__/ \/  \_/ \_/\____/\____/\__/\/ \_/ 
                                                                                         
 ";
-sudo chmod +x uninstall.sh
+sudo chmod +x uninstall
 sudo chmod +x onifw
 
 if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
