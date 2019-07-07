@@ -2,6 +2,7 @@
 
 import configparser
 import os
+import subprocess
 import random
 import sys
 import readline
@@ -184,7 +185,7 @@ class onifw:
 
         elif prompt == "uninstall":
             clearScr()
-            os.sys("./uninstall")
+            subprocess.call(["./uninstall"])
 
         elif prompt == "clear":
             clearScr()

@@ -7,7 +7,6 @@ echo "
 \___/\_\ \/\____/\/       \/  \/   \____/\_\ \/  \__/ \/  \_/ \_/\____/\____/\__/\/ \_/ 
                                                                                         
 ";
-sudo chmod +x uninstall
 sudo chmod +x onifw
 
 if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
@@ -30,7 +29,7 @@ echo "[*] - Looking for old install...";
 if [ -d "$INSTALL_DIR" ]; then
     echo "[!] - onifw is already installed. Do you want to overwrite anyways?";
     read ans
-    if [ "$ans" = "y" ]; then
+    if [ "$ans" = "y" ] || [ "$ans" = "Y"]; then
         if [ "$TERMUX" = true ]; then
             rm -rf "$INSTALL_DIR"
             rm "$BIN_DIR/onifw"
@@ -71,7 +70,8 @@ else
 fi
 rm "$INSTALL_DIR/onifw";
 
-mv uninstall "$INSTALL_DIR/onifw/"
+sudo chmod +x uninstall
+mv uninstall "$INSTALL_DIR"
 
 if [ -d "$INSTALL_DIR" ] ;
 then
