@@ -71,6 +71,7 @@ else
 fi
 rm "$INSTALL_DIR/onifw";
 
+mv uninstall "$INSTALL_DIR/onifw/"
 
 if [ -d "$INSTALL_DIR" ] ;
 then
