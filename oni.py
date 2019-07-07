@@ -184,7 +184,12 @@ class onifw:
             sys.exit(1)
 
         elif prompt == "uninstall":
-            subprocess.run("$HOME/.onifw/uninstall", shell=True)
+            answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]")
+            if answer.lower() in yes:
+                subprocess.run("$HOME/.onifw/uninstall", shell=True)
+            else :
+                print(color.LOGGING + "[*] - Aborting uninstall process.")
+                self.__init__()
 
         elif prompt == "clear":
             clearScr()

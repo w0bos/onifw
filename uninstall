@@ -36,4 +36,4 @@ elif [ "$TERMUX" = false ]; then
     sudo rm -rf "$BIN_DIR/onifw"
 fi
 
-echo "[*] - onifw was sucessfully uninstalled."
+echo "[*] - onifw was sucessfully uninstalled.";
