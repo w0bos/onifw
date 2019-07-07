@@ -2,11 +2,11 @@
 
 import configparser
 import os
-import subprocess
 import random
 import sys
 import readline
 import socket
+import subprocess
 
 #Api
 import api.installer    as instl
@@ -184,8 +184,7 @@ class onifw:
             sys.exit(1)
 
         elif prompt == "uninstall":
-            clearScr()
-            subprocess.call(["./uninstall"])
+            subprocess.run("./uninstall", shell=True)
 
         elif prompt == "clear":
             clearScr()
