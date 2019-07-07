@@ -184,7 +184,7 @@ class onifw:
             sys.exit(1)
 
         elif prompt == "uninstall":
-            subprocess.run("./uninstall", shell=True)
+            subprocess.run("$HOME/.onifw/uninstall", shell=True)
 
         elif prompt == "clear":
             clearScr()
