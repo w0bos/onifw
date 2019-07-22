@@ -89,7 +89,7 @@ class Installer:
                         elif self.pkg[i][0] == "revsh":
                             clearScr()
                             os.system("git clone %s %s" %(self.pkg[i][1], self.installDir))
-                            os.system("cd %s/ && make && make install" % (self.installDir))
+                            os.system("cd %s/ && make && make install" % (self.installDir))       
 
                         else:
                             clearScr()

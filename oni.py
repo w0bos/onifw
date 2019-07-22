@@ -18,6 +18,7 @@ import lib.info         as ig
 import lib.passw        as pwd
 import lib.web          as web
 import lib.net          as nt
+import lib.custom       as custom
 
 def readcred():
     f = open(installDir + "doc/Credits.txt")
@@ -209,6 +210,9 @@ class onifw:
 
         elif prompt == "exploit":
             expfw()
+
+        elif prompt == "custom":
+            custfw()
             
         elif prompt == "show_title":
             print(onifw_title)
@@ -238,24 +242,75 @@ class onifw:
         elif prompt[:7] == "install":
             if len(prompt) == 7:
                 print(color.NOTICE)
-                print("[*] - Usage : install [package] [-all]")
+                print("[*] - Usage : install [cmd] [package]")
                 print("      Multiple packages can be installed at once.")
-                print("      Use [list] to see what packages are available")
+                print("      Use the [list] commad to see what packages are available")
+                print("      Flags:")
+                print("      -a --all        install all packages")
+                print("      -c --custom     add custom package")
                 print(color.WHITE)
                 self.__init__()
-            if len(prompt) > 7:
-                if prompt[8:12].lower() == "-all":
-                    instl.Installer(0, installDir)
-                    self.__init__()
-                else :
-                    tools = prompt[8:].split()
-                    instl.Installer(0, installDir, tools)
-                    self.__init__()
+            cmd = prompt.split()
+            
+            if "--all" in cmd or "-a" in cmd:
+                instl.Installer(0, installDir)
+                self.__init__()
+
+            elif "-c" in cmd or "--custom" in cmd:
+                print("[*] - Custom tool installer. MAY NOT WORK AS INTENDED")
+                print(color.IMPORTANT + "Only python tools are supported at the moment")
+                print(color.WHITE)
+                link = input("Git repository of the tool (full link): ")
+                name = input("Tool name: ")
+                ver = input("Python version: ")
+                cmds = input("Custom command (leave blank if unsure): ")
+                if not cmds:
+                    cmds = "python{0} {1}{2}.py".format(ver,toolDir+'/',name)
+
+                os.system("git clone %s %s%s/" % (link, toolDir, name))
+                with open("api/dict.txt", "a") as f:
+                    f.write(name + '\n')
+                with open("api/ctools.txt", "a") as f:
+                    f.write(name + '\n')
+                with open("settings.cfg", "w+") as f:
+                    f.write("{0}:{1}\n".format(name,cmds))
+                self.__init__()
+
+            else :
+                tools = prompt[8:].split()
+                instl.Installer(0, installDir, tools)
+                self.__init__()
 
         elif prompt == "list" or prompt == "ls":
             instl.Installer(1, installDir)
             self.__init__()
 
+        else:
+            print(color.WARNING + "[!] - %s : unknown command" % prompt)
+            self.__init__()
+
+class custfw():
+    def __init__(self):
+        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
+        readline.set_completer(completer.complete)
+        readline.parse_and_bind('tab: complete')
+        print(color.IMPORTANT + "[!] - This feature may not work as intended")
+        prompt = input("onifw.CUSTOM > " + color.WHITE)
+
+        if prompt == "return":
+            onifw()
+        
+        elif prompt == "list":
+            with open("api/ctools.txt", "r") as f:
+                try:
+                    lignes = [lines.rstrip('\n') for lines in f]
+                    print(lignes)
+                except:
+                    print("[!] - An error occurred.")
+            self.__init__()
+        
+        elif prompt == "quit":
+            sys.exit(1);
         else:
             print(color.WARNING + "[!] - %s : unknown command" % prompt)
             self.__init__()

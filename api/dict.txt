@@ -37,8 +37,10 @@ nxcrypt
 revsh
 ls
 brutex
+custom
 
 show_title
 show_logo
 show_version
 show_credits
+
