@@ -273,7 +273,7 @@ class onifw:
                 with open("api/ctools.txt", "a") as f:
                     f.write(name + '\n')
                 with open("settings.cfg", "w+") as f:
-                    f.write("{0}:{1}\n".format(name,cmds))
+                    f.write("{0} = {1}\n".format(name,cmds))
                 self.__init__()
 
             else :
