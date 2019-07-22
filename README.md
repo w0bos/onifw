@@ -12,7 +12,9 @@ A Linux debian-based distribution is recommended (Ubuntu, Kubuntu, Lubuntu, Debi
 Clone this repository and start the installer :
 
 ```bash
-git clone  https://github.com/w0bos/onifw/ && cd onifw/
+curl 'https://raw.githubusercontent.com/w0bos/onifw/master/install.sh' > install.sh
+
+chmod +x install.sh
 
 ./install.sh
 ```
