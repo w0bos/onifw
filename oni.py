@@ -18,7 +18,6 @@ import lib.info         as ig
 import lib.passw        as pwd
 import lib.web          as web
 import lib.net          as nt
-import lib.custom       as custom
 
 def readcred():
     f = open(installDir + "doc/Credits.txt")
@@ -264,16 +263,23 @@ class onifw:
                 name = input("Tool name: ")
                 ver = input("Python version: ")
                 cmds = input("Custom command (leave blank if unsure): ")
+                temp = 0
                 if not cmds:
-                    cmds = "python{0} {1}{2}.py".format(ver,toolDir+'/',name)
-
-                os.system("git clone %s %s%s/" % (link, toolDir, name))
+                    cmds = "python{0} {1}{2}{2}.py".format(ver,toolDir+'/',name)
+                try:
+                    os.system("git clone %s %s%s" % (link, toolDir, name))
+                    temp = 1
+                except:
+                    temp = -1
                 with open("api/dict.txt", "a") as f:
-                    f.write(name + '\n')
+                    if temp == 1:
+                        f.write(name + '\n')
                 with open("api/ctools.txt", "a") as f:
-                    f.write(name + '\n')
-                with open("settings.cfg", "w+") as f:
-                    f.write("{0}:{1}\n".format(name,cmds))
+                    if temp == 1:
+                        f.write(name + '\n')
+                with open("settings.cfg", "a") as f:
+                    if temp ==1 :
+                        f.write("{0} = {1}\n".format(name,cmds))
                 self.__init__()
 
             else :
@@ -304,16 +310,24 @@ class custfw():
             with open("api/ctools.txt", "r") as f:
                 try:
                     lignes = [lines.rstrip('\n') for lines in f]
-                    print(lignes)
+                    for i in lignes:
+                        print(color.LOGGING + i)
                 except:
-                    print("[!] - An error occurred.")
+                    print("[!] - There are no custom packages to display.")
             self.__init__()
         
         elif prompt == "quit":
             sys.exit(1);
+        
         else:
-            print(color.WARNING + "[!] - %s : unknown command" % prompt)
-            self.__init__()
+            try :
+                cmd = config.get("custom", prompt)
+                print(cmd)
+                os.system(cmd)
+                self.__init__()
+            except :
+                print(color.WARNING + "[!] - %s : unknown command" % prompt)
+                self.__init__()
 
 class webfw:
     def __init__(self):
