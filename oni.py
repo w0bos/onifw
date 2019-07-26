@@ -11,7 +11,6 @@ import subprocess
 #Api
 import api.installer    as instl
 import api.completer    as auto
-import api.customizer   as cinstl
 
 #Libs
 import lib.exploit      as ex
@@ -274,7 +273,7 @@ class onifw:
                     # Must fix github login ?
                 except:
                     temp = -1
-                if temp == 1:
+                if temp:
                     with open("api/dict.txt", "a") as f:
                         f.write(name + '\n')
                     with open("api/ctools.txt", "a") as f:

@@ -26,7 +26,7 @@ fi
 
 echo "[*] - Looking for old install...";
 if [ -d "$INSTALL_DIR" ]; then
-    echo "[!] - onifw is already installed. Do you want to overwrite anyways?";
+    echo "[!] - onifw is already installed. Do you want to overwrite anyways? [y/N]";
     read ans
     if [ "$ans" = "y" ] || [ "$ans" = "Y"]; then
         if [ "$TERMUX" = true ]; then
