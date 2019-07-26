@@ -11,6 +11,7 @@ import subprocess
 #Api
 import api.installer    as instl
 import api.completer    as auto
+import api.customizer   as cinstl
 
 #Libs
 import lib.exploit      as ex
@@ -18,6 +19,7 @@ import lib.info         as ig
 import lib.passw        as pwd
 import lib.web          as web
 import lib.net          as nt
+
 
 def readcred():
     f = open(installDir + "doc/Credits.txt")
@@ -269,16 +271,15 @@ class onifw:
                 try:
                     os.system("git clone %s %s%s" % (link, toolDir, name))
                     temp = 1
+                    # Must fix github login ?
                 except:
                     temp = -1
-                with open("api/dict.txt", "a") as f:
-                    if temp == 1:
+                if temp == 1:
+                    with open("api/dict.txt", "a") as f:
                         f.write(name + '\n')
-                with open("api/ctools.txt", "a") as f:
-                    if temp == 1:
+                    with open("api/ctools.txt", "a") as f:
                         f.write(name + '\n')
-                with open("settings.cfg", "a") as f:
-                    if temp ==1 :
+                    with open("settings.cfg", "a") as f:
                         f.write("{0} = {1}\n".format(name,cmds))
                 self.__init__()
 
