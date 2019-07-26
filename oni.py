@@ -273,12 +273,14 @@ class onifw:
                     # Must fix github login ?
                 except:
                     temp = -1
-                if temp:
-                    with open("api/dict.txt", "a") as f:
+                with open("api/dict.txt", "a") as f:
+                    if temp:
                         f.write(name + '\n')
-                    with open("api/ctools.txt", "a") as f:
+                with open("api/ctools.txt", "a") as f:
+                    if temp:
                         f.write(name + '\n')
-                    with open("settings.cfg", "a") as f:
+                with open("settings.cfg", "a") as f:
+                    if temp:
                         f.write("{0} = {1}\n".format(name,cmds))
                 self.__init__()
 
