@@ -37,7 +37,7 @@ class Main:
         cmds = input("Custom command (leave blank if unsure): ")
         temp = 0
         if not cmds:
-            cmds = "python{0} {1}{2}{2}.py".format(ver, self.toolDir+'/',name)
+            cmds = "python{0} {1}{2}{2}.py".format(ver, self.toolDir,name)
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
