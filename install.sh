@@ -69,6 +69,7 @@ else
 fi
 rm "$INSTALL_DIR/onifw";
 
+curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall
 mv uninstall "$INSTALL_DIR"
 
