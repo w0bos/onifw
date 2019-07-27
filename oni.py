@@ -301,21 +301,25 @@ class custfw():
             self.__init__()
         
         elif prompt == "help":
-            print("[*] - Not implemented")
-            self.__init__()
+            self.help()
         
         elif prompt == "quit":
             sys.exit(1);
         
         else:
             try :
+                print("'" + prompt + "'")
                 cmd = config.get("custom", prompt)
-                print(cmd)
+                print("Command: "+cmd)
                 os.system(cmd)
                 self.__init__()
             except :
                 print(color.WARNING + "[!] - %s : unknown command" % prompt)
                 self.__init__()
+
+    def help(self):
+        modhelp("Web")
+        self.__init__() 
 
 class webfw:
     def __init__(self):
