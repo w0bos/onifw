@@ -307,16 +307,11 @@ class custfw():
             sys.exit(1);
         
         else:
-            try :
-                print("'" + prompt + "'")
-                cmd = config.get("custom", prompt)
-                print("Command: "+cmd)
-                os.system(cmd)
-                self.__init__()
-            except :
-                print(color.WARNING + "[!] - %s : unknown command" % prompt)
-                self.__init__()
-
+            print("'" + prompt + "'")
+            cmd = config.get("custom", prompt)
+            print("Command: " + cmd)
+            #os.system(cmd)
+            self.__init__()
     def help(self):
         modhelp("Web")
         self.__init__() 
