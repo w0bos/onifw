@@ -308,7 +308,7 @@ class custfw():
         
         else:
             print("'" + prompt + "'")
-            cmd = config.get("custom", prompt)
+            cmd = config.get('custom', str(prompt))
             print("Command: " + cmd)
             #os.system(cmd)
             self.__init__()
