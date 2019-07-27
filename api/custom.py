@@ -50,4 +50,4 @@ class Main:
             with open("api/ctools.txt", "a") as f:
                 f.write(name + '\n')
             with open("settings.cfg", "a") as f:
-                f.write("{0} = {1}\n".format(name,cmds))
+                f.write("{0} = \"{1}\"\n".format(name,cmds))
