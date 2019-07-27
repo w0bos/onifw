@@ -37,7 +37,7 @@ class Main:
         cmds = input("Custom command (leave blank if unsure): ")
         temp = 0
         if not cmds:
-            cmds = "python{0} {1}{2}{2}.py".format(ver, self.toolDir,name)
+            cmds = "python{0} {1}{2}/{2}.py".format(ver, self.toolDir,name)
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
@@ -47,7 +47,11 @@ class Main:
         if temp:
             with open("api/dict.txt", "a") as f:
                 f.write(name + '\n')
+                f.close()
             with open("api/ctools.txt", "a") as f:
                 f.write(name + '\n')
+                f.close()
             with open("settings.cfg", "a") as f:
-                f.write("{0} = \"{1}\"\n".format(name,cmds))
+                f.write("{0} = \"{1}\" \n".format(name,cmds))
+                f.close()
+            print("[*] - You must restart onifw in order to use the custom tool.")

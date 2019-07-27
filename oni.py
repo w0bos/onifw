@@ -151,6 +151,8 @@ def help():
     return              {while in a module} returns to the main module
     install             starts the installer, use install [package] if you
                         want to install specific packages
+    custom              Allows the use of custom installed packages
+                        Must use the {install -c} command
     list                {while in a module} shows all packages available
                         in the current module
 
@@ -307,10 +309,8 @@ class custfw():
             sys.exit(1);
         
         else:
-            print("'" + prompt + "'")
             cmd = config.get('custom', str(prompt))
-            print("Command: " + cmd)
-            #os.system(cmd)
+            os.system(cmd)
             self.__init__()
     def help(self):
         modhelp("Web")

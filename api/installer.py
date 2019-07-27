@@ -140,6 +140,8 @@ class Installer:
             print("\033[32m" + "\nScripts\n" + "\033[93m")
             for i in range(len(self.scripts)):
                 print("%s" % self.scripts[i][0])
+
+            customz = 2
             print("\033[97m")    
 
     def completed(self):
