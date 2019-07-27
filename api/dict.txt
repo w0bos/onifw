@@ -44,3 +44,4 @@ show_logo
 show_version
 show_credits
 
+onifw

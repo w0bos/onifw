@@ -11,6 +11,7 @@ import subprocess
 #Api
 import api.installer    as instl
 import api.completer    as auto
+import api.custom       as cinstall
 
 #Libs
 import lib.exploit      as ex
@@ -257,31 +258,7 @@ class onifw:
                 self.__init__()
 
             elif "-c" in cmd or "--custom" in cmd:
-                print("[*] - Custom tool installer. MAY NOT WORK AS INTENDED")
-                print(color.IMPORTANT + "Only python tools are supported at the moment")
-                print(color.WHITE)
-                link = input("Git repository of the tool (full link): ")
-                name = input("Tool name: ")
-                ver = input("Python version: ")
-                cmds = input("Custom command (leave blank if unsure): ")
-                temp = 0
-                if not cmds:
-                    cmds = "python{0} {1}{2}{2}.py".format(ver,toolDir+'/',name)
-                try:
-                    os.system("git clone %s %s%s" % (link, toolDir, name))
-                    temp = 1
-                    # Must fix github login ?
-                except:
-                    temp = -1
-                with open("api/dict.txt", "a") as f:
-                    if temp:
-                        f.write(name + '\n')
-                with open("api/ctools.txt", "a") as f:
-                    if temp:
-                        f.write(name + '\n')
-                with open("settings.cfg", "a") as f:
-                    if temp:
-                        f.write("{0} = {1}\n".format(name,cmds))
+                cinstall.Main(installDir)
                 self.__init__()
 
             else :
@@ -298,17 +275,18 @@ class onifw:
             self.__init__()
 
 class custfw():
+    print(color.IMPORTANT + "[!] - This feature may not work as intended")
     def __init__(self):
         completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
-        print(color.IMPORTANT + "[!] - This feature may not work as intended")
         prompt = input("onifw.CUSTOM > " + color.WHITE)
+
 
         if prompt == "return":
             onifw()
         
-        elif prompt == "list":
+        elif prompt == "list" or prompt=="ls":
             with open("api/ctools.txt", "r") as f:
                 try:
                     lignes = [lines.rstrip('\n') for lines in f]
@@ -316,6 +294,14 @@ class custfw():
                         print(color.LOGGING + i)
                 except:
                     print("[!] - There are no custom packages to display.")
+            self.__init__()
+
+        elif prompt =="clear":
+            clearScr()
+            self.__init__()
+        
+        elif prompt == "help":
+            print("[*] - Not implemented")
             self.__init__()
         
         elif prompt == "quit":
