@@ -35,9 +35,15 @@ class Main:
         name = input("Tool name: ")
         ver = input("Python version: ")
         cmds = input("Custom command (leave blank if unsure): ")
+        issudo = input("Does the package needs root permissions? [y/N]")
+        #Add question if script has a different name
+        #g.e: main.py insttead of <projectname>.py
         temp = 0
         if not cmds:
-            cmds = "python{0} {1}{2}/{2}.py".format(ver, self.toolDir,name)
+            if issudo.lower() != "y":
+                cmds = "python{0} {1}{2}/{2}.py".format(ver, self.toolDir,name)
+            else:
+                cmds = "sudo python{0} {1}{2}/{2}.py".format(ver, self.toolDir,name)
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
@@ -52,6 +58,6 @@ class Main:
                 f.write(name + '\n')
                 f.close()
             with open("settings.cfg", "a") as f:
-                f.write("{0} = \"{1}\" \n".format(name,cmds))
+                f.write("{0} = {1}\n".format(name,cmds))
                 f.close()
             print("[*] - You must restart onifw in order to use the custom tool.")
