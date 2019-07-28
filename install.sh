@@ -67,7 +67,7 @@ else
     sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
     sudo cp "$INSTALL_DIR/settings.cfg" "$BIN_DIR"
 fi
-rm "$INSTALL_DIR/onifw";
+#rm "$INSTALL_DIR/onifw";
 
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall

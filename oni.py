@@ -20,7 +20,7 @@ import lib.passw        as pwd
 import lib.web          as web
 import lib.net          as nt
 
-
+#Must simplify functions
 def readcred():
     f = open(installDir + "doc/Credits.txt")
     content = [line.rstrip('\n') for line in f]
@@ -38,7 +38,8 @@ def readfile(file_dir):
     return content
 
 class color:
-    HEADER =    '\033[96m'
+    #Rename
+    HEADER ='\033[96m'
     IMPORTANT = '\033[35m'
     NOTICE =    '\033[32m'
     OKBLUE =    '\033[94m'
@@ -149,10 +150,11 @@ def help():
     password            starts the password module
     show_[option]       [logo] [title] [version] [credits]
     return              {while in a module} returns to the main module
-    install             starts the installer, use install [package] if you
-                        want to install specific packages
-    custom              Allows the use of custom installed packages
-                        Must use the {install -c} command
+    install             starts the installer, use install [package] to install
+                        a specific package. Use the {install -c} command to
+                        install custom package
+    custom              Starts the custom packages module. WILL NOT WORK IF NO
+                        CUSTOM PACKAGES ARE ADDED
     list                {while in a module} shows all packages available
                         in the current module
 
@@ -165,6 +167,7 @@ class onifw:
 
     def __init__(self):
 
+        config.read(configFile)        
         if not os.path.isdir(toolDir):  os.makedirs(toolDir)
         if not os.path.isdir(logDir):   os.makedirs(logDir)
 

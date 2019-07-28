@@ -14,9 +14,7 @@ Clone this repository and start the installer :
 ```bash
 curl 'https://raw.githubusercontent.com/w0bos/onifw/master/install.sh' > install.sh
 
-chmod +x install.sh
-
-./install.sh
+bash install.sh
 ```
 
 
