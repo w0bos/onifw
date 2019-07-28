@@ -312,9 +312,15 @@ class custfw():
             sys.exit(1);
         
         else:
-            cmd = config.get('custom', str(prompt))
-            os.system(cmd)
-            self.__init__()
+            try:
+                cmd = config.get('custom', str(prompt))
+                os.system(cmd)
+                self.__init__()
+            except configparser.Error:
+                print("[!] - Command not found!")
+                self.__init__()
+            except:
+                print(color.WARNING + "[!] - %s command not found".format(prompt))
     def help(self):
         modhelp("Web")
         self.__init__() 
