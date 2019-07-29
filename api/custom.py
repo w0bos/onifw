@@ -60,4 +60,4 @@ class Main:
             with open("settings.cfg", "a") as f:
                 f.write("{0} = {1}\n".format(name,cmds))
                 f.close()
-            print("[*] - You must restart onifw in order to use the custom tool.")
+            print("[*] - You may need to restart onifw in order to use the custom tool.")
