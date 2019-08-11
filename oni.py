@@ -317,7 +317,8 @@ class custfw():
                 os.system(cmd)
                 self.__init__()
             except configparser.Error:
-                print("[!] - %s command not found!\n[!] - %s might not be installed.".format(prompt, prompt))
+                print(color.WARNING + "[!] - %s command not found!" % prompt)
+                print("[!] - %s might not be installed." % prompt)
                 self.__init__()
             except:
                 print(color.WARNING + "[!] - %s command not found".format(prompt))

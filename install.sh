@@ -1,3 +1,4 @@
+# For post 0.3
 clear
 echo "
   _____    __  __  _____  _      __    __    __  __  
@@ -6,7 +7,6 @@ echo "
 /\/ /_/ /\  / _\ \ / / /  _  \/ /___/ /___//__/ _  \ 
 \____/\_\ \/  \__/ \/  \_/ \_/\____/\____/\__/\/ \_/                                                   
 ";
-sudo chmod +x onifw
 
 if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
     INSTALL_DIR="$PREFIX/usr/share/doc/onifw"
@@ -23,6 +23,7 @@ else
     TERMUX=false
 
 fi
+
 
 echo "[*] - Looking for old install...";
 if [ -d "$INSTALL_DIR" ]; then
@@ -67,7 +68,6 @@ else
     sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
     sudo cp "$INSTALL_DIR/settings.cfg" "$BIN_DIR"
 fi
-#rm "$INSTALL_DIR/onifw";
 
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall
