@@ -9,6 +9,18 @@ network
 info
 password
 exploit
+ipfinder
+ls
+custom
+
+
+show_title
+show_logo
+show_version
+show_credits
+
+
+
 nikto
 rapidscan
 arachni
@@ -27,7 +39,6 @@ doork
 crips
 wpscan
 setoolkit
-ipfinder
 cupp
 leviathan
 microsploit
@@ -35,14 +46,5 @@ weeman
 sb0x
 nxcrypt
 revsh
-ls
 brutex
-custom
-
-show_title
-show_logo
-show_version
-show_credits
-
-
 
