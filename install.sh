@@ -59,7 +59,7 @@ echo "";
 git clone https://github.com/w0bos/onifw "$INSTALL_DIR"
 echo "#!$BASH_PATH
 python3 $INSTALL_DIR/oni.py" '${1+"$@"}' > "$INSTALL_DIR/onifw"
-chmod +x "$INSTALL_DIR/onifw";
+#chmod +x "$INSTALL_DIR/onifw";
 if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/onifw" "$BIN_DIR"
     cp "$INSTALL_DIR/settings.cfg" "$BIN_DIR"
