@@ -94,10 +94,15 @@ class Installer:
                         else:
                             clearScr()
                             os.system("git clone %s %s" % (self.pkg[i][1], self.installDir))
+                        
+                        with open("api/dict.txt", "a") as f:
+                            f.write(self.pkg[i][0])
 
                     for i in range(len(self.scripts)):
                         os.system("wget %s --output-document=%s.py" % (self.scripts[i][1], self.scripts[i][0]))
                         os.system("mv %s.py %s%s.py" % (self.scripts[i][0], self.toolDir, self.scripts[i][0]))
+                        with open("api/dict.txt", "a") as f:
+                            f.write(self.scripts[i][0])
 
                     self.completed()
 
