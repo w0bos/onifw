@@ -1,5 +1,5 @@
 help
-install
+pkg
 return
 quit
 list
