@@ -192,6 +192,8 @@ class onifw:
 
         elif prompt == "quit":
             clearScr()
+            print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
+            os.system("rm -rf $HOME/.onifw/api/__pycache__ $HOME/.onifw/lib/__pycache__")
             print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(1)
 
@@ -258,6 +260,8 @@ class onifw:
                 print("      Use the [list] commad to see what packages are available")
                 print("      Flags:")
                 print("      -a --all        install all packages")
+                print("      -i --install    install named package")
+                print("      -r --remove     remove package")
                 print("      -c --custom     add custom package")
                 print(color.WHITE)
                 self.__init__()
