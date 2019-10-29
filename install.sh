@@ -68,7 +68,7 @@ else
     sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
     sudo cp "$INSTALL_DIR/settings.cfg" "$BIN_DIR"
 fi
-
+sudo pip3 install -r requirements.txt
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall
 mv uninstall "$INSTALL_DIR"
