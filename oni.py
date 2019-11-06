@@ -39,19 +39,19 @@ def readfile(file_dir):
 
 class color:
     #Rename
-    HEADER ='\033[96m'
-    IMPORTANT = '\033[35m'
-    NOTICE =    '\033[32m'
-    OKBLUE =    '\033[94m'
-    OKGREEN =   '\033[92m'
-    WARNING =   '\033[91m'
-    RED =       '\033[31m'
-    END =       '\033[0m'
-    LOGGING =   '\033[93m'
-    WHITE =     '\033[97m'
+    HEADER      =   '\033[96m'
+    IMPORTANT   =   '\033[35m'
+    NOTICE      =   '\033[32m'
+    OKBLUE      =   '\033[94m'
+    OKGREEN     =   '\033[92m'
+    WARNING     =   '\033[91m'
+    RED         =   '\033[31m'
+    END         =   '\033[0m'
+    LOGGING     =   '\033[93m'
+    WHITE       =   '\033[97m'
     #Text formatting
-    BOLD =      '\033[1m'
-    UNDER =     '\033[4m'
+    BOLD        =   '\033[1m'
+    UNDER       =   '\033[4m'
 
 installDir = os.path.dirname(os.path.abspath(__file__)) + '/'
 configFile = installDir + "./settings.cfg"
@@ -170,10 +170,7 @@ class onifw:
         config.read(configFile)        
         if not os.path.isdir(toolDir):  os.makedirs(toolDir)
         if not os.path.isdir(logDir):   os.makedirs(logDir)
-
-
-
-
+        
         completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')

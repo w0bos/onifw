@@ -33,25 +33,11 @@ bash install.sh
 
 - `git`
 
-- `python-selenium`
+- `pip3`
 
-- `selenium web driver`
-
-
-  - **Ubuntu**
-
-    ```bash
-    apt-get install python2 python perl gcc ruby git
-    ```
 
   - **Arch**
 
     ```bash
     pacman -S python2 python perl gcc ruby git && pip install selenium
-    ```
-
-  - **Fedora**
-
-    ```bash
-    yum install gcc python2 python ruby git
     ```
