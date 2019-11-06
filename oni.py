@@ -190,7 +190,8 @@ class onifw:
         elif prompt == "quit":
             clearScr()
             print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
-            os.system("rm -rf $HOME/.onifw/api/__pycache__ $HOME/.onifw/lib/__pycache__")
+            os.system("rm -rf $HOME/.onifw/api/__pycache__")
+            os.system("rm -rf $HOME/.onifw/lib/__pycache__")
             print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(1)
 
