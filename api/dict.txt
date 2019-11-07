@@ -18,4 +18,3 @@ show_title
 show_logo
 show_version
 show_credits
-

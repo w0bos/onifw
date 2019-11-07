@@ -190,10 +190,19 @@ class Installer:
 class Uninstaller:
 
     def __init__(self, installDir, cmd):
+        print("[*] - Removing folder")
+        os.system("rm -rf tools/%s" % (cmd[2]))
+        print("[*] - Cleaning dictionnary...")
+        f = open("api/dict.txt")
+        out = []
+        for line in f:
+            if not cmd[2] in line:
+                out.append(line)
+        f.close()
+        f = open("api/dict.txt", 'w')
+        f.writelines(out)
+        f.close()
 
-        print("rm -rf %s" % ("tools/"+installDir+cmd[2]))
-        #os.system("rm -rf %s" % (installDir+cmd[2]))
-        
 
 class User_install:
 
@@ -212,18 +221,21 @@ class User_install:
                 for i in range(len(scripts)):
                     if self.target[i] == scripts[i][0]:
                         os.system("wget %s --output-document=%s.py" %
-                                      (scripts[i][1], scripts[i][0]))
+                                  (scripts[i][1], scripts[i][0]))
             elif not (self.target[i] in self.bugpkg):
                 for i in range(len(self.target)):
                     for j in range(len(pkg)):
                         if self.target[i] == pkg[j][0]:
                             print("[*] - Installing %s" % (self.target[i]))
-                            os.system("git clone %s %s" % (pkg[i][1], self.installDir[i]))
+                            os.system("git clone %s %s" %
+                                      (pkg[i][1], self.installDir[i]))
             else:
                 if self.target[i] == "Crips":
                     clearScr()
-                    os.system("git clone %s %s" % (pkg[i][1], self.installDir[i]))
-                    os.system("sudo chmod +x %s/install.sh" % (self.installDir[i]))
+                    os.system("git clone %s %s" %
+                              (pkg[i][1], self.installDir[i]))
+                    os.system("sudo chmod +x %s/install.sh" %
+                              (self.installDir[i]))
                     os.system("sudo %s/./install.sh" % (self.installDir[i]))
                 elif self.target[i] == "arachni":
                     clearScr()
