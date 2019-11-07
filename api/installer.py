@@ -271,3 +271,4 @@ class User_install:
         print("[*] - Done.")
         input(color.LOGGING +
               "[*] - Installation completed, press [return] to go back" + color.WHITE)
+
