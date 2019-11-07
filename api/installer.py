@@ -207,53 +207,48 @@ class User_install:
         self.install()
 
     def install(self):
-
-        try:
-            for i in range(len(self.target)):
-                if self.target[i] in scripts:
-                    for i in range(len(scripts)):
-                        if self.target[i] == scripts[i][0]:
-                            os.system("wget %s --output-document=%s.py" %
-                                          (scripts[i][1], scripts[i][0]))
-
-                elif not (self.target[i] in self.bugpkg):
-                    for i in range(len(pkg)):
-                        if self.target[i] == pkg[i][0]:
-                            clearScr()
+        for i in range(len(self.target)):
+            if self.target[i] in scripts:
+                for i in range(len(scripts)):
+                    if self.target[i] == scripts[i][0]:
+                        os.system("wget %s --output-document=%s.py" %
+                                      (scripts[i][1], scripts[i][0]))
+            elif not (self.target[i] in self.bugpkg):
+                for i in range(len(self.target)):
+                    for j in range(len(pkg)):
+                        if self.target[i] == pkg[j][0]:
+                            print("[*] - Installing %s" % (self.target(i)))
                             os.system("git clone %s %s" % (pkg[i][1], self.installDir[i]))
-
-                else:
-                    if self.target[i] == "Crips":
-                        clearScr()
-                        os.system("git clone %s %s" % (pkg[i][1], self.installDir[i]))
-                        os.system("sudo chmod +x %s/install.sh" % (self.installDir[i]))
-                        os.system("sudo %s/./install.sh" % (self.installDir[i]))
-                    elif self.target[i] == "arachni":
-                        clearScr()
-                        os.system("git clone %s %s" %
-                                  (pkg[i][1], self.installDir[i]))
-                        os.system("cd %s/ && bundle install" %
-                                  (self.installDir[i]))
-                    elif self.target[i] == "openssl":
-                        clearScr()
-                        os.system("git clone %s %s" %
-                                  (pkg[i][1], self.installDir[i]))
-                        os.system(
-                            "cd %s/ && ./config no-shared -static && make && make test && sudo make install" % self.installDir[i])
-                    elif self.target[i] == "brutex":
-                        clearScr()
-                        os.system("sudo mkdir /usr/share/brutex")
-                        os.system("git clone %s %s" %
-                                  (pkg[i][1], self.installDir[i]))
-                    elif self.target[i] == "revsh":
-                        clearScr()
-                        os.system("git clone %s %s" %
-                                  (pkg[i][1], self.installDir[i]))
-                        os.system("cd %s/ && make && make install" %
-                                  (self.installDir[i]))
-                self.completed()
-        except:
-            print("[!] - An error occured.")
+            else:
+                if self.target[i] == "Crips":
+                    clearScr()
+                    os.system("git clone %s %s" % (pkg[i][1], self.installDir[i]))
+                    os.system("sudo chmod +x %s/install.sh" % (self.installDir[i]))
+                    os.system("sudo %s/./install.sh" % (self.installDir[i]))
+                elif self.target[i] == "arachni":
+                    clearScr()
+                    os.system("git clone %s %s" %
+                              (pkg[i][1], self.installDir[i]))
+                    os.system("cd %s/ && bundle install" %
+                              (self.installDir[i]))
+                elif self.target[i] == "openssl":
+                    clearScr()
+                    os.system("git clone %s %s" %
+                              (pkg[i][1], self.installDir[i]))
+                    os.system(
+                        "cd %s/ && ./config no-shared -static && make && make test && sudo make install" % self.installDir[i])
+                elif self.target[i] == "brutex":
+                    clearScr()
+                    os.system("sudo mkdir /usr/share/brutex")
+                    os.system("git clone %s %s" %
+                              (pkg[i][1], self.installDir[i]))
+                elif self.target[i] == "revsh":
+                    clearScr()
+                    os.system("git clone %s %s" %
+                              (pkg[i][1], self.installDir[i]))
+                    os.system("cd %s/ && make && make install" %
+                              (self.installDir[i]))
+            self.completed()
 
     def completed(self):
         print("[*] - Adding dictionnary words...")

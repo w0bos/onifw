@@ -190,15 +190,15 @@ class onifw:
         elif prompt == "quit":
             clearScr()
             print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
-            os.system("rm -rf $HOME/.onifw/api/__pycache__")
-            os.system("rm -rf $HOME/.onifw/lib/__pycache__")
+            os.system("rm -rf api/__pycache__")
+            os.system("rm -rf lib/__pycache__")
             print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(1)
 
         elif prompt == "uninstall":
             answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]")
             if answer.lower() in yes:
-                subprocess.run("$HOME/.onifw/uninstall", shell=True)
+                subprocess.run("./uninstall", shell=True)
             else :
                 print(color.LOGGING + "[*] - Aborting uninstall process.")
                 self.__init__()

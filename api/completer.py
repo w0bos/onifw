@@ -3,7 +3,6 @@ import readline
 class Autocomp(object):
     def __init__(self, options):
         self.options = sorted(options)
-        
     def complete(self, text, state):
         if state == 0:
             if text:
