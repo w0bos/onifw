@@ -39,19 +39,19 @@ def readfile(file_dir):
 
 class color:
     #Rename
-    HEADER ='\033[96m'
-    IMPORTANT = '\033[35m'
-    NOTICE =    '\033[32m'
-    OKBLUE =    '\033[94m'
-    OKGREEN =   '\033[92m'
-    WARNING =   '\033[91m'
-    RED =       '\033[31m'
-    END =       '\033[0m'
-    LOGGING =   '\033[93m'
-    WHITE =     '\033[97m'
+    HEADER      =   '\033[96m'
+    IMPORTANT   =   '\033[35m'
+    NOTICE      =   '\033[32m'
+    OKBLUE      =   '\033[94m'
+    OKGREEN     =   '\033[92m'
+    WARNING     =   '\033[91m'
+    RED         =   '\033[31m'
+    END         =   '\033[0m'
+    LOGGING     =   '\033[93m'
+    WHITE       =   '\033[97m'
     #Text formatting
-    BOLD =      '\033[1m'
-    UNDER =     '\033[4m'
+    BOLD        =   '\033[1m'
+    UNDER       =   '\033[4m'
 
 installDir = os.path.dirname(os.path.abspath(__file__)) + '/'
 configFile = installDir + "./settings.cfg"
@@ -150,8 +150,8 @@ def help():
     password            starts the password module
     show_[option]       [logo] [title] [version] [credits]
     return              {while in a module} returns to the main module
-    install             starts the installer, use install [package] to install
-                        a specific package. Use the {install -c} command to
+    pkg                 starts the installer, use pkg [package] to install
+                        a specific package. Use the {pkg -c} command to
                         install custom package
     custom              Starts the custom packages module. WILL NOT WORK IF NO
                         CUSTOM PACKAGES ARE ADDED
@@ -170,13 +170,15 @@ class onifw:
         config.read(configFile)        
         if not os.path.isdir(toolDir):  os.makedirs(toolDir)
         if not os.path.isdir(logDir):   os.makedirs(logDir)
-
+        
         completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input(onifw_cmd + color.OKGREEN)
         
-        
+
+        cmd = prompt.split()
+
         if prompt[:4] == "help":            
             if len(prompt) == 4:
                 help()
@@ -187,13 +189,16 @@ class onifw:
 
         elif prompt == "quit":
             clearScr()
+            print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
+            os.system("rm -rf api/__pycache__")
+            os.system("rm -rf lib/__pycache__")
             print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
             sys.exit(1)
 
         elif prompt == "uninstall":
             answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]")
             if answer.lower() in yes:
-                subprocess.run("$HOME/.onifw/uninstall", shell=True)
+                subprocess.run("./uninstall", shell=True)
             else :
                 print(color.LOGGING + "[*] - Aborting uninstall process.")
                 self.__init__()
@@ -244,19 +249,20 @@ class onifw:
             print(color.END)
             print(color.OKGREEN + "Framework created by w0bos" + color.END + color.WHITE)
             self.__init__()
-            
-        elif prompt[:7] == "install":
-            if len(prompt) == 7:
+        
+        elif cmd[0] == "pkg":
+            if len(cmd)== 1:
                 print(color.NOTICE)
-                print("[*] - Usage : install [cmd] [package]")
+                print("[*] - Usage : pkg [cmd] [package]")
                 print("      Multiple packages can be installed at once.")
                 print("      Use the [list] commad to see what packages are available")
                 print("      Flags:")
                 print("      -a --all        install all packages")
+                print("      -i --install    install named package")
+                print("      -r --remove     remove package")
                 print("      -c --custom     add custom package")
                 print(color.WHITE)
                 self.__init__()
-            cmd = prompt.split()
             
             if "--all" in cmd or "-a" in cmd:
                 instl.Installer(0, installDir)
@@ -264,6 +270,14 @@ class onifw:
 
             elif "-c" in cmd or "--custom" in cmd:
                 cinstall.Main(installDir)
+                self.__init__()
+
+            elif "-r" in cmd or "--remove" in cmd:
+                instl.Uninstaller(installDir, cmd)
+                self.__init__()
+
+            elif "-i" in cmd or "--install" in cmd:
+                instl.User_install(installDir, cmd)
                 self.__init__()
 
             else :
@@ -279,7 +293,7 @@ class onifw:
             print(color.WARNING + "[!] - %s : unknown command" % prompt)
             self.__init__()
 
-class custfw():
+class custfw:
     print(color.IMPORTANT + "[!] - This feature may not work as intended")
     def __init__(self):
         completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
