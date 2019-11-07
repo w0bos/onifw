@@ -1,5 +1,4 @@
 import readline
-
 class Autocomp(object):
     def __init__(self, options):
         self.options = sorted(options)

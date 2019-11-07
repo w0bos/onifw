@@ -217,7 +217,7 @@ class User_install:
                 for i in range(len(self.target)):
                     for j in range(len(pkg)):
                         if self.target[i] == pkg[j][0]:
-                            print("[*] - Installing %s" % (self.target(i)))
+                            print("[*] - Installing %s" % (self.target[i]))
                             os.system("git clone %s %s" % (pkg[i][1], self.installDir[i]))
             else:
                 if self.target[i] == "Crips":
