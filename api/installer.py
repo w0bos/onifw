@@ -169,7 +169,7 @@ class Installer:
             for i in range(len(scripts)):
                 print("%s" % scripts[i][0])
 
-            customz = 2
+            #customz = 2
             print("\033[97m")
 
     def completed(self):
