@@ -12,6 +12,7 @@ import subprocess
 import api.installer    as instl
 import api.completer    as auto
 import api.custom       as cinstall
+import api.updater      as update
 
 #Libs
 import lib.exploit      as ex
@@ -58,6 +59,9 @@ configFile = installDir + "./settings.cfg"
 config = configparser.ConfigParser()
 config.read(configFile)
 
+
+repo = config.get("onisettings","repo")
+
 toolDir = installDir + config.get('onisettings', 'toolDir')
 logDir = installDir + config.get('onisettings', 'logDir')
 yes = config.get('onisettings', 'yes').split()
@@ -78,7 +82,11 @@ $$ |  $$ |$$ |\$$$ |  $$ |     $$ |      $$$  / \$$$ |
 '''
 
 onifw_cmd = "onifw > "
-version = "Version {%s}\n" % (config.get("onisettings","version"))
+global value_t
+with open("version.txt","r") as f:
+    temp = f.readline()
+    value_t = temp.strip('\n')
+version = "Version {%s}\n" % (value_t)
 
 TaC = color.BOLD + color.WARNING + '''
     By using this framework you signify your acceptance that:   
@@ -108,6 +116,14 @@ def check_connectivity():
         return True
     except:
         return False
+
+def check_version(ver):
+    git_ver = os.system("curl https://raw.githubusercontent.com/w0bos/onifw/master/version.txt")
+    if git_ver == ver:
+        print("[*] - onifw up to date")
+    else:
+        print(git_ver)
+        print(ver)
 
 def argeement():
     while not config.getboolean("onisettings", "agreement"):
@@ -157,6 +173,7 @@ def help():
                         CUSTOM PACKAGES ARE ADDED
     list                {while in a module} shows all packages available
                         in the current module
+    update              check if there is an update for the framework
 
     uninstall           Uninstall onifw
 
@@ -167,7 +184,8 @@ class onifw:
 
     def __init__(self):
 
-        config.read(configFile)        
+        config.read(configFile)       
+        check_version(version) 
         if not os.path.isdir(toolDir):  os.makedirs(toolDir)
         if not os.path.isdir(logDir):   os.makedirs(logDir)
         
@@ -249,6 +267,15 @@ class onifw:
             print(color.END)
             print(color.OKGREEN + "Framework created by w0bos" + color.END + color.WHITE)
             self.__init__()
+
+
+        elif prompt == "update":
+            if check_connectivity():
+                print("[*] - Checking for an update...")
+                self.__init__()
+            else:
+                print("[!] - No connectivity. The updater won't work")
+                self.__init__()
         
         elif cmd[0] == "pkg":
             if len(cmd)== 1:
