@@ -133,7 +133,13 @@ class main:
                 print(color.color_random[0])
                 print(fin.read())
                 print(color.END)
-            fin.close()    
+            fin.close()
+        elif cmd[0]=="show_agreement":
+            with open("api/agreement.txt", 'r') as fin:
+                print(color.BOLD + color.IMPORTANT)
+                print(fin.read())
+                print(color.END)
+            fin.close()
 
 
 
