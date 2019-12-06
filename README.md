@@ -2,7 +2,7 @@
 ###### *A console based framework for Pentesting. Based on the work of [Manisso's Fsociety framework](https://github.com/Manisso/fsociety)*
 ![](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Tested_On-Linux-orange.svg?longCache=true&style=popout-square)
-![](https://img.shields.io/badge/Version-0.3.7-dark_green.svg?longCache=true&style=popout-square)
+![](https://img.shields.io/badge/Version-1.0-beta1-dark_green.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Python-3.7+-purple.svg?longCache=true&style=popout-square)
 
 ## **Installation**
