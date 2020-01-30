@@ -20,7 +20,7 @@ class Updater:
         f.close()
         
         if not os.path.isdir("{}/temp".format(installDir)):  os.makedirs("{}/temp".format(installDir))
-        os.system("wget -q -O {}/temp/latest_version.txt ".format(installDir))
+        os.system("wget -q -O {}/temp/latest_version.txt https://raw.githubusercontent.com/w0bos/onifw/master/api/version.txt".format(installDir))
         with open("{}/temp/latest_version.txt".format(installDir)) as f:
             latest_version = version.parse(f.readlines()[0].rstrip("\n\r"))
         f.close()
