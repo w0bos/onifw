@@ -38,7 +38,7 @@ installDir = os.path.dirname(os.path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
 onifw_cmd = "onifw > "
 with open("{}/api/version.txt".format(installDir)) as f:
-    version = version.parse(f.readlines()[0].rstrip("\n\r"))
+    version = f.readlines()[0].rstrip("\n\r")
 f.close()
 pkg = ["microsploit", "poet","weeman","sb0x","nxcrypt",
         "nmap","xsstrike","doork","crips","wpscan","setoolkit","cupp",
