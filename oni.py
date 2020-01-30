@@ -23,6 +23,7 @@ import core.installer as instl
 import core.custom    as cinstall
 import core.launcher  as start
 import core.launcher  as l
+import core.updater   as up
 
 
 ### FROM ###
@@ -36,7 +37,9 @@ from subprocess import DEVNULL, STDOUT, check_call
 installDir = os.path.dirname(os.path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
 onifw_cmd = "onifw > "
-version = "v.{1.0}"
+with open("{}/api/version.txt".format(installDir)) as f:
+    version = version.parse(f.readlines()[0].rstrip("\n\r"))
+f.close()
 pkg = ["microsploit", "poet","weeman","sb0x","nxcrypt",
         "nmap","xsstrike","doork","crips","wpscan","setoolkit","cupp",
         "brutex","leviathan","sslstrip","sqlmap","slowloris","pwnloris",
@@ -94,7 +97,9 @@ class main:
         elif cmd[0] == "list" or cmd[0]=="ls":
             instl.Installer(1, installDir)
         elif cmd[0]=="update":
-            print(color.NOTICE + "[*] - Feature not yet deployed" + color.END)
+            up.Updater(installDir)
+            
+            #print(color.NOTICE + "[*] - Feature not yet deployed" + color.END)
         elif cmd[0] == "help":
             print(color.NOTICE)
             with open("api/help.txt", 'r') as fin:
@@ -265,7 +270,7 @@ if __name__ == '__main__':
             print(color.END)
         fin.close()
         print(color.color_random[0]+version)
-        if socket.create_connection(("www.google.com", 80)):
+        if setup.init(): #socket.create_connection(("www.google.com", 80)):
             print(color.OKGREEN + "\n[*] - Connected to a network")
         else :
             print(color.BOLD)
