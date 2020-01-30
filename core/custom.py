@@ -57,7 +57,7 @@ class Main:
             with open("api/ctools.txt", "a") as f:
                 f.write(name + '\n')
                 f.close()
-            with open("settings.cfg", "a") as f:
+            with open("core/config.cfg", "a") as f:
                 f.write("{0} = {1}\n".format(name,cmds))
                 f.close()
             print("[*] - You may need to restart onifw in order to use the custom tool.")

@@ -1,3 +1,5 @@
+All tools belong to their corresponding authors:
+
 Microsploit     Screetsec
 POET            mossberg
 Weeman          Samyoyo
