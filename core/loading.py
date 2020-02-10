@@ -19,7 +19,7 @@ def loadingHack(importlib):
 			time.sleep(0.06)
 
 def loadingUpper(importlib):
-	string = "Loading the framework"
+	string = " Loading the framework"
 	string = list(string)
 	nb = len(string)
 

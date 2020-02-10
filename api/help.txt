@@ -7,10 +7,10 @@
     pkg                 starts the installer, use pkg [package] to install
                         a specific package. Use the {pkg -c} command to
                         install custom package
-    custom              Starts the custom packages module. 
-                        WILL NOT WORK IF NO CUSTOM PACKAGES ARE ADDED
-    list                {while in a module} shows all packages available
+    list                [-r] shows all packages available
+                        [] shows installed packages
                         in the current module
+    restore             restores the dictionnary
     update              check if there is an update for the framework
     uninstall           Uninstall onifw
     quit                quit program

@@ -157,14 +157,14 @@ class Installer:
                                       "[!] - Already installed" + color.WHITE)
 
         if show == 1:
-            print("\033[32m" + "Packages\n" + "\033[93m")
+            print("\033[32m" + "Recommended packages\n" + "\033[93m")
             for i in range(0, len(pkg), 2):
                 if i < len(pkg)-1:
                     print("%-15s" "%s" % (pkg[i][0], pkg[i+1][0]))
                 else:
                     print("%s" % (pkg[i][0]))
 
-            print("\033[32m" + "\nScripts\n" + "\033[93m")
+            print("\033[32m" + "\nRecommended scripts\n" + "\033[93m")
             for i in range(len(scripts)):
                 print("%s" % scripts[i][0])
 
@@ -273,3 +273,22 @@ class User_install:
         print("[*] - Done.")
         input(color.LOGGING +
               "[*] - Installation completed, press [return] to go back" + color.WHITE)
+
+
+class RestoreDict:
+    def __init__(self, installDir):
+        print("[*] - Restoring dictionnary to default...")
+        f = open("api/dict.txt")
+        out = []
+        default = False
+        for line in f:
+            temp = str(line).rstrip('\n\r')
+            if temp == "update":
+                default=True
+                out.append(temp)
+            if default==False:
+                out.append(line)
+        f.close()
+        f = open("api/dict.txt", 'w')
+        f.writelines(out)
+        f.close()

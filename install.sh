@@ -38,6 +38,7 @@ if [ -d "$INSTALL_DIR" ]; then
             sudo rm "$BIN_DIR/onifw"
         fi
     else
+        echo "[!] - Unable to delete onifw folder"
         echo "[*] - In order to install this version you must remove the installed one";
         echo "[*] - Installation aborted.";
         exit

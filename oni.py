@@ -14,6 +14,7 @@ import threading
 import configparser
 import socket
 import subprocess
+import re
 
 
 ### IMPORTS ###
@@ -47,7 +48,7 @@ pkg = ["microsploit", "poet","weeman","sb0x","nxcrypt",
 
 
 ### PARAM ###
-configFile = installDir + "./settings.cfg"
+configFile = installDir + "./core/config.cfg"
 config = configparser.ConfigParser()
 config.read(configFile)
 
@@ -95,7 +96,12 @@ class main:
         elif cmd[0] == "clear":
             clearScr()
         elif cmd[0] == "list" or cmd[0]=="ls":
-            instl.Installer(1, installDir)
+            if len(cmd)==1:
+                print(color.BOLD + color.HEADER + "List of installed tools" + color.END + color.LOGGING)
+                os.system("ls %s/"%toolDir)
+                print(color.END)
+            elif cmd[1] == "-r" or cmd[1]=="recommended":
+                instl.Installer(1, installDir)
         elif cmd[0]=="update":
             up.Updater(installDir)
             
@@ -116,6 +122,8 @@ class main:
                 self.__init__()
 
         ### MISC ###
+        elif cmd[0] == "restore":
+            instl.RestoreDict(installDir)
         elif cmd[0] == "show_version":
             print(color.color_random[random.randint(0,len(color.color_random)-1)])
             print(version)
@@ -216,7 +224,13 @@ class main:
     
         ### THROW NO CMD ###
         else:
-            print(color.WARNING + "[!] - %s : unknown command" % cmd[0])
+            try:
+                cmd = config.get('custom', str(prompt.rstrip('\n\r')))
+                print(cmd)
+                os.system(cmd)
+            except:
+                print(color.WARNING + "[!] - %s : unknown command" % cmd[0])
+            
 
         self.__init__()
 
