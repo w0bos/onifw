@@ -27,6 +27,10 @@ curl 'https://raw.githubusercontent.com/w0bos/onifw/master/install.sh' > install
 
 - `python 3.7+`
 
+- `packaging`
+    
+    use ```pip install packaging```
+
 
 ## Usage
 

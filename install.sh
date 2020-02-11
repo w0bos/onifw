@@ -71,6 +71,7 @@ fi
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall
 mv uninstall "$INSTALL_DIR"
+sudo pip3 install packaging
 
 if [ -d "$INSTALL_DIR" ] ;
 then
