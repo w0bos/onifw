@@ -157,8 +157,6 @@ class main:
 
 
         ### TOOL LAUNCH ###
-        elif cmd[0]=="custom":
-            custfw()
         elif cmd[0] in pkg:
             e = cmd[0]
             if   e=="microsploit":l.microsploit()
