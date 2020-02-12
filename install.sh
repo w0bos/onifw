@@ -62,7 +62,8 @@ echo "#!$BASH_PATH
 python3 $INSTALL_DIR/oni.py" '${1+"$@"}' > "$INSTALL_DIR/onifw"
 if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/onifw" "$BIN_DIR"
-    cp "$INSTALL_DIR/settings.cfg" "$BIN_DIR"
+    cp "$INSTALL_DIR/api" "$BIN_DIR"
+    cp "$INSTALL_DIR/core" "$BIN_DIR"
     cp launcher "$BIN_DIR" onifw
 else
     sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
