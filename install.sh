@@ -67,7 +67,9 @@ if [ "$TERMUX" = true ]; then
     cp launcher "$BIN_DIR" onifw
 else
     sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
-    sudo cp "$INSTALL_DIR/settings.cfg" "$BIN_DIR"
+    sudo cp "$INSTALL_DIR/core" "$BIN_DIR"
+    sudo cp "$INSTALL_DIR/api" "$BIN_DIR"
+    sudo cp launcher "$BIN_DIR" onifw
 fi
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall
