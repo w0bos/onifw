@@ -61,14 +61,14 @@ git clone https://github.com/w0bos/onifw "$INSTALL_DIR"
 echo "#!$BASH_PATH
 python3 $INSTALL_DIR/oni.py" '${1+"$@"}' > "$INSTALL_DIR/onifw"
 if [ "$TERMUX" = true ]; then
-    cp "$INSTALL_DIR/onifw" "$BIN_DIR"
-    cp "$INSTALL_DIR/api" "$BIN_DIR"
-    cp "$INSTALL_DIR/core" "$BIN_DIR"
+    cp -r "$INSTALL_DIR/onifw" "$BIN_DIR"
+    cp -r "$INSTALL_DIR/api" "$BIN_DIR"
+    cp -r "$INSTALL_DIR/core" "$BIN_DIR"
     cp launcher "$BIN_DIR" onifw
 else
-    sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
-    sudo cp "$INSTALL_DIR/core" "$BIN_DIR"
-    sudo cp "$INSTALL_DIR/api" "$BIN_DIR"
+    sudo cp -r "$INSTALL_DIR/onifw" "$BIN_DIR"
+    sudo cp -r "$INSTALL_DIR/core" "$BIN_DIR"
+    sudo cp -r "$INSTALL_DIR/api" "$BIN_DIR"
     sudo cp launcher "$BIN_DIR" onifw
 fi
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
