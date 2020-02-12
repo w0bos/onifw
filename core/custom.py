@@ -68,13 +68,13 @@ class Pythonapp:
         except:
             temp = -1
         if temp:
-            with open("api/dict.txt", "a") as f:
-                f.write(name + '\n')
+            with open("{}api/dict.txt".format(self.installDir), "a") as f:
+                f.write('\n' + name + '\n')
                 f.close()
-            with open("api/ctools.txt", "a") as f:
-                f.write(name + '\n')
+            with open("{}api/ctools.txt".format(self.installDir), "a") as f:
+                f.write('\n' + name + '\n')
                 f.close()
-            with open("core/config.cfg", "a") as f:
+            with open("{}core/config.cfg".format(self.installDir), "a") as f:
                 f.write("{0} = {1}\n".format(name, cmds))
                 f.close()
             print("[*] - You may need to restart onifw in order to use the custom tool.")
@@ -93,13 +93,13 @@ class Capp:
                 cmd = input("Custom command: ")
                 os.system(cmd)
             cmds = input("Launch command: ")
-            with open("core/config.cfg", "a") as f:
+            with open("{}core/config.cfg".format(self.installDir), "a") as f:
                 f.write("{0} = {1}\n".format(name, cmds))
                 f.close()
-            with open("api/dict.txt", "a") as f:
+            with open("{}api/dict.txt".format(self.installDir), "a") as f:
                 f.write(name + '\n')
                 f.close()
-            with open("api/ctools.txt", "a") as f:
+            with open("{}api/ctools.txt".format(self.installDir), "a") as f:
                 f.write(name + '\n')
                 f.close()
         except:
@@ -129,20 +129,20 @@ class Otherapp:
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % os.system(pwd))
+                print("[*] - Current directory: %s" % os.system("pwd"))
                 cmd = input("Custom command: ")
                 os.system(cmd)
             if lang=="java":
                 cmds = "{0} = cd {1}{2} && {3}{4}".format(name, toolDir, name, lang_dict[lang], name_exe)
             else:
                 cmds = "{0} = {1} {2}{3}{4}".format(name, lang_dict[lang], toolDir, name, name_exe)
-            with open("core/config.cfg", "a") as f:
-                f.write(cmds)
+            with open("{}core/config.cfg".format(self.installDir), "a") as f:
+                f.write("{0} = {1}\n".format(name, cmds))
                 f.close()
-            with open("api/dict.txt", "a") as f:
+            with open("{}api/dict.txt".format(self.installDir), "a") as f:
                 f.write(name + '\n')
                 f.close()
-            with open("api/ctools.txt", "a") as f:
+            with open("{}api/ctools.txt".format(self.installDir), "a") as f:
                 f.write(name + '\n')
                 f.close()
             

@@ -62,8 +62,8 @@ def readfile(file_dir):
     return content
 
 def del_cache(leave=0):
-    os.system("rm -rf core/__pycache__")
-    os.system("rm -rf ./__pycache__")
+    os.system("rm -rf {}core/__pycache__".format(installDir))
+    os.system("rm -rf {}./__pycache__".format(installDir))
     if leave==1:
         sys.exit(1)
 
@@ -108,7 +108,7 @@ class main:
             #print(color.NOTICE + "[*] - Feature not yet deployed" + color.END)
         elif cmd[0] == "help":
             print(color.NOTICE)
-            with open("api/help.txt", 'r') as fin:
+            with open("{}api/help.txt".format(installDir), 'r') as fin:
                 print(color.color_random[0])
                 print(fin.read())
                 print(color.END)
@@ -129,26 +129,26 @@ class main:
             print(version)
         elif cmd[0] == "show_logo":
             print(color.HEADER)
-            with open("api/logo.txt", 'r') as fin:
+            with open("{}api/logo.txt".format(installDir), 'r') as fin:
                 print(color.color_random[0])
                 print(fin.read())
                 print(color.END)
                 print(color.END + color.WHITE)
             fin.close()
         elif cmd[0]=="show_credits":
-            with open("api/credits.txt", 'r') as fin:
+            with open("{}api/credits.txt".format(installDir), 'r') as fin:
                 print(color.color_random[0])
                 print(fin.read())
                 print(color.END)
             fin.close()
         elif cmd[0]=="show_title":
-            with open("api/logo_ascii.txt", 'r') as fin:
+            with open("{}api/logo_ascii.txt".format(installDir), 'r') as fin:
                 print(color.color_random[0])
                 print(fin.read())
                 print(color.END)
             fin.close()
         elif cmd[0]=="show_agreement":
-            with open("api/agreement.txt", 'r') as fin:
+            with open("{}api/agreement.txt".format(installDir), 'r') as fin:
                 print(color.BOLD + color.IMPORTANT)
                 print(fin.read())
                 print(color.END)
@@ -235,7 +235,7 @@ class main:
 class custfw:
     print(color.IMPORTANT + "[!] - This feature may not work as intended")
     def __init__(self):
-        completer = auto.Autocomp(readfile(installDir + "api/dict.txt"))
+        completer = auto.Autocomp(readfile(installDir + "{}api/dict.txt".format(installDir)))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input(color.color_random[0] + "onifw.CUSTOM > " + color.WHITE)
@@ -245,7 +245,7 @@ class custfw:
             main()
         
         elif prompt == "list" or prompt=="ls":
-            with open("api/ctools.txt", "r") as f:
+            with open("{}api/ctools.txt".format(installDir), "r") as f:
                 try:
                     lignes = [lines.rstrip('\n') for lines in f]
                     for i in lignes:

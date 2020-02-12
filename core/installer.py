@@ -173,7 +173,7 @@ class Installer:
 
     def completed(self):
         print("[*] - Adding dictionnary words...")
-        with open("api/dict.txt", "a") as f:
+        with open("{}api/dict.txt".format(installDir), "a") as f:
             for i in range(len(pkg)):
                 f.write(pkg[i][0] + "\n")
         f.close()
@@ -195,13 +195,13 @@ class Uninstaller:
         else:
             os.system("sudo rm -rf tools/%s" % (cmd[2]))
         print("[*] - Cleaning dictionnary...")
-        f = open("api/dict.txt")
+        f = open("{}api/dict.txt".format(installDir))
         out = []
         for line in f:
             if not cmd[2] in line:
                 out.append(line)
         f.close()
-        f = open("api/dict.txt", 'w')
+        f = open("{}api/dict.txt".format(installDir), 'w')
         f.writelines(out)
         f.close()
 
@@ -266,7 +266,7 @@ class User_install:
 
     def completed(self):
         print("[*] - Adding dictionnary words...")
-        with open("api/dict.txt", "a") as f:
+        with open("{}api/dict.txt".format(installDir), "a") as f:
             for i in range(len(self.target)):
                 f.write(self.target[i] + "\n")
         f.close()
@@ -278,7 +278,7 @@ class User_install:
 class RestoreDict:
     def __init__(self, installDir):
         print("[*] - Restoring dictionnary to default...")
-        f = open("api/dict.txt")
+        f = open("{}api/dict.txt".format(installDir))
         out = []
         default = False
         for line in f:
@@ -289,6 +289,6 @@ class RestoreDict:
             if default==False:
                 out.append(line)
         f.close()
-        f = open("api/dict.txt", 'w')
+        f = open("{}api/dict.txt".format(installDir), 'w')
         f.writelines(out)
         f.close()
