@@ -30,9 +30,9 @@ class Main:
         self.toolDir = installDir + 'tools/'
         self.logDir = installDir + 'logs/'
         print(color.WARNING)
-        print("[!] - Custom tool installer.")
+        print(color.BOLD + "[*] - Custom tool installer." + color.END)
         print("This tool may not work properly and might break your current install of onifw.")
-        print("[?] - What is the language of the tool?\n\r1 - Python2/3\n\r2 - C\n3 - Other")
+        print("[?] - What is the language of the tool?\n\r1 - Python\n\r2 - C\n3 - Other")
         ans = input("> ")
         if ans == "1":
             Pythonapp(self.installDir, self.toolDir)
@@ -51,7 +51,7 @@ class Pythonapp:
         name = input("Tool name: ")
         ver = input("Python version: ")
         cmds = input("Custom command (leave blank if unsure): ")
-        issudo = input("Does the package needs root permissions? [y/N]")
+        issudo = input("Does the package needs root permissions? [y/N]: ")
         #Add question if script has a different name
         #g.e: main.py insttead of <projectname>.py
         temp = 0
@@ -65,7 +65,6 @@ class Pythonapp:
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
-            # Must fix github login ?
         except:
             temp = -1
         if temp:
@@ -90,7 +89,7 @@ class Capp:
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % os.system(pwd))
+                print("[*] - Current directory: %s" % os.system("pwd"))
                 cmd = input("Custom command: ")
                 os.system(cmd)
             cmds = input("Launch command: ")
