@@ -276,7 +276,7 @@ if __name__ == '__main__':
     try:
         clearScr()
         thread_loading()
-        with open("api/logo_ascii.txt", 'r') as fin:
+        with open("{}api/logo_ascii.txt".format(installDir), 'r') as fin:
             print(color.color_random[0])
             print(fin.read())
             print(color.END)
