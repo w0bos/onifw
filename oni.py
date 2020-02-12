@@ -116,7 +116,7 @@ class main:
         elif cmd[0]=="uninstall":
             answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]")
             if answer.lower() in ["y", "yes"]:
-                subprocess.run("./uninstall", shell=True)
+                subprocess.run("cd {} && ./uninstall".format(installDir), shell=True)
             else :
                 print(color.LOGGING + "[*] - Aborting uninstall process.")
                 self.__init__()

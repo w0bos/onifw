@@ -191,9 +191,9 @@ class Uninstaller:
     def __init__(self, installDir, cmd, root=0):
         print("[*] - Removing folder")
         if not root:
-            os.system("rm -rf tools/%s" % (cmd[2]))
+            os.system("rm -rf {0}tools/{1}".format(installDir,cmd[2]))
         else:
-            os.system("sudo rm -rf tools/%s" % (cmd[2]))
+            os.system("sudo rm -rf {0}tools/{1}".format(installDir, cmd[2]))
         print("[*] - Cleaning dictionnary...")
         f = open("{}api/dict.txt".format(installDir))
         out = []

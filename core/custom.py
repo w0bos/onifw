@@ -50,6 +50,7 @@ class Pythonapp:
         link = input("Git repository of the tool (full link): ")
         name = input("Tool name: ")
         ver = input("Python version: ")
+        exe = input("Name of the file to launch (w/o extension): ")
         cmds = input("Custom command (leave blank if unsure): ")
         issudo = input("Does the package needs root permissions? [y/N]: ")
         #Add question if script has a different name
@@ -57,11 +58,11 @@ class Pythonapp:
         temp = 0
         if not cmds:
             if issudo.lower() != "y":
-                cmds = "python{0} {1}{2}/{2}.py".format(
-                    ver, self.toolDir, name)
+                cmds = "python{0} {1}{2}/{3}.py".format(
+                    ver, self.toolDir, name,exe)
             else:
-                cmds = "sudo python{0} {1}{2}/{2}.py".format(
-                    ver, self.toolDir, name)
+                cmds = "sudo python{0} {1}{2}/{3}.py".format(
+                    ver, self.toolDir, name,exe)
         try:
             os.system("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
