@@ -1,11 +1,12 @@
 # For post 0.3
 clear
 echo "
-  _____    __  __  _____  _      __    __    __  __  
-  \_   \/\ \ \/ _\/__   \/_\    / /   / /   /__\/__\ 
-   / /\/  \/ /\ \   / /\//_\\\\  / /   / /   /_\ / \// 
-/\/ /_/ /\  / _\ \ / / /  _  \/ /___/ /___//__/ _  \ 
-\____/\_\ \/  \__/ \/  \_/ \_/\____/\____/\__/\/ \_/                                                   
+ _                      _ _             
+(_)           _        | | |            
+ _ ____   ___| |_  ____| | | ____  ____ 
+| |  _ \ /___)  _)/ _  | | |/ _  )/ ___)
+| | | | |___ | |_( ( | | | ( (/ /| |    
+|_|_| |_(___/ \___)_||_|_|_|\____)_|                                                                                         
 ";
 
 if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
@@ -23,7 +24,6 @@ else
     TERMUX=false
 
 fi
-
 
 echo "[*] - Looking for old install...";
 if [ -d "$INSTALL_DIR" ]; then
@@ -64,12 +64,12 @@ if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/onifw" "$BIN_DIR"
     cp -r "$INSTALL_DIR/api" "$BIN_DIR"
     cp -r "$INSTALL_DIR/core" "$BIN_DIR"
-    cp launcher "$BIN_DIR" onifw
+    #cp launcher "$BIN_DIR" onifw
 else
     sudo cp "$INSTALL_DIR/onifw" "$BIN_DIR"
     sudo cp -r "$INSTALL_DIR/core" "$BIN_DIR"
     sudo cp -r "$INSTALL_DIR/api" "$BIN_DIR"
-    sudo cp launcher "$BIN_DIR" onifw
+    #sudo cp launcher "$BIN_DIR" onifw
 fi
 curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
 sudo chmod +x uninstall

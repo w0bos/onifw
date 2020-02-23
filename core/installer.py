@@ -63,8 +63,8 @@ class Installer:
         if show == 0:
             if not len(pack):
                 ans = input(
-                    color.IMPORTANT + "[*] - Installation process can be quite long.\nProceed anyways?\n [Y/N] : " + color.WHITE)
-                if ans.lower() == "y":
+                    color.IMPORTANT + "[*] - Installation process can be quite long.\nProceed anyways?\n [Y/N] : " + color.WHITE).lower()
+                if ans == "y":
                     for i in range(len(pkg)):
                         self.installDir = self.toolDir + pkg[i][0]
 

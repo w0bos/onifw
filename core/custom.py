@@ -52,12 +52,12 @@ class Pythonapp:
         ver = input("Python version: ")
         exe = input("Name of the file to launch (w/o extension): ")
         cmds = input("Custom command (leave blank if unsure): ")
-        issudo = input("Does the package needs root permissions? [y/N]: ")
+        issudo = input("Does the package needs root permissions? [y/N]: ").lower()
         #Add question if script has a different name
         #g.e: main.py insttead of <projectname>.py
         temp = 0
         if not cmds:
-            if issudo.lower() != "y":
+            if issudo != "y":
                 cmds = "python{0} {1}{2}/{3}.py".format(
                     ver, self.toolDir, name,exe)
             else:
