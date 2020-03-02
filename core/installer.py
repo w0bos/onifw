@@ -210,6 +210,7 @@ class User_install:
 
     def __init__(self, installDir, cmd):
         self.target = cmd[2:]
+        self.absDir = installDir
         self.installDir = []
         for i in range(len(self.target)):
             tree = installDir + "tools/" + self.target[i]
@@ -266,7 +267,7 @@ class User_install:
 
     def completed(self):
         print("[*] - Adding dictionnary words...")
-        with open("{}api/dict.txt".format(installDir), "a") as f:
+        with open("{}api/dict.txt".format(self.absDir), "a") as f:
             for i in range(len(self.target)):
                 f.write(self.target[i] + "\n")
         f.close()
@@ -277,8 +278,9 @@ class User_install:
 
 class RestoreDict:
     def __init__(self, installDir):
+        self.installDir = installDir
         print("[*] - Restoring dictionnary to default...")
-        f = open("{}api/dict.txt".format(installDir))
+        f = open("{}api/dict.txt".format(self.installDir))
         out = []
         default = False
         for line in f:
