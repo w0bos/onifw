@@ -7,14 +7,10 @@
 ### MODULES ###
 import sys
 import os
-import time
 import readline
 import random
-import threading
 import configparser
-import socket
 import subprocess
-import re
 
 
 ### IMPORTS ###
@@ -22,7 +18,6 @@ import core.completer as auto
 import setup          as setup
 import core.installer as instl
 import core.custom    as cinstall
-import core.launcher  as start
 import core.launcher  as l
 import core.updater   as up
 
@@ -30,7 +25,6 @@ import core.updater   as up
 ### FROM ###
 from core.loading import thread_loading
 from core.gui import color as color
-from subprocess import DEVNULL, STDOUT, check_call
 
 
 
@@ -54,7 +48,7 @@ config.read(configFile)
 
 ### Functions ###
 def clearScr():
-    os.system("cls|clear")
+    os.system("cls||clear")
 
 def readfile(file_dir):
     f = open(file_dir)
@@ -176,7 +170,7 @@ class main:
             elif e=="wpscan":l.wpscan()
             elif e=="setoolkit":l.setoolkit()
             elif e=="ipfinder":l.ipfind()
-            elif e=="sslstrip":l.ssltrip()
+            elif e=="sslstrip":l.sslstrip()
             elif e=="stmp":l.stmp()
             elif e=="pyphi":l.pyphi()
             elif e=="snmp":l.snmp()

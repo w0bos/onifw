@@ -58,6 +58,7 @@ class Installer:
 
         self.toolDir = installDir + 'tools/'
         self.logDir = installDir + 'log/'
+        self.installDir = installDir
 
 
         if show == 0:
@@ -173,7 +174,7 @@ class Installer:
 
     def completed(self):
         print("[*] - Adding dictionnary words...")
-        with open("{}api/dict.txt".format(installDir), "a") as f:
+        with open("{}api/dict.txt".format(self.installDir), "a") as f:
             for i in range(len(pkg)):
                 f.write(pkg[i][0] + "\n")
         f.close()

@@ -1,4 +1,4 @@
-import sys, random, time, importlib
+import sys, random, time
 import threading, setup
 
 
@@ -47,9 +47,6 @@ def thread_loading():
 		load = threading.Thread(target=loadingHack(importlib))
 	elif num == 2:
 		load = threading.Thread(target=loadingUpper(importlib))
-	elif num == 3:
-		load = threading.Thread(target=loadingTextPrint(importlib))
-
 	load.start()
 	importlib.join()
 	load.join()

@@ -1,17 +1,15 @@
 #!/usr/bin/python
 
-import sys
+
 import os
-import random
-import time
-import configparser
 import socket
 
 import core.installer as instl
 from core.gui import color as color
+from time import gmtime, strftime
 
 def clearScr():
-    os.system('clear')
+    os.system('cls||clear')
 
 
 alreadyInstalled = "Already Installed"
@@ -319,7 +317,6 @@ class setoolkit:
         else:
             clearScr()
             self.run()
-            response = input(continuePrompt)
 
     def installed(self):
         print("%ssetoolkit/setoolkit" % toolDir)
@@ -391,7 +388,7 @@ class stmp:
         os.system("mv smtp.py %ssmtp.py" % (toolDir))
         os.system("python2 %ssmtp.py" % (toolDir))
 
-class ssltrip:
+class sslstrip:
     def __init__(self):
         self.installDir = toolDir + "sslstrip"
 
@@ -409,7 +406,7 @@ class ssltrip:
 
     def run(self):
         target = input("Enter Target IP: ")
-        os.system("python2 %s/sslstrip.py" % (self.installDir))
+        os.system("python2 %s/sslstrip.py %s" % (self.installDir, target))
 
 class cupp:
     
@@ -501,7 +498,6 @@ class rscan:
             self.targetPrompt = color.LOGGING + "rscan > "  + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
             target=input(self.targetPrompt)
             self.run(target)
-            response = input(continuePrompt)
 
     def installed(self):
         return (os.path.isdir(self.installDir))
@@ -511,26 +507,6 @@ class rscan:
 
     def run(self, target):
         os.system("python2 %s/rapidscan.py %s" % (self.installDir, target))
-
-class brutex:
-    def __init__(self):
-        self.installDir = toolDir + "brutex"
-        if not self.installed():
-            print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
-        else:
-            self.run()
-
-    def installed(self):
-        return (os.path.isdir(self.installDir))
-
-    def install(self):
-        if not os.path.isdir("/usr/share/brutex"):
-            os.system("sudo mkdir /usr/share/brutex")
-        instl.Installer(0, installDir, ["brutex"])
-
-    def run(self):
-        target = input(color.LOGGING + "BruteX > " + color.WHITE + "Enter Target IP: ")
-        os.system("brutex %s" % target)
 
 class arachni:
     def __init__(self):
