@@ -36,3 +36,4 @@ elif [ "$TERMUX" = false ]; then
 fi
 
 echo "[*] - onifw was sucessfully uninstalled.";
+exit
