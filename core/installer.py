@@ -109,8 +109,12 @@ class Installer:
                             os.system("git clone %s %s" %
                                         (pkg[i][1], self.installDir))
                             
-                            os.system("cd %s/ && make && make install" %
+                            os.system("cd %s/ && ./configure && make && make install" %
                                       (self.installDir))
+                           
+                            #os.system("cd %s/ && make && make install" %
+                            #         (self.installDir))
+                            
 
                         else:
                             
