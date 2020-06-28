@@ -105,6 +105,13 @@ class Installer:
                             os.system("cd %s/ && make && make install" %
                                       (self.installDir))
 
+                        elif pkg[i][0] == "nmap":
+                            os.system("git clone %s %s" %
+                                        (pkg[i][1], self.installDir))
+                            
+                            os.system("cd %s/ && make && make install" %
+                                      (self.installDir))
+
                         else:
                             
                             os.system("git clone %s %s" %
