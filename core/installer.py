@@ -8,7 +8,7 @@ pkg = [
     ["weeman",          "https://github.com/samyoyo/weeman"],
     ["sb0x",            "https://github.com/lostcitizen/sb0x-project"],
     ["nxcrypt",         "https://github.com/Hadi999/NXcrypt"],
-    ["nmap",            "https://github.com/nmap/nmap.git"],
+    ["nmap",            "https://github.com/nmap/nmap"],
     ["xsstrike",        "https://github.com/UltimateHackers/XSStrike.git"],
     ["doork",           "https://github.com/AeonDave/doork.git"],
     ["crips",           "https://github.com/Manisso/Crips.git"],
@@ -106,11 +106,9 @@ class Installer:
                                       (self.installDir))
 
                         elif pkg[i][0] == "nmap":
-                            os.system("git clone %s %s" %
-                                        (pkg[i][1], self.installDir))
+                            os.system("git clone %s %s && cd %s/ && ./configure && make && make install" %
+                                        (pkg[i][1], self.installDir,self.installDir))
                             
-                            os.system("cd %s/ && ./configure && make && make install" %
-                                      (self.installDir))
                            
                             #os.system("cd %s/ && make && make install" %
                             #         (self.installDir))
@@ -222,12 +220,13 @@ class User_install:
 
     def __init__(self, installDir, cmd):
         self.target = cmd[2:]
+        print(self.target)
         self.absDir = installDir
         self.installDir = []
         for i in range(len(self.target)):
             tree = installDir + "tools/" + self.target[i]
             self.installDir.append(tree)
-        self.bugpkg = ["arachni", "Crips", "openssl", "brutex", "revshl"]
+        self.bugpkg = ["arachni", "crips", "openssl", "brutex", "revshl", "nmap"]
         self.install()
 
     def install(self):
@@ -235,46 +234,56 @@ class User_install:
             if self.target[i] in scripts:
                 for i in range(len(scripts)):
                     if self.target[i] == scripts[i][0]:
+                        print("[*] - Flagged as script")
                         os.system("wget %s --output-document=%s.py" %
                                   (scripts[i][1], scripts[i][0]))
             elif not (self.target[i] in self.bugpkg):
                 for i in range(len(self.target)):
                     for j in range(len(pkg)):
                         if self.target[i] == pkg[j][0]:
+                            print("[*] - Flagged as normal pkg")
                             print("[*] - Installing %s" % (self.target[i]))
                             os.system("git clone %s %s" %
                                       (pkg[j][1], self.installDir[i]))
+
             else:
-                if self.target[i] == "Crips":
+                print("[*] - Flagged as bug pkg")
+
+                if self.target[i] == "crips":
                     
                     os.system("git clone %s %s" %
-                              (pkg[i][1], self.installDir[i]))
+                              (pkg[8][1], self.installDir[i]))
                     os.system("sudo chmod +x %s/install.sh" %
                               (self.installDir[i]))
                     os.system("sudo %s/./install.sh" % (self.installDir[i]))
                 elif self.target[i] == "arachni":
                     
                     os.system("git clone %s %s" %
-                              (pkg[i][1], self.installDir[i]))
+                              (pkg[25][1], self.installDir[i]))
                     os.system("cd %s/ && bundle install" %
                               (self.installDir[i]))
                 elif self.target[i] == "openssl":
                     
                     os.system("git clone %s %s" %
-                              (pkg[i][1], self.installDir[i]))
+                              (pkg[26][1], self.installDir[i]))
                     os.system(
                         "cd %s/ && ./config no-shared -static && make && make test && sudo make install" % self.installDir[i])
                 elif self.target[i] == "brutex":
                     
                     os.system("sudo mkdir /usr/share/brutex")
                     os.system("git clone %s %s" %
-                              (pkg[i][1], self.installDir[i]))
+                              (pkg[12][1], self.installDir[i]))
                 elif self.target[i] == "revsh":
                     
                     os.system("git clone %s %s" %
-                              (pkg[i][1], self.installDir[i]))
+                              (pkg[24][1], self.installDir[i]))
                     os.system("cd %s/ && make && make install" %
                               (self.installDir[i]))
+                
+                elif self.target[i] == "nmap":
+
+                    os.system("git clone %s %s && cd %s/ && ./configure && make && make install" % (pkg[5][1],self.installDir[i],self.installDir[i]) )
+            
             self.completed()
 
     def completed(self):
