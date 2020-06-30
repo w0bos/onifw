@@ -38,8 +38,6 @@ scripts = [
 
 
 
-
-
 class color:
     HEADER = '\033[96m'
     IMPORTANT = '\033[35m'
@@ -59,12 +57,13 @@ class Installer:
         self.toolDir = installDir + 'tools/'
         self.logDir = installDir + 'log/'
         self.installDir = installDir
+        self.defaultDir = installDir
 
 
         if show == 0:
             if not len(pack):
                 ans = input(
-                    color.IMPORTANT + "[*] - Installation process can be quite long.\nProceed anyways?\n [Y/N] : " + color.WHITE).lower()
+                    color.IMPORTANT + "[*] - Installation process can be quite long.\nProceed anyways?\n [y/N] : " + color.WHITE).lower()
                 if ans == "y":
                     for i in range(len(pkg)):
                         self.installDir = self.toolDir + pkg[i][0]
@@ -162,9 +161,12 @@ class Installer:
                                             pkg[j][1], self.installDir))
                                         os.system(
                                             "cd %s/ && make && make install" % (self.installDir))
-                            except os.isdir(self.toolDir + pkg[j][0]):
-                                print(color.NOTICE +
-                                      "[!] - Already installed" + color.WHITE)
+
+                            #except os.path.isdir(self.toolDir + pkg[j][0]):
+                            #    print(color.NOTICE +
+                            #          "[!] - Already installed" + color.WHITE)
+                            except:
+                                print(color.NOTICE + "[!] - An error occurred" + color.WHITE)
 
         if show == 1:
             print("\033[32m" + "Recommended packages\n" + "\033[93m")
@@ -183,7 +185,7 @@ class Installer:
 
     def completed(self):
         print("[*] - Adding dictionnary words...")
-        with open("{}api/dict.txt".format(self.installDir), "a") as f:
+        with open("{}api/dict.txt".format(self.defaultDir), "a") as f:
             for i in range(len(pkg)):
                 f.write(pkg[i][0] + "\n")
         f.close()
@@ -220,7 +222,6 @@ class User_install:
 
     def __init__(self, installDir, cmd):
         self.target = cmd[2:]
-        print(self.target)
         self.absDir = installDir
         self.installDir = []
         for i in range(len(self.target)):
@@ -234,21 +235,17 @@ class User_install:
             if self.target[i] in scripts:
                 for i in range(len(scripts)):
                     if self.target[i] == scripts[i][0]:
-                        print("[*] - Flagged as script")
                         os.system("wget %s --output-document=%s.py" %
                                   (scripts[i][1], scripts[i][0]))
             elif not (self.target[i] in self.bugpkg):
                 for i in range(len(self.target)):
                     for j in range(len(pkg)):
                         if self.target[i] == pkg[j][0]:
-                            print("[*] - Flagged as normal pkg")
                             print("[*] - Installing %s" % (self.target[i]))
                             os.system("git clone %s %s" %
                                       (pkg[j][1], self.installDir[i]))
 
             else:
-                print("[*] - Flagged as bug pkg")
-
                 if self.target[i] == "crips":
                     
                     os.system("git clone %s %s" %
@@ -282,7 +279,11 @@ class User_install:
                 
                 elif self.target[i] == "nmap":
 
-                    os.system("git clone %s %s && cd %s/ && ./configure && make && make install" % (pkg[5][1],self.installDir[i],self.installDir[i]) )
+                    os.system("git clone %s %s && cd %s/ && ./configure" %
+                              (pkg[5][1], self.installDir[i], self.installDir[i]))
+                    os.system("cd %s/ && sudo make && make install" %
+                              self.installDir[i])
+                    #os.system("sudo make install")
             
             self.completed()
 

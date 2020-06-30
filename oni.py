@@ -61,6 +61,21 @@ def del_cache(leave=0):
     if leave==1:
         sys.exit(1)
 
+def pkgmgrhelp():
+    print(color.NOTICE)
+    print("[*] - Usage : pkg [cmd] [package]")
+    print("      Multiple packages can be installed at once.")
+    print(
+        "      Use the [list] commad to see what packages are available")
+    print("      Flags:")
+    print("      -a --all        install all packages")
+    print("      -i --install    install named package")
+    print("      -r --remove     remove package")
+    print(
+        "      -f --force      forces the removal (when installed in sudo)")
+    print("      -c --custom     add custom package")
+    print(color.WHITE)
+
 ### Class ###
 class main:
 
@@ -189,17 +204,7 @@ class main:
         ### PACKAGE MANAGER ###
         elif cmd[0] == "pkg":
             if len(cmd)==1:
-                print(color.NOTICE)
-                print("[*] - Usage : pkg [cmd] [package]")
-                print("      Multiple packages can be installed at once.")
-                print("      Use the [list] commad to see what packages are available")
-                print("      Flags:")
-                print("      -a --all        install all packages")
-                print("      -i --install    install named package")
-                print("      -r --remove     remove package")
-                print("      -f --force      forces the removal (when installed in sudo)")
-                print("      -c --custom     add custom package")
-                print(color.WHITE)
+                pkgmgrhelp()
             else:         
                 if "--all" in cmd or "-a" in cmd:
                     instl.Installer(0, installDir)
@@ -211,6 +216,8 @@ class main:
                     instl.Uninstaller(installDir, cmd, 1)
                 elif "-i" in cmd or "--install" in cmd:
                     instl.User_install(installDir, cmd)
+                elif "-h" in cmd or "--help" in cmd:
+                    pkgmgrhelp()
                 else :
                     tools = prompt[8:].split()
                     instl.Installer(0, installDir, tools)
