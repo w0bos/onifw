@@ -164,8 +164,6 @@ class main:
                 print(color.END)
             fin.close()
 
-
-
         ### TOOL LAUNCH ###
         elif cmd[0] in pkg:
             e = cmd[0]
@@ -198,8 +196,6 @@ class main:
             elif e=="brutex":l.brutex()
             elif e=="rapidscan":l.rscan()
             elif e=="nikto":l.nikto()
-
-
 
         ### PACKAGE MANAGER ###
         elif cmd[0] == "pkg":
