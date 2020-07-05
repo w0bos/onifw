@@ -1,0 +1,14 @@
+By using this framework you signify your acceptance that:  
+ 
+1.- You won't upload, download, distribute, transfer, any trademark,
+    trade secret, copyrighted content, propietary or intellectual 
+    property rights of any person;
+
+2.- You won't use this tool for illegal or unethical purposes, including
+    activities that give rise to criminal or civil liability;
+
+3.- You won't use this tool in order to upload, download, distribute viruses,
+    malwares, or any kind of malicious software;
+
+4.- Under no event shall the author of onifw be responsible for any activities, 
+    or misdeeds, made by using the framework.
