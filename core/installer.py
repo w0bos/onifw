@@ -85,17 +85,23 @@ class Installer:
                                       (pkg[i][1], self.installDir))
                             os.system("cd %s/ && bundle install" %
                                       (self.installDir))
-
+                        ##################
+                        #      ERROR     #
+                        ##################
                         elif pkg[i][0] == "brutex":
 
-                            os.system("sudo mkdir /usr/share/brutex")
+                            #os.system("sudo mkdir /usr/share/brutex") #why?
                             os.system("git clone %s %s" %
                                       (pkg[i][1], self.installDir))
+    
+                            os.system("cd %s/ && ./install.sh" % self.installDir)
+
 
                         elif pkg[i][0] == "revsh":
                             
                             os.system("git clone %s %s" %
                                       (pkg[i][1], self.installDir))
+                            print(self.installDir)
                             os.system("cd %s/ && make && make install" %
                                       (self.installDir))
 
@@ -103,9 +109,6 @@ class Installer:
                             os.system("git clone %s %s && cd %s/ && ./configure && make && make install" %
                                         (pkg[i][1], self.installDir,self.installDir))
                             
-                           
-                            #os.system("cd %s/ && make && make install" %
-                            #         (self.installDir))
                             
 
                         else:
@@ -130,7 +133,7 @@ class Installer:
                         if i == pkg[j][0]:
                             try:
                                 self.installDir = self.toolDir + pkg[j][0]
-                                if not (i in ("crips", "arachni","revsh","nmap")):
+                                if not (i in ("crips", "arachni","revsh","nmap","brutex")):
                                     os.system("git clone %s %s" %
                                               (pkg[j][1], self.installDir))
                                 else:
@@ -151,6 +154,13 @@ class Installer:
                                             pkg[j][1], self.installDir))
                                         os.system(
                                             "cd %s/ && make && make install" % (self.installDir))
+
+                                    elif i == "brutex":
+                                        
+                                        #os.system("sudo mkdir /usr/share/brutex") #why?
+                                        os.system("git clone %s %s && cd %s/ && bash install.sh" %
+                                                  (pkg[j][1], self.installDir, self.installDir))
+
                                     elif i == "nmap":
                                         os.system("git clone %s %s && cd %s/ && ./configure && make && make install" %(pkg[j][1], self.installDir, self.installDir))
 
@@ -298,6 +308,7 @@ class RestoreDict:
                 out.append(temp)
             if default==False:
                 out.append(line)
+        out.append("\n\n")
         f.close()
         f = open("{}api/dict.txt".format(installDir), 'w')
         f.writelines(out)

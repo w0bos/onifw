@@ -26,11 +26,13 @@ fi
 
 if [ "$TERMUX" = true ]; then
     rm -rf "$ETC_DIR/w0bos"
+    cd $HOME
     rm -rf "$INSTALL_DIR"
     rm -rf "$BIN_DIR/onifw"
 
 elif [ "$TERMUX" = false ]; then
     sudo rm -rf "$ETC_DIR/w0bos"
+    cd $HOME
     sudo rm -rf "$INSTALL_DIR"
     sudo rm -rf "$BIN_DIR/onifw"
 fi
