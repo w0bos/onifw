@@ -26,7 +26,6 @@
 
 # Imports
 import readline
-import configparser
 import subprocess
 import random
 
@@ -187,12 +186,6 @@ class main:
                     print(fin.read())
                     print(color.END)
                     print(color.END + color.WHITE)
-                fin.close()
-            elif marg == "show_credits":
-                with open("{}data/credits.txt".format(installDir), 'r') as fin:
-                    print(color.color_random[0])
-                    print(fin.read())
-                    print(color.END)
                 fin.close()
             elif marg == "show_title":
                 with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
