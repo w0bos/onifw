@@ -173,6 +173,9 @@ class main:
             # PASS
             elif marg == "show_version":
                 print(color.color_random[random.randint(0, len(color.color_random)-1)])
+                with open("{}data/version.txt".format(installDir)) as f:
+                    version = f.readlines()[0].rstrip("\n\r")
+                f.close()
                 print("[*] - Installed version",version)
             elif marg == "show_logo":
                 print(color.HEADER)
@@ -247,7 +250,7 @@ class main:
                         instl.Install(installDir)
                         #instl.Installer(0, installDir)
                     elif "-c" in cmd or "--custom" in cmd:
-                        pass
+                        custom.Main(installDir)
                         #cinstall.Main(installDir)
                     elif "-r" in cmd or "--remove" in cmd:
                         #instl.Uninstaller(installDir, cmd)
@@ -264,7 +267,7 @@ class main:
                         if not(len(tools)):
                             instl.Install(installDir)
                         else:
-                            print("[!] - Some case")
+                            print(color.WARNING +"PackageManager[!] %s : unknown command" % tools)
                         #instl.Installer(0, installDir, tools)
             
             # Try custom package
@@ -282,13 +285,6 @@ class main:
         
         #loopback while no command
         self.__init__()        
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
