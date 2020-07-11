@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-import core.dict
+import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
 from sys import exc_info as einfo
@@ -57,15 +57,15 @@ class Pythonapp:
         except:
             temp = -1
         if temp:
-            addWords(self.installDir,[name])
+            dictmgr.addWords(self.installDir,[name])
             #with open("{}api/dict.txt".format(self.installDir), "a") as f:
             #    f.write('\n' + name + '\n')
             #    f.close()
-            addCustomWords(self.installDir,name)
+            dictmgr.addCustomWords(self.installDir, name)
             #with open("{}api/ctools.txt".format(self.installDir), "a") as f:
             #    f.write('\n' + name + '\n')
             #    f.close()
-            updateConfig(self.installDir,name,cmds)
+            dictmgr.updateConfig(self.installDir, name, cmds)
             #with open("{}core/config.cfg".format(self.installDir), "a") as f:
             #    f.write("{0} = {1}\n".format(name, cmds))
             #    f.close()
@@ -85,9 +85,9 @@ class Capp:
                 cmd = input("Custom command: ")
                 os.system(cmd)
             cmds = input("Launch command: ")
-            addWords(self.installDir,name)
-            addCustomWords(self.installDir,name)
-            updateConfig(self.installDir,name,cmds)
+            dictmgr.addWords(self.installDir,name)
+            dictmgr.addCustomWords(self.installDir,name)
+            dictmgr.updateConfig(self.installDir,name,cmds)
             #with open("{}core/config.cfg".format(self.installDir), "a") as f:
             #    f.write("{0} = {1}\n".format(name, cmds))
             #    f.close()

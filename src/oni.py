@@ -163,7 +163,8 @@ class main:
                 '''
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    subprocess.run("cd {} && ./uninstall".format(installDir), shell=True)
+                    subprocess.run("cd {} && ../uninstall".format(installDir), shell=True)
+                    #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
                     self.__init__()
