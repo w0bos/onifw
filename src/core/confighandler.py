@@ -61,8 +61,27 @@ class ConfigOnQuit:
         self.onleave()
 
     def onleave(self):
-        if self.parser.getboolean('onleave', 'delete_on_exit'):
+        if self.parser.getboolean('onleave', 'delete_cache_on_exit'):
             cmd("rm -rf {}core/__pycache__".format(self.installDir))
             cmd("rm -rf {}__pycache__".format(self.installDir))
         if self.parser.getboolean('onleave', 'remove_tools'):
             cmd("rm -rf {}/tools".format(self.installDir))
+
+
+
+class CustomTool:
+    def __init__(self,installDir,name):
+        self.installDir = installDir
+        with open("{}data/version.txt".format(installDir)) as f:
+            self.version = f.readlines()[0].rstrip("\n\r")
+        f.close()
+        self.configFile = installDir + "onirc"
+        self.parser = ConfigParser()
+        self.parser.read(self.configFile)
+        self.name = name
+        self.custom()
+
+    def custom(self):
+        launch_cmd = self.parser.get('custom', self.name)
+        cmd(launch_cmd)
+        

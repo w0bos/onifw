@@ -7,8 +7,8 @@ check_connectivity = true
 check_version = false
 
 [onleave]
-delete_on_exit = true
-remove_tools = true
+delete_cache_on_exit = true
+remove_tools = false
 
 
 ###########################
@@ -17,3 +17,5 @@ remove_tools = true
 #       DO NOT EDIT       #
 ###########################
 [custom]
+
+

@@ -60,7 +60,7 @@ def addCustomWords(installDir,name):
         - name : name of the custom tool
         - installDir : Directory of current install
     """
-    print("[*] - Adding dictionnary words...")
+    print("[*] - Adding custom words...")
     try:
         with open("{}data/ctools.txt".format(installDir), "a") as f:
             f.write(name + "\n")

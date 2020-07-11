@@ -106,6 +106,8 @@ def loadtools():
 def loadconfig():
     cfghandler.ConfigOnstart(installDir)
 
+def loadCustom(name):
+    cfghandler.CustomTool(installDir, name)
 
 # Class
 class main:
@@ -241,6 +243,15 @@ class main:
                 elif e == "brutex":     launch.brutex()
                 elif e == "rapidscan":  launch.rscan()
                 elif e == "nikto":      launch.nikto()
+
+                #Custom tool
+                else:
+                    try:
+                        loadCustom(marg)
+                    # Else throw command as unknown
+                    except:
+                        print(color.WARNING +
+                              "[!] - %s : unknown command" % cmd[0])
             
             # Package managment
             elif marg == "pkg":
@@ -273,16 +284,7 @@ class main:
             
             # Try custom package
             else:
-
-                try:
-                    launch_cmd = config.get('custom', str(prompt.rstrip('\n\r')))
-                    #for debug purposes
-                    #print(launch_cmd)
-                    cmd(launch_cmd)
-
-                # Else throw command as unknown
-                except:
-                    print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
+                print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
         
         #loopback while no command
         self.__init__()        

@@ -79,7 +79,7 @@ class Capp:
         name = input("Tool name: ")
         nb_cmd = int(input("How many commands to build the tool?: "))
         try:
-            os.system("git clone %s %s%s" % (link, self.toolDir, name))
+            os.system("git clone %s %s %s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
                 print("[*] - Current directory: %s" % os.system("pwd"))
                 cmd = input("Custom command: ")
