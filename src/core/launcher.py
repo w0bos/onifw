@@ -32,9 +32,6 @@ class microsploit:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["microsploit"])
-        os.system("chmod +x %s/Microsploit" % (self.installDir))
 
 
     def run(self):
@@ -52,10 +49,6 @@ class poet:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["poet"])
-
-
     def run(self):
         os.system("python2 %s/server.py" % (self.installDir))
 
@@ -71,10 +64,6 @@ class weeman:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["weeman"])
-
-
     def run(self):
         os.system("cd %s/ && python2 weeman.py" % (self.installDir))
 
@@ -89,9 +78,6 @@ class sb0x:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["sb0x"])
 
 
     def run(self):
@@ -109,9 +95,6 @@ class nxcrypt:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["nxcrypt"])
-
 
     def run(self):
         os.system("sudo python2 %s/NXcrypt.py --help" % (self.installDir))
@@ -127,9 +110,6 @@ class revsh:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["revsh"])
 
 
     def run(self):
@@ -151,9 +131,6 @@ class nmap:
 
     def installed(self):
         return (os.path.isfile("/usr/bin/nmap") or os.path.isfile("/usr/local/bin/nmap"))
-
-    def install(self):
-        instl.Installer(0, installDir, ["nmap"])
 
     def run(self):
         target = input(self.targetPrompt)
@@ -199,9 +176,6 @@ class xsstrike:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["xsstrike"])
-
     def run(self, response):
         if not len(response):
             os.system("python3 %s/xsstrike.py -h" % (self.installDir))
@@ -221,9 +195,6 @@ class doork:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["doork"])
 
     def run(self, target):
         if not "http://" in target:
@@ -250,10 +221,6 @@ class crips:
     def installed(self):
         return (os.path.isdir(self.installDir) or os.path.isdir("/usr/share/doc/Crips"))
 
-    def install(self):
-        instl.Installer(0, installDir, ["crips"])
-        
-
     def run(self):
         try:
             os.system("python2 %s/crips.py" % self.installDir)
@@ -272,9 +239,6 @@ class wpscan:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["wpscan"])
 
     def menu(self, target):
         print("   WPScan for: %s\n" % target)
@@ -322,9 +286,6 @@ class setoolkit:
         print(os.path.isfile("%s/setoolkit/setoolkit" % (toolDir)))
         return (os.path.isfile("%s/setoolkit/setoolkit" % (toolDir)))
 
-    def install(self):
-        instl.Installer(0, installDir, ["settoolkit"])
-
     def run(self):
         os.system("sudo %ssetoolkit/setoolkit" % (toolDir))
 
@@ -347,9 +308,6 @@ class apwps:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["apwps"])
-
     def run(self):
         os.system("python2 %s/autopixie.py" % self.installDir)
 
@@ -365,9 +323,6 @@ class snmp:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["snmp"])
 
     def run(self):
         target = input("Enter Target IP: ")
@@ -400,9 +355,6 @@ class sslstrip:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["ssltrip"])
-
     def run(self):
         target = input("Enter Target IP: ")
         os.system("python2 %s/sslstrip.py %s" % (self.installDir, target))
@@ -421,9 +373,6 @@ class cupp:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["cupp"])
-
     def run(self):
         os.system("python3 %s/cupp.py -i" % self.installDir)
 
@@ -440,11 +389,6 @@ class brutex:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        if not os.path.isdir("/usr/share/brutex"):
-            os.system("sudo mkdir /usr/share/brutex")
-        instl.Installer(0, installDir, ["brutex"])
-
     def run(self):
         target = input(color.LOGGING + "BruteX > " + color.WHITE + "Enter Target IP: ")
         os.system("brutex %s" % target)
@@ -460,12 +404,9 @@ class leviathan:
             clearScr()
             self.run()
 
-
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["leviathan"])
     def run(self):
         os.system("python2 %s/leviathan.py -i" % self.installDir)
 
@@ -480,8 +421,7 @@ class nikto:
             self.run()
     def installed(self):
         return (os.path.isfile("%s/program/nikto.pl" % self.installDir))
-    def install(self):
-        instl.Installer(0, installDir, ["nikto"])
+
     def run(self):
         target = input(self.targetPrompt)
         self.menu(target)
@@ -501,9 +441,6 @@ class rscan:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["rapidscan"])
-
     def run(self, target):
         os.system("python2 %s/rapidscan.py %s" % (self.installDir, target))
 
@@ -513,9 +450,6 @@ class arachni:
         if not os.path.isdir(self.installDir):
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:self.run()
-
-    def install(self):
-        instl.Installer(0, installDir, ["arachni"])
 
     def run(self):
         target = input(color.LOGGING + "Arachni > " + color.LOGGING + "Enter Target Hostname/URL: ")
@@ -530,10 +464,6 @@ class sqlmap:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["sqlmap"])
-
 
     def run(self):
         os.system("python2 %s/sqlmap.py --wizard" % (self.installDir))
@@ -551,10 +481,6 @@ class slowloris:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["slowloris"])
-
-
     def run(self,target):
         os.system("python3 %s/slowloris.py %s" % (self.installDir, target))
 
@@ -571,10 +497,6 @@ class pwnloris:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["pwnloris"])
-
-
     def run(self,target):
         os.system("python3 %s/pwnloris.py %s" % (self.installDir, target))
 
@@ -590,10 +512,6 @@ class atscan:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-    def install(self):
-        instl.Installer(0, installDir, ["atscan"])
-
-
     def run(self):
         os.system("perl %s/atscan.pl --interactive" % (self.installDir))
 
@@ -607,10 +525,6 @@ class hyde:
 
     def installed(self):
         return (os.path.isdir(self.installDir))
-
-    def install(self):
-        instl.Installer(0, installDir, ["hyde"])
-
 
     def run(self):
         os.system("python3 %s/hyde/main.py" % (self.installDir))

@@ -1,6 +1,6 @@
 import sys, random, time
-import threading, setup
-
+import threading
+import setup
 
 def loadingHack(importlib):
 	chaine = "[*]"+' Loading the framework'
@@ -50,3 +50,7 @@ def thread_loading():
 	load.start()
 	importlib.join()
 	load.join()
+
+
+
+

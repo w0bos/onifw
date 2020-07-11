@@ -4,7 +4,7 @@
 
 ![](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Tested_On-Linux-orange.svg?longCache=true&style=popout-square)
-![](https://img.shields.io/badge/Version-1.0.6-dark_green.svg?longCache=true&style=popout-square)
+![](https://img.shields.io/badge/Version-1.10-dark_green.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Python-3-purple.svg?longCache=true&style=popout-square)
 
 ## Description
@@ -29,7 +29,7 @@ curl 'https://raw.githubusercontent.com/w0bos/onifw/master/install.sh' > install
 
 - `packaging`
     
-    use ```pip install packaging```
+    with ```pip install packaging```
 
 
 ## Usage

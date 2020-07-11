@@ -1,16 +1,13 @@
 import os
 
 from packaging import version
-
-
-
 from core.gui import color as color
 
 class Updater:
 
     def __init__(self, installDir):
         try:
-            with open("{}/api/version.txt".format(installDir)) as f:
+            with open("{}data/version.txt".format(installDir)) as f:
                 local_version = version.parse(f.readlines()[0].rstrip("\n\r"))
             f.close()
 
@@ -22,11 +19,10 @@ class Updater:
 
             if (latest_version>local_version):
                 ans = input(color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
-                if ans.lower() !="y":
-                    print("[*] - Update aborted")
-
-                elif ans.lower()=="y":
+                if ans.lower() in ["yes","y"]:
                     os.system("{}/install.sh")
+                else:
+                    print("[*] - Update aborted")
 
             elif (latest_version==local_version) :
                 print(color.OKGREEN + "[*] - You're already running the latest version of onifw" + color.END)
