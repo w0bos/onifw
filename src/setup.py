@@ -1,5 +1,7 @@
 import socket
 
+#lame code
+#need to fix this
 
 def init():
     try:

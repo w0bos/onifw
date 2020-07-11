@@ -20,14 +20,16 @@ class Main:
         print(color.WARNING)
         print(color.BOLD + "[*] - Custom tool installer." + color.END)
         print("The custom installer may not work properly and might break your current install of onifw.")
-        print("[?] - What is the language of the tool?\n\r1 - Python\n\r2 - C\n3 - Other")
-        ans = input("> ")
+        print("[?] - What is the language of the tool?\n\r1 - Python\n\r2 - C\n3 - Other\n\nq - Return")
+        ans = input(color.OKBLUE + "PackageManager> ")
         if ans == "1":
             Pythonapp(self.installDir, self.toolDir)
         elif ans == "2":
             Capp(self.installDir, self.toolDir)
         elif ans=="3":
-            Otherapp(self.installDir, self.toolDir)    
+            Otherapp(self.installDir, self.toolDir)
+        elif ans.lower()=="q":
+            pass 
         else:
             print("[!] - Not yet implemented")
 
