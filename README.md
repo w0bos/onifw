@@ -29,7 +29,7 @@ curl 'https://raw.githubusercontent.com/w0bos/onifw/master/install.sh' > install
 
 - `packaging`
     
-    use ```pip install packaging```
+    with ```pip install packaging```
 
 
 ## Usage

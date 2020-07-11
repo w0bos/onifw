@@ -4,13 +4,12 @@
 
 
 '''
-    TODO
-
-        - Add configHandler
-        - Add custom installer  
+    TODO 
         - Check if uninstaller works         
 
     DONE
+        - ConfigHandler
+        - CustomInstaller
         - Implement installer
         - Updater
         - GUI
@@ -40,31 +39,23 @@ from sys import exit as abort
 from socket import create_connection
 
 #File loading
-import core.completer as auto
-import core.installer as instl
-#import core.custom    as custom
-import core.launcher  as launch
-import core.updater   as update
-import core.dict      as dictmgr
-from   core.loading   import thread_loading
-from   core.gui       import color as color
+import core.completer       as auto
+import core.installer       as instl
+import core.custom          as custom
+import core.launcher        as launch
+import core.updater         as update
+import core.dict            as dictmgr
+import core.confighandler   as cfghandler
+from   core.loading         import thread_loading
+from   core.gui             import color as color
 
 
 # Data
 installDir = path.dirname(path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
 onifw_cmd = "onifw > "
-with open("{}data/version.txt".format(installDir)) as f:
-    version = f.readlines()[0].rstrip("\n\r")
-f.close()
 
 
-# Configuration files
-configFile = installDir + "core/config.cfg"
-config = configparser.ConfigParser()
-config.read(configFile)
-
-installed_tools = []
 
 # Misc functions
 def clearScr():
@@ -102,14 +93,7 @@ def pkgmgrhelp():
     print("      -c --custom     add custom package")
     print(color.WHITE)
 
-def check_connection():
-    try:
-        create_connection(("www.google.com", 80))
-        isconnected = True
-    except:
-        isconnected = False
 
-    return isconnected
 
 def loadtools():
     load_cmd = ['ls','{}'.format(toolDir)]
@@ -118,6 +102,9 @@ def loadtools():
     pkg_local=output.splitlines()
     return pkg_local
 
+
+def loadconfig():
+    cfghandler.ConfigOnstart(installDir)
 
 
 # Class
@@ -186,7 +173,7 @@ class main:
             # PASS
             elif marg == "show_version":
                 print(color.color_random[random.randint(0, len(color.color_random)-1)])
-                print(version)
+                print("[*] - Installed version",version)
             elif marg == "show_logo":
                 print(color.HEADER)
                 with open("{}data/logo.txt".format(installDir), 'r') as fin:
@@ -304,40 +291,15 @@ class main:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
     try:
         clearScr()
         print(color.color_random[1])
         thread_loading()
-        with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
-            print(color.color_random[0])
-            print(fin.read())
-            print(color.END)
-        fin.close()
-        print(color.color_random[0]+version)
-        if check_connection():  # socket.create_connection(("www.google.com", 80)):
-            print(color.OKGREEN + "\n[*] - Connected to a network")
-        else:
-            print(color.BOLD)
-            print(color.RED + "[!] - No connectivity!" + color.WHITE)
-            print(color.RED + "[!] - Some tools might not work as intended" + color.END)
+        loadconfig()
         main()
     except KeyboardInterrupt:
         print("\n" + color.LOGGING + color.BOLD)
         print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
         del_cache()
+
