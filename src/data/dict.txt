@@ -14,9 +14,3 @@ show_agreement
 restore
 update
 
-pwn
-pwnloris
-hello
-hello
-hello
-hello

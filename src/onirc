@@ -5,10 +5,11 @@ show_ascii_art = true
 show_version = true
 check_connectivity = true
 check_version = false
+show_options = false
 
 [onleave]
 delete_cache_on_exit = true
-remove_tools = false
+remove_tools_on_exit = false
 
 
 ###########################

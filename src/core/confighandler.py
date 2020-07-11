@@ -47,7 +47,15 @@ class ConfigOnstart:
             Updater(self.installDir)
         if self.parser.getboolean('startup', 'show_version'):
             print(color.color_random[0]+self.version)
-
+        
+        if self.parser.getboolean('startup', 'show_options'):
+            print(color.BOLD + color.LOGGING + "configuration:" + color.END)
+            print("show_ascii_art: " + color.NOTICE     +str(self.parser.getboolean('startup', 'show_ascii_art'))+ color.END)
+            print("check_connectivity: " + color.NOTICE +str(self.parser.getboolean('startup', 'check_connectivity'))+ color.END)
+            print("check_version: "       +color.NOTICE  +str(self.parser.getboolean('startup', 'check_version'))+ color.END)
+            print("show_version: "        +color.NOTICE  +str(self.parser.getboolean('startup', 'show_version'))+ color.END)
+            print("delete_cache_on_exit: "+color.NOTICE  +str(self.parser.getboolean('onleave', 'delete_cache_on_exit'))+color.END)
+            print("remove_tools_on_exit: "+color.NOTICE  +str(self.parser.getboolean('onleave', 'remove_tools_on_exit'))+color.END)
 
 class ConfigOnQuit:
     def __init__(self, installDir):
@@ -64,7 +72,7 @@ class ConfigOnQuit:
         if self.parser.getboolean('onleave', 'delete_cache_on_exit'):
             cmd("rm -rf {}core/__pycache__".format(self.installDir))
             cmd("rm -rf {}__pycache__".format(self.installDir))
-        if self.parser.getboolean('onleave', 'remove_tools'):
+        if self.parser.getboolean('onleave', 'remove_tools_on_exit'):
             cmd("rm -rf {}/tools".format(self.installDir))
 
 
