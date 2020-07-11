@@ -58,8 +58,8 @@ fi
 echo "[*] - Installing...";
 echo "";
 # Install when merge done
-#git clone https://github.com/w0bos/onifw "$INSTALL_DIR"
-git clone --single-branch --branch v3 https://github.com/w0bos/onifw "$INSTALL_DIR"
+git clone https://github.com/w0bos/onifw "$INSTALL_DIR"
+#git clone --single-branch --branch v3 https://github.com/w0bos/onifw "$INSTALL_DIR"
 #echo "#!$BASH_PATH python3 $INSTALL_DIR/oni.py" '${1+"$@"}' > "$INSTALL_DIR/onifw"
 if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/src/bin/onifw" "$BIN_DIR"
@@ -73,8 +73,8 @@ else
     #sudo cp launcher "$BIN_DIR" onifw
 fi
 #For merged
-#curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
-curl https://raw.githubusercontent.com/w0bos/onifw/v3/src/uninstall > uninstall
+curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
+#curl https://raw.githubusercontent.com/w0bos/onifw/v3/src/uninstall > uninstall
 sudo chmod +x uninstall
 mv uninstall "$INSTALL_DIR"
 sudo pip3 install packaging
