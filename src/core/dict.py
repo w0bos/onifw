@@ -70,7 +70,7 @@ def addCustomWords(installDir,name):
         print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])
 
 
-def customConfig(installDir,name,command):
+def updateConfig(installDir,name,command):
     """Add launch command to the onirc file
     Arguments:
         - installDir : directory of current install
