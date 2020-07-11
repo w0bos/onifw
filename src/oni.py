@@ -7,12 +7,16 @@
     TODO
 
         - Add configHandler
-        - Add custom installer
-        - Load all tools installed in array    
+        - Add custom installer  
         - Check if uninstaller works         
 
     DONE
         - Implement installer
+        - Updater
+        - GUI
+        - Dictionnary handler
+        - Loading
+        - Load all tools installed in array 
 '''
 
 
@@ -107,9 +111,13 @@ def check_connection():
 
     return isconnected
 
-def loadtools(toolDir):
-    out = cmd("ls %s/" % toolDir)
-    print(out)
+def loadtools():
+    load_cmd = ['ls','{}'.format(toolDir)]
+    output = subprocess.run(load_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    #Clean output
+    pkg_local=output.splitlines()
+    return pkg_local
+
 
 
 # Class
@@ -122,6 +130,7 @@ class main:
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
         prompt = input(color.color_random[0]+onifw_cmd + color.END)
+        
         # Ask input
         cmd = prompt.split()
 
@@ -209,7 +218,7 @@ class main:
 
 
             # TOOL LAUNCHER
-            elif marg in installed_tools:
+            elif marg in loadtools():
                 # Add dictionnary to array on launch instead of hard coded one
                 e = cmd[0]
                 if e == "microsploit":  launch.microsploit()
