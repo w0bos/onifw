@@ -72,7 +72,9 @@ else
     sudo cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
     #sudo cp launcher "$BIN_DIR" onifw
 fi
-curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
+#For merged
+#curl https://raw.githubusercontent.com/w0bos/onifw/master/uninstall > uninstall
+curl https://raw.githubusercontent.com/w0bos/onifw/v3/src/uninstall > uninstall
 sudo chmod +x uninstall
 mv uninstall "$INSTALL_DIR"
 sudo pip3 install packaging
