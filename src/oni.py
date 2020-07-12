@@ -3,27 +3,6 @@
 
 
 
-'''
-    TODO 
-        - Check if uninstaller works         
-
-    DONE
-        - ConfigHandler
-        - CustomInstaller
-        - Implement installer
-        - Updater
-        - GUI
-        - Dictionnary handler
-        - Loading
-        - Load all tools installed in array 
-'''
-
-
-
-
-
-
-
 # Imports
 import readline
 import subprocess
