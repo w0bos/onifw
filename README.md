@@ -53,6 +53,7 @@ delete_cache_on_exit = true
 remove_tools_on_exit = false
 save_session = false
 prompt = onifw >
+debug = false
 ```
 
 
