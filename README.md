@@ -41,11 +41,24 @@ onifw
 
 Use the `help` command in order to see all the available commands
 
+## Configuration
+onifw comes with some options that you can edit in the `src/onirc` file. These options with their default value are:
+```ini
+show_ascii_art = true
+show_version = true
+check_connectivity = true
+check_version = false
+show_options = false
+delete_cache_on_exit = true
+remove_tools_on_exit = false
+save_session = false
+prompt = onifw >
+```
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
 Feel free to contact me at w0bos@protonmail.com if you have any questions
 
 ## License

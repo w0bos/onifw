@@ -4,7 +4,13 @@ import os
 import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
+import core.confighandler as cfghandler
+from configparser import ConfigParser
+from sys import exc_info as err
 
+
+def load_debug(installDir):
+    return cfghandler.debug_value(installDir)
 
 pkg = [
     ["microsploit",     "https://github.com/Screetsec/Microsploit"],
@@ -175,7 +181,8 @@ class Install:
                                 shell("git clone %s %s && cd %s/ && ./configure && make && make install" %(pkg[j][1], self.installDir, self.installDir))
                     except:
                         print(color.NOTICE + "[!] - An error occurred" + color.WHITE)
-        print("PACK:" , pack)
+                        if load_debug(self.installDir):
+                            print(err())
 
 
 class User_install:

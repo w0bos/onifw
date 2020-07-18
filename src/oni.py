@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+'''
 
+'''
 
 # Imports
 import readline
@@ -28,12 +30,6 @@ from   core.loading         import thread_loading
 from   core.gui             import color as color
 
 
-# Data
-installDir = path.dirname(path.abspath(__file__)) + '/'
-toolDir = installDir + 'tools/'
-onifw_cmd = "onifw > "
-
-
 
 # Misc functions
 def clearScr():
@@ -56,8 +52,6 @@ def del_cache(leave=0):
         cmd("rm -rf {}core/__pycache__".format(installDir))
         cmd("rm -rf {}__pycache__".format(installDir))
 
-
-
 def pkgmgrhelp():
     print(color.NOTICE)
     print("[*] - Usage : pkg [cmd] [package]")
@@ -72,20 +66,36 @@ def pkgmgrhelp():
     print(color.WHITE)
 
 
-
 def loadtools():
     load_cmd = ['ls','{}'.format(toolDir)]
     output = subprocess.run(load_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
     #Clean output
     pkg_local=output.splitlines()
+    #Add default scripts
+    pkg_local.append("ipfinder")
     return pkg_local
 
 
 def loadconfig():
     cfghandler.ConfigOnstart(installDir)
+    cfghandler.ConfigMisc(installDir)
 
 def loadCustom(name):
     cfghandler.CustomTool(installDir, name)
+
+def loadPrompt():
+    return cfghandler.check_custom_prompt(installDir)
+
+def load_debug():
+    return cfghandler.debug_value(installDir)
+
+# Data
+installDir = path.dirname(path.abspath(__file__)) + '/'
+toolDir = installDir + 'tools/'
+#onifw_cmd = "onifw > "
+onifw_cmd = loadPrompt()
+debug = load_debug()
+
 
 # Class
 class main:
@@ -192,7 +202,7 @@ class main:
                 elif e == "sb0x":       launch.sb0x()
                 elif e == "nxcrypt":    launch.nxcrypt()
                 elif e == "revsh":      launch.revsh()
-                elif e == "leviathen":  launch.leviathan()
+                elif e == "leviathan":  launch.leviathan()
                 elif e == "brutetx":    launch.brutex()
                 elif e == "cupp":       launch.cupp()
                 elif e == "nmap":       launch.nmap()

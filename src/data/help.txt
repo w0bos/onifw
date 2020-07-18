@@ -2,7 +2,7 @@
     -----------         --------------------------------------
     help                shows help
     clear               clear screen
-    clean_cache         clean __pycache folders
+    clean_cache         clean __pycache__ folders
     show_[option]       [logo] [title] [version] [credits]
     pkg                 starts the installer, use pkg [package] to install
                         a specific package. Use the {pkg -c} command to
