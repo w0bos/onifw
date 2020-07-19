@@ -17,6 +17,7 @@ from os import path as path
 from os import makedirs as mkdir
 from sys import exit as abort
 from socket import create_connection
+from datetime import date
 
 #File loading
 import core.completer       as auto
@@ -110,6 +111,13 @@ class main:
         
         # Ask input
         cmd = prompt.split()
+
+        #Add input to log if enables
+        if cfghandler.check_log_enabled(installDir):
+            with open("{}logs/oni.log".format(installDir), "a") as f:
+                for i in cmd:
+                    f.write("[input][{}] : ".format(date.today())+i+"\n")
+            f.close()
 
         if len(cmd)==0:
             self.__init__()
@@ -267,6 +275,9 @@ class main:
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
+
+
+        
         
         #loopback while no command
         self.__init__()        

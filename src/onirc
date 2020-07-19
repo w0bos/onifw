@@ -7,15 +7,14 @@ check_version = false
 show_options = false
 delete_cache_on_exit = true
 remove_tools_on_exit = false
-save_session = false
-
+save_session = true
 
 
 
 
 ###########################
 #       CUSTOM TOOLS      #
-###########################
+#                         #
 #       DO NOT EDIT       #
 ###########################
 [custom]

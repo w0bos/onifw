@@ -68,17 +68,11 @@ class Pythonapp:
                 print(err())
         if temp:
             dictmgr.addWords(self.installDir,[name])
-            #with open("{}api/dict.txt".format(self.installDir), "a") as f:
-            #    f.write('\n' + name + '\n')
-            #    f.close()
+
             dictmgr.addCustomWords(self.installDir, name)
-            #with open("{}api/ctools.txt".format(self.installDir), "a") as f:
-            #    f.write('\n' + name + '\n')
-            #    f.close()
+
             dictmgr.updateConfig(self.installDir, name, cmds)
-            #with open("{}core/config.cfg".format(self.installDir), "a") as f:
-            #    f.write("{0} = {1}\n".format(name, cmds))
-            #    f.close()
+
             print("[*] - You may need to restart onifw in order to use the custom tool.")
 
 
@@ -98,15 +92,7 @@ class Capp:
             dictmgr.addWords(self.installDir,name)
             dictmgr.addCustomWords(self.installDir,name)
             dictmgr.updateConfig(self.installDir,name,cmds)
-            #with open("{}core/config.cfg".format(self.installDir), "a") as f:
-            #    f.write("{0} = {1}\n".format(name, cmds))
-            #    f.close()
-            #with open("{}api/dict.txt".format(self.installDir), "a") as f:
-            #    f.write(name + '\n')
-            #    f.close()
-            #with open("{}api/ctools.txt".format(self.installDir), "a") as f:
-            #    f.write(name + '\n')
-            #    f.close()
+
         except:
             print("[!] - An unexpected error occurred!")
             if load_debug(self.installDir):

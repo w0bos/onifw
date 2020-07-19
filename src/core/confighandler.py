@@ -75,13 +75,22 @@ class ConfigOnstart:
             print(color.color_random[0]+self.version)
         
         if self.parser.getboolean('config', 'show_options'):
+            
             print(color.BOLD + color.LOGGING + "configuration:" + color.END)
-            print("show_ascii_art: " + color.NOTICE      +str(self.parser.getboolean('config', 'show_ascii_art'))+ color.END)
-            print("check_connectivity: " + color.NOTICE  +str(self.parser.getboolean('config', 'check_connectivity'))+ color.END)
+            print("show_ascii_art: "      +color.NOTICE  +str(self.parser.getboolean('config', 'show_ascii_art'))+ color.END)
+            print("check_connectivity: "  +color.NOTICE  +str(self.parser.getboolean('config', 'check_connectivity'))+ color.END)
             print("check_version: "       +color.NOTICE  +str(self.parser.getboolean('config', 'check_version'))+ color.END)
             print("show_version: "        +color.NOTICE  +str(self.parser.getboolean('config', 'show_version'))+ color.END)
             print("delete_cache_on_exit: "+color.NOTICE  +str(self.parser.getboolean('config', 'delete_cache_on_exit'))+color.END)
             print("remove_tools_on_exit: "+color.NOTICE  +str(self.parser.getboolean('config', 'remove_tools_on_exit'))+color.END)
+            print("save_session: "        +color.NOTICE  +str(self.parser.getboolean('config', 'save_session'))+color.END)
+            print("prompt: "              +color.NOTICE  +str(check_custom_prompt(self.installDir))+color.END)
+            print("debug: "               +color.NOTICE  +str(check_log_enabled(self.installDir))+color.END)
+
+
+
+
+
 
 class ConfigOnQuit:
     def __init__(self, installDir):
@@ -130,6 +139,7 @@ class ConfigMisc:
 
     def loadMisc(self):
         if self.parser.getboolean('config', 'save_session'):
-            if not path.isdir(self.logDir): mkdir(self.logDir)
+            if not path.isdir(self.logDir): mkdir(self.logDir) # Make the dir
+            if not path.isfile(self.logDir+"oni.log"): cmd("touch {}/oni.log".format(self.logDir))
 
 
