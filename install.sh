@@ -39,8 +39,8 @@ if [ -d "$INSTALL_DIR" ]; then
         fi
     else
         echo "[!] - Unable to delete onifw folder"
-        echo "[*] - In order to install this version you must remove the installed one";
-        echo "[*] - Installation aborted.";
+        echo "[!] - In order to install this version you must manually remove the installed one";
+        echo "[!] - Installation aborted.";
         exit
     fi
 fi

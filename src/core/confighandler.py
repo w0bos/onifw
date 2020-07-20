@@ -10,13 +10,6 @@ from socket import create_connection
 from configparser import ConfigParser
 import readline
 
-'''
-    Class : Mutiple load    :: load_[event]
-    Func  : Single load     :: check_[value]
-
-    All calls to onirc must use has_option to avoid bugs
-
-'''
 
 
 # Misc functions
@@ -135,5 +128,3 @@ class ConfigMisc:
         if check_value(self.installDir,"save_session",False):
             if not path.isdir(self.logDir): mkdir(self.logDir) # Make the dir
             if not path.isfile(self.logDir+"oni.log"): cmd("touch {}/oni.log".format(self.logDir))
-
-
