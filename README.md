@@ -47,13 +47,14 @@ onifw comes with some options that you can edit in the `src/onirc` file. These o
 show_ascii_art = true
 show_version = true
 check_connectivity = true
-check_version = false
+check_updates = false
 show_options = false
-delete_cache_on_exit = true
-remove_tools_on_exit = false
+delete_cache = true
+remove_tools = false
 save_session = false
 prompt = onifw >
 debug = false
+show_loading = true
 ```
 
 
