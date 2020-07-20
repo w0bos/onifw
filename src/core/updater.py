@@ -1,7 +1,12 @@
 import os
 
+import core.confighandler as cfg
+from configparser import ConfigParser
+from sys import exc_info as err
 from packaging import version
 from core.gui import color as color
+
+
 
 class Updater:
 
@@ -12,7 +17,7 @@ class Updater:
             f.close()
 
             if not os.path.isdir("{}/temp".format(installDir)):  os.makedirs("{}/temp".format(installDir))
-            os.system("wget -q -O {}/temp/latest_version.txt https://raw.githubusercontent.com/w0bos/onifw/master/api/version.txt".format(installDir))
+            os.system("wget -q -O {}/temp/latest_version.txt https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt".format(installDir))
             with open("{}/temp/latest_version.txt".format(installDir)) as f:
                 latest_version = version.parse(f.readlines()[0].rstrip("\n\r"))
             f.close()
@@ -34,3 +39,5 @@ class Updater:
             os.system("rm -rf {}/temp".format(installDir))
         except:
             print("[!] - An unexpected error occurred! Please try again")
+            if cfg.check_value(installDir,"debug",False):
+                print(err())

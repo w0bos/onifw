@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
 from core.gui import color
-from sys import exc_info as einfo
-
-
-
+import core.confighandler as cfg
+from configparser import ConfigParser
+from sys import exc_info as err
 
 def addWords(installDir,wordList):
     """Add words to dictionnary file
@@ -20,7 +19,9 @@ def addWords(installDir,wordList):
         f.close()
         print("[*] - Done.")
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])
+        print(color.LOGGING + "[!] - Unexpected error: ")
+        if cfg.check_value(installDir, "debug", False):
+            print(err())
 
 
 def restoreDict(installDir):
@@ -46,29 +47,13 @@ def restoreDict(installDir):
         f.writelines(out)
         f.close()
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])
-
-
+        print(color.LOGGING + "[!] - Unexpected error: ")
+        if cfg.check_value(installDir, "debug", False):
+            print(err())
 
 """
-CHECK IF EVER USED
-MIGHT BE DUPLICATE
+DELETED DUPLICATE
 """
-def addCustomWords(installDir,name):
-    """Add words to the custom dictionnary
-    Arguments:
-        - name : name of the custom tool
-        - installDir : Directory of current install
-    """
-    print("[*] - Adding custom words...")
-    try:
-        with open("{}data/ctools.txt".format(installDir), "a") as f:
-            f.write(name + "\n")
-        f.close()
-        print("[*] - Done.")
-    except:
-        print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])
-
 
 def updateConfig(installDir,name,command):
     """Add launch command to the onirc file
@@ -84,5 +69,7 @@ def updateConfig(installDir,name,command):
         f.close()
         print("[*] - Done.")
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])
+        print(color.LOGGING + "[!] - Unexpected error: ")
+        if cfg.check_value(installDir, "debug", False):
+            print(err())
     

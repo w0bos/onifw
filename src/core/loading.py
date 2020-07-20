@@ -1,22 +1,24 @@
-import sys, random, time
-import threading
+from sys import stdout
+from random import choice
+from threading import Thread
+from time import sleep
 import setup
 
 def loadingHack(importlib):
 	chaine = "[*]"+' Loading the framework'
-	charspec = "$*.X^%_/\\#~!?;"
+	charspec = ")@€]£+-$*.X^%{_/&\\#}[~!(?;"
 
 	while importlib.is_alive():
 		chainehack = ""
 		for c in chaine:
 			chainehack += c
-			r = random.choice(charspec)+random.choice(charspec)+random.choice(charspec)
+			r = choice(charspec)+choice(charspec)+choice(charspec)
 			if len(chainehack+r) <= len(chaine):
 				pass
 			else:
 				r = ""
-			sys.stdout.write('\r'+chainehack+r+"...")
-			time.sleep(0.06)
+			stdout.write('\r'+chainehack+r+"...")
+			sleep(0.06)
 
 def loadingUpper(importlib):
 	string = " Loading the framework"
@@ -29,8 +31,8 @@ def loadingUpper(importlib):
 			c = string[x]
 			c = c.upper()
 			string[x] = c
-			sys.stdout.write("\r[*] "+''.join(string) +'...')
-			time.sleep(0.1)
+			stdout.write("\r[*] "+''.join(string) +'...')
+			sleep(0.1)
 			c = string[x]
 			c = c.lower()
 			string[x] = c
@@ -38,15 +40,15 @@ def loadingUpper(importlib):
 
 
 def thread_loading():
-	num = random.choice([1])
+	num = choice([1])
 
-	importlib = threading.Thread(target=setup.init)
+	importlib = Thread(target=setup.init)
 	importlib.start()
 
 	if num == 1:
-		load = threading.Thread(target=loadingHack(importlib))
+		load = Thread(target=loadingHack(importlib))
 	elif num == 2:
-		load = threading.Thread(target=loadingUpper(importlib))
+		load = Thread(target=loadingUpper(importlib))
 	load.start()
 	importlib.join()
 	load.join()

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+'''
 
+'''
 
 # Imports
 import readline
@@ -15,6 +17,7 @@ from os import path as path
 from os import makedirs as mkdir
 from sys import exit as abort
 from socket import create_connection
+from datetime import date
 
 #File loading
 import core.completer       as auto
@@ -23,15 +26,9 @@ import core.custom          as custom
 import core.launcher        as launch
 import core.updater         as update
 import core.dict            as dictmgr
-import core.confighandler   as cfghandler
+import core.confighandler   as cfg
 from   core.loading         import thread_loading
 from   core.gui             import color as color
-
-
-# Data
-installDir = path.dirname(path.abspath(__file__)) + '/'
-toolDir = installDir + 'tools/'
-onifw_cmd = "onifw > "
 
 
 
@@ -56,8 +53,6 @@ def del_cache(leave=0):
         cmd("rm -rf {}core/__pycache__".format(installDir))
         cmd("rm -rf {}__pycache__".format(installDir))
 
-
-
 def pkgmgrhelp():
     print(color.NOTICE)
     print("[*] - Usage : pkg [cmd] [package]")
@@ -72,20 +67,23 @@ def pkgmgrhelp():
     print(color.WHITE)
 
 
-
 def loadtools():
     load_cmd = ['ls','{}'.format(toolDir)]
     output = subprocess.run(load_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
     #Clean output
     pkg_local=output.splitlines()
+    #Add default scripts
+    pkg_local.append("ipfinder")
     return pkg_local
 
 
-def loadconfig():
-    cfghandler.ConfigOnstart(installDir)
+# Data
+installDir = path.dirname(path.abspath(__file__)) + '/'
+toolDir = installDir + 'tools/'
+#onifw_cmd = "onifw > "
+onifw_cmd = cfg.check_prompt(installDir)
+debug = cfg.check_value(installDir, "debug", False)
 
-def loadCustom(name):
-    cfghandler.CustomTool(installDir, name)
 
 # Class
 class main:
@@ -100,6 +98,13 @@ class main:
         
         # Ask input
         cmd = prompt.split()
+
+        #Add input to log if enables
+        if cfg.check_value(installDir,"save_session",False):
+            with open("{}logs/oni.log".format(installDir), "a") as f:
+                for i in cmd:
+                    f.write("[input][{}] : ".format(date.today())+i+"\n")
+            f.close()
 
         if len(cmd)==0:
             self.__init__()
@@ -192,7 +197,7 @@ class main:
                 elif e == "sb0x":       launch.sb0x()
                 elif e == "nxcrypt":    launch.nxcrypt()
                 elif e == "revsh":      launch.revsh()
-                elif e == "leviathen":  launch.leviathan()
+                elif e == "leviathan":  launch.leviathan()
                 elif e == "brutetx":    launch.brutex()
                 elif e == "cupp":       launch.cupp()
                 elif e == "nmap":       launch.nmap()
@@ -219,7 +224,7 @@ class main:
                 #Custom tool
                 else:
                     try:
-                        loadCustom(marg)
+                        cfg.CustomTool(installDir, marg)
                     # Else throw command as unknown
                     except:
                         print(color.WARNING +
@@ -257,6 +262,9 @@ class main:
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
+
+
+        
         
         #loopback while no command
         self.__init__()        
@@ -265,12 +273,15 @@ class main:
 if __name__ == '__main__':
     try:
         clearScr()
-        print(color.color_random[1])
-        thread_loading()
-        loadconfig()
+        if cfg.check_value(installDir,"show_loading",True):
+            print(color.color_random[1])
+            thread_loading()
+        cfg.ConfigOnstart(installDir)
+        cfg.ConfigMisc(installDir)
         main()
     except KeyboardInterrupt:
         print("\n" + color.LOGGING + color.BOLD)
         print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
-        del_cache()
+        if cfg.check_value(installDir, "delete_cache", True):
+            del_cache()
 

@@ -2,14 +2,12 @@
     -----------         --------------------------------------
     help                shows help
     clear               clear screen
-    clean_cache         clean __pycache folders
+    clean_cache         clean __pycache__/ folders
     show_[option]       [logo] [title] [version] [credits]
     pkg                 starts the installer, use pkg [package] to install
-                        a specific package. Use the {pkg -c} command to
+                        a specific package. Use the pkg -c command to
                         install custom package
     list                [-r] shows all packages available
-                        [] shows installed packages
-                        in the current module
     restore             restores the dictionnary
     update              check if there is an update for the framework
     uninstall           Uninstall onifw

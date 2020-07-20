@@ -1,20 +1,12 @@
 # Configuration file of onifw
+[config]
 
-[startup]
-show_ascii_art = true
-show_version = true
-check_connectivity = true
-check_version = false
-show_options = false
 
-[onleave]
-delete_cache_on_exit = true
-remove_tools_on_exit = false
 
 
 ###########################
 #       CUSTOM TOOLS      #
-###########################
+#                         #
 #       DO NOT EDIT       #
 ###########################
 [custom]
