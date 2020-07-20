@@ -76,7 +76,7 @@ class ConfigOnstart:
                 print(color.BOLD)
                 print(color.RED + "[!] - No connectivity!" + color.WHITE)
                 print(color.RED + "[!] - Some tools might not work as intended" + color.END)
-        if check_value(self.installDir, "check_update", False):
+        if check_value(self.installDir, "check_updates", False):
             Updater(self.installDir)
         if check_value(self.installDir, "show_version", True):
             print(color.color_random[0]+self.version)
