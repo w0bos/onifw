@@ -16,7 +16,6 @@ from os import system as cmd
 from os import path as path
 from os import makedirs as mkdir
 from sys import exit as abort
-from sys import tracebacklimit as tblimit
 from socket import create_connection
 from datetime import date
 
@@ -149,7 +148,6 @@ class main:
                 '''
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    tblimit=0
                     subprocess.run("cd {} && ../uninstall".format(installDir), shell=True)
                     #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
