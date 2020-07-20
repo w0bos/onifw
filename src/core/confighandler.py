@@ -10,8 +10,18 @@ from socket import create_connection
 from configparser import ConfigParser
 import readline
 
+'''
+    Class : Mutiple load    :: load_[event]
+    Func  : Single load     :: check_[value]
 
-def check_connection():
+    All calls to onirc must use has_option to avoid bugs
+
+'''
+
+
+# Misc functions
+
+def get_connection():
     try:
         create_connection(("www.google.com", 80))
         isconnected = True
@@ -20,29 +30,29 @@ def check_connection():
     return isconnected
 
 
-def check_log_enabled(installDir):
-    configFile = installDir + "onirc"
-    parser = ConfigParser()
-    parser.read(configFile)
-    return parser.getboolean('config', 'save_session')
+# Check values
 
-def check_custom_prompt(installDir):
+
+def check_value(installDir,value,default):
     configFile = installDir + "onirc"
     parser = ConfigParser()
     parser.read(configFile)
-    if parser.has_option("config", "prompt"):
-        return str(parser.get("config","prompt"))+" "
+    if parser.has_option('config', value):
+        return parser.getboolean('config', value)
+    else:
+        return default
+
+
+def check_prompt(installDir):
+    configFile = installDir + "onirc"
+    parser = ConfigParser()
+    parser.read(configFile)
+    if parser.has_option('config', 'prompt'):
+        return str(parser.get('config', 'prompt'))+" "
     else:
         return "onifw > "
 
-def debug_value(installDir):
-    configFile = installDir + "onirc"
-    parser = ConfigParser()
-    parser.read(configFile)
-    if parser.has_option("config", "debug"):
-        return parser.getboolean("config","debug")
-    else:
-        return False
+
 
 class ConfigOnstart:
     def __init__(self,installDir):
@@ -50,46 +60,38 @@ class ConfigOnstart:
         with open("{}data/version.txt".format(installDir)) as f:
             self.version = f.readlines()[0].rstrip("\n\r")
         f.close()
-        self.configFile = installDir + "onirc"
-        self.parser = ConfigParser()
-        self.parser.read(self.configFile)
         self.startup()
     
     def startup(self):
-        if self.parser.getboolean('config', 'show_ascii_art'):
+        if check_value(self.installDir,"show_ascii_art",True):
             with open("{}data/logo_ascii.txt".format(self.installDir), 'r') as fin:
                 print(color.color_random[0])
                 print(fin.read())
                 print(color.END)
             fin.close()
-        if self.parser.getboolean('config', 'check_connectivity'):
-            if check_connection():
+        if check_value(self.installDir, "check_connectivity", True):
+            if get_connection():
                 print(color.OKGREEN + "\n[*] - Connected to a network")
             else:
                 print(color.BOLD)
                 print(color.RED + "[!] - No connectivity!" + color.WHITE)
                 print(color.RED + "[!] - Some tools might not work as intended" + color.END)
-        if self.parser.getboolean('config', 'check_version'):
+        if check_value(self.installDir, "check_update", False):
             Updater(self.installDir)
-        if self.parser.getboolean('config', 'show_version'):
+        if check_value(self.installDir, "show_version", True):
             print(color.color_random[0]+self.version)
-        
-        if self.parser.getboolean('config', 'show_options'):
-            
+        if check_value(self.installDir, "show_options", False):
             print(color.BOLD + color.LOGGING + "configuration:" + color.END)
-            print("show_ascii_art: "      +color.NOTICE  +str(self.parser.getboolean('config', 'show_ascii_art'))+ color.END)
-            print("check_connectivity: "  +color.NOTICE  +str(self.parser.getboolean('config', 'check_connectivity'))+ color.END)
-            print("check_version: "       +color.NOTICE  +str(self.parser.getboolean('config', 'check_version'))+ color.END)
-            print("show_version: "        +color.NOTICE  +str(self.parser.getboolean('config', 'show_version'))+ color.END)
-            print("delete_cache_on_exit: "+color.NOTICE  +str(self.parser.getboolean('config', 'delete_cache_on_exit'))+color.END)
-            print("remove_tools_on_exit: "+color.NOTICE  +str(self.parser.getboolean('config', 'remove_tools_on_exit'))+color.END)
-            print("save_session: "        +color.NOTICE  +str(self.parser.getboolean('config', 'save_session'))+color.END)
-            print("prompt: "              +color.NOTICE  +str(check_custom_prompt(self.installDir))+color.END)
-            print("debug: "               +color.NOTICE  +str(check_log_enabled(self.installDir))+color.END)
-
-
-
-
+            print("show_ascii_art: "    +color.NOTICE  +str(check_value(self.installDir,"show_ascii_art",True))       + color.END)
+            print("check_connectivity: "+color.NOTICE  +str(check_value(self.installDir,"check_connectivity",True))   + color.END)
+            print("check_updates: "     +color.NOTICE  +str(check_value(self.installDir,"check_updates",False))       + color.END)
+            print("show_version: "      +color.NOTICE  +str(check_value(self.installDir,"show_version",True))         + color.END)
+            print("delete_cache: "      +color.NOTICE  +str(check_value(self.installDir,"delete_cache",True))         + color.END)
+            print("remove_tools: "      +color.NOTICE  +str(check_value(self.installDir,"remove_tools",False))        + color.END)
+            print("save_session: "      +color.NOTICE  +str(check_value(self.installDir,"save_session",False))        + color.END)
+            print("debug: "             +color.NOTICE  +str(check_value(self.installDir,"debug",False))               + color.END)
+            print("show_loading: "      +color.NOTICE  +str(check_value(self.installDir, "show_loading", True))       + color.END)
+            print("prompt: "            +color.NOTICE  +str(check_prompt(self.installDir)) + color.END)
 
 
 class ConfigOnQuit:
@@ -98,19 +100,14 @@ class ConfigOnQuit:
         with open("{}data/version.txt".format(installDir)) as f:
             self.version = f.readlines()[0].rstrip("\n\r")
         f.close()
-        self.configFile = installDir + "onirc"
-        self.parser = ConfigParser()
-        self.parser.read(self.configFile)
         self.onleave()
 
     def onleave(self):
-        if self.parser.getboolean('config', 'delete_cache_on_exit'):
+        if check_value(self.installDir,"delete_cache",True):
             cmd("rm -rf {}core/__pycache__".format(self.installDir))
             cmd("rm -rf {}__pycache__".format(self.installDir))
-        if self.parser.getboolean('config', 'remove_tools_on_exit'):
+        if check_value(self.installDir,"remove_tools",False):
             cmd("rm -rf {}/tools".format(self.installDir))
-
-
 
 class CustomTool:
     def __init__(self,installDir,name):
@@ -131,14 +128,11 @@ class CustomTool:
 class ConfigMisc:
     def __init__(self, installDir):
         self.installDir = installDir
-        self.configFile = installDir + "onirc"
         self.logDir = installDir + "logs"
-        self.parser = ConfigParser()
-        self.parser.read(self.configFile)
         self.loadMisc()
 
     def loadMisc(self):
-        if self.parser.getboolean('config', 'save_session'):
+        if check_value(self.installDir,"save_session",False):
             if not path.isdir(self.logDir): mkdir(self.logDir) # Make the dir
             if not path.isfile(self.logDir+"oni.log"): cmd("touch {}/oni.log".format(self.logDir))
 

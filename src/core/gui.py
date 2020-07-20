@@ -1,4 +1,4 @@
-import random
+from random import shuffle
 class color:
     #Rename
     HEADER      =   '\033[96m'
@@ -16,4 +16,4 @@ class color:
     UNDER       =   '\033[4m'
 
     color_random = [HEADER, IMPORTANT, NOTICE, OKBLUE, OKGREEN, WARNING, RED, LOGGING]
-    random.shuffle(color_random)
+    shuffle(color_random)

@@ -4,13 +4,13 @@ import os
 import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
-import core.confighandler as cfghandler
+import core.confighandler as cfg
 from configparser import ConfigParser
 from sys import exc_info as err
 
 
 def load_debug(installDir):
-    return cfghandler.debug_value(installDir)
+    return cfg.debug_value(installDir)
 
 pkg = [
     ["microsploit",     "https://github.com/Screetsec/Microsploit"],
@@ -71,13 +71,13 @@ def uninstall(installDir,cmd,root=0):
     else:
         shell("sudo rm -rf {0}tools/{1}".format(installDir, cmd[2]))
     print("[*] - Cleaning dictionnary...")
-    f = open("{}api/dict.txt".format(installDir))
+    f = open("{}data/dict.txt".format(installDir))
     out = []
     for line in f:
         if not cmd[2] in line:
             out.append(line)
     f.close()
-    f = open("{}api/dict.txt".format(installDir), 'w')
+    f = open("{}data/dict.txt".format(installDir), 'w')
     f.writelines(out)
     f.close()
 
@@ -156,32 +156,34 @@ class Install:
                 if i == pkg[j][0]:
                     try:
                         self.installDir = self.toolDir + pkg[j][0]
+                        tempDir = self.toolDir + pkg[j][0]
                         if not (i in ("crips", "arachni","revsh","nmap")):
                             shell("git clone %s %s" %
-                                      (pkg[j][1], self.installDir))
+                                  (pkg[j][1], tempDir))
                         else:
                             if i == "crips":
                                 shell("git clone %s %s" % (
-                                    pkg[j][1], self.installDir))
+                                    pkg[j][1], tempDir))
                                 shell(
-                                    "sudo chmod +x %s/install.sh" % (self.installDir))
+                                    "sudo chmod +x %s/install.sh" % (tempDir))
                                 shell("sudo %s/./install.sh" %
-                                          (self.installDir))
+                                      (tempDir))
                             elif i == "arachni":
                                 shell("git clone %s %s" % (
-                                    pkg[j][1], self.installDir))
+                                    pkg[j][1], tempDir))
                                 shell(
-                                    "cd %s/ && bundle install" % (self.installDir))
+                                    "cd %s/ && bundle install" % (tempDir))
                             elif i == "revsh":
                                 shell("git clone %s %s" % (
-                                    pkg[j][1], self.installDir))
+                                    pkg[j][1], tempDir))
                                 shell(
-                                    "cd %s/ && make && make install" % (self.installDir))
+                                    "cd %s/ && make && make install" % (tempDir))
                             elif i == "nmap":
-                                shell("git clone %s %s && cd %s/ && ./configure && make && make install" %(pkg[j][1], self.installDir, self.installDir))
+                                shell("git clone %s %s && cd %s/ && ./configure && make && make install" % (
+                                    pkg[j][1], tempDir, tempDir))
                     except:
                         print(color.NOTICE + "[!] - An error occurred" + color.WHITE)
-                        if load_debug(self.installDir):
+                        if cfg.check_value(self.installDir, "debug", False):
                             print(err())
 
 

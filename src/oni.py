@@ -26,7 +26,7 @@ import core.custom          as custom
 import core.launcher        as launch
 import core.updater         as update
 import core.dict            as dictmgr
-import core.confighandler   as cfghandler
+import core.confighandler   as cfg
 from   core.loading         import thread_loading
 from   core.gui             import color as color
 
@@ -77,25 +77,12 @@ def loadtools():
     return pkg_local
 
 
-def loadconfig():
-    cfghandler.ConfigOnstart(installDir)
-    cfghandler.ConfigMisc(installDir)
-
-def loadCustom(name):
-    cfghandler.CustomTool(installDir, name)
-
-def loadPrompt():
-    return cfghandler.check_custom_prompt(installDir)
-
-def load_debug():
-    return cfghandler.debug_value(installDir)
-
 # Data
 installDir = path.dirname(path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
 #onifw_cmd = "onifw > "
-onifw_cmd = loadPrompt()
-debug = load_debug()
+onifw_cmd = cfg.check_prompt(installDir)
+debug = cfg.check_value(installDir, "debug", False)
 
 
 # Class
@@ -113,7 +100,7 @@ class main:
         cmd = prompt.split()
 
         #Add input to log if enables
-        if cfghandler.check_log_enabled(installDir):
+        if cfg.check_value(installDir,"save_session",False):
             with open("{}logs/oni.log".format(installDir), "a") as f:
                 for i in cmd:
                     f.write("[input][{}] : ".format(date.today())+i+"\n")
@@ -237,7 +224,7 @@ class main:
                 #Custom tool
                 else:
                     try:
-                        loadCustom(marg)
+                        cfg.CustomTool(installDir, marg)
                     # Else throw command as unknown
                     except:
                         print(color.WARNING +
@@ -286,12 +273,15 @@ class main:
 if __name__ == '__main__':
     try:
         clearScr()
-        print(color.color_random[1])
-        thread_loading()
-        loadconfig()
+        if cfg.check_value(installDir,"show_loading",True):
+            print(color.color_random[1])
+            thread_loading()
+        cfg.ConfigOnstart(installDir)
+        cfg.ConfigMisc(installDir)
         main()
     except KeyboardInterrupt:
         print("\n" + color.LOGGING + color.BOLD)
         print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
-        del_cache()
+        if cfg.check_value(installDir, "delete_cache", True):
+            del_cache()
 

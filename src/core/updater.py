@@ -1,14 +1,12 @@
 import os
 
-import core.confighandler as cfghandler
+import core.confighandler as cfg
 from configparser import ConfigParser
 from sys import exc_info as err
 from packaging import version
 from core.gui import color as color
 
 
-def load_debug(installDir):
-    return cfghandler.debug_value(installDir)
 
 class Updater:
 
@@ -41,5 +39,5 @@ class Updater:
             os.system("rm -rf {}/temp".format(installDir))
         except:
             print("[!] - An unexpected error occurred! Please try again")
-            if load_debug(installDir):
+            if cfg.check_value(installDir,"debug",False):
                 print(err())

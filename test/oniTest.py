@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from os import system as shell
 
 class oniTest(unittest.TestCase):
