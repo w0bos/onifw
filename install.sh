@@ -11,7 +11,7 @@ echo "
 
 if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
     INSTALL_DIR="$PREFIX/usr/share/doc/onifw"
-    BIN_DIR="$PREFIX/bin/"
+    BIN_DIR="$PREFIX/bin"
     BASH_PATH="$PREFIX/bin/bash"
     TERMUX=true
 
@@ -19,7 +19,7 @@ if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
 
 else
     INSTALL_DIR="$HOME/.onifw"
-    BIN_DIR="/usr/local/bin/"
+    BIN_DIR="/usr/local/bin"
     BASH_PATH="/bin/bash"
     TERMUX=false
 
