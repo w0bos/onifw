@@ -9,7 +9,6 @@ ls
 show_title
 show_logo
 show_version
-show_credits
 show_agreement
 ipfinder
 restore
