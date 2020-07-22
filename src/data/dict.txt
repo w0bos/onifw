@@ -11,6 +11,14 @@ show_logo
 show_version
 show_agreement
 ipfinder
+hashcheck
+servicestatus
+firewall
+viewtraffic
+netmanager
+pymap
+shell
 restore
 update
+
 

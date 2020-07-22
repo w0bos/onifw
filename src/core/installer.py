@@ -191,6 +191,7 @@ class User_install:
 
     def __init__(self, installDir, cmd):
         self.target = cmd[2:]
+        print(self.target)
         self.absDir = installDir
         self.installDir = []
         for i in range(len(self.target)):
@@ -225,7 +226,7 @@ class User_install:
                 elif self.target[i] == "arachni":
                     
                     shell("git clone %s %s" %
-                              (pkg[25][1], self.installDir[i]))
+                              (pkg[24][1], self.installDir[i]))
                     shell("cd %s/ && bundle install" %
                               (self.installDir[i]))
                 elif self.target[i] == "brutex":

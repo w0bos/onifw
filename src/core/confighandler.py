@@ -128,3 +128,4 @@ class ConfigMisc:
         if check_value(self.installDir,"save_session",False):
             if not path.isdir(self.logDir): mkdir(self.logDir) # Make the dir
             if not path.isfile(self.logDir+"oni.log"): cmd("touch {}/oni.log".format(self.logDir))
+        
