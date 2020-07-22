@@ -2,6 +2,38 @@
 # -*- coding: utf-8 -*-
 
 '''
+    TODO:
+        * Commands
+            - myIP  -> Displays local and remote IP
+            
+        * Configuration
+            - Log output of onifw in log/oni.log file
+            ? Add custom_banner flag to add a cutsom banner
+            ? Move the rc file to ~/.onirc
+
+        * Fix
+            ! Some tools (nmap,arachni...) installed with pkg don't pas the make / make install
+            ! IndexOutOfBonds when installing some packages
+           
+        * Misc
+            - Add short description of recommended packages
+            - Add --install-recommended flag to the installer to install all at once
+            - Add flags to help command to display either complete or specific help
+            ? Add ascii art and choose a random at launch
+
+    DONE:
+        * Commands
+            - shell -> Run a shell command
+            - Add commands from dlab/plab
+
+        * Configuration
+
+        * Fix
+            - Fix logging when doing multiple argument input
+            - Add more options to Nmap
+
+        * Misc
+            - Simplify help command
 
 '''
 
@@ -12,7 +44,7 @@ import random
 
 
 # From
-from os import system as cmd
+from os import system as shell
 from os import path as path
 from os import makedirs as mkdir
 from sys import exit as abort
@@ -34,7 +66,7 @@ from   core.gui             import color as color
 
 # Misc functions
 def clearScr():
-    cmd("cls||clear")
+    shell("cls||clear")
 
 
 def readfile(file_dir):
@@ -46,12 +78,12 @@ def readfile(file_dir):
 def del_cache(leave=0):
     
     if leave == 1:
-        cmd("rm -rf {}core/__pycache__".format(installDir))
-        cmd("rm -rf {}__pycache__".format(installDir))
+        shell("rm -rf {}core/__pycache__".format(installDir))
+        shell("rm -rf {}__pycache__".format(installDir))
         abort(1)
     else:
-        cmd("rm -rf {}core/__pycache__".format(installDir))
-        cmd("rm -rf {}__pycache__".format(installDir))
+        shell("rm -rf {}core/__pycache__".format(installDir))
+        shell("rm -rf {}__pycache__".format(installDir))
 
 def pkgmgrhelp():
     print(color.NOTICE)
@@ -72,14 +104,13 @@ def loadtools():
     output = subprocess.run(load_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
     #Clean output
     pkg_local=output.splitlines()
-    #Add default scripts
-    pkg_local.append("ipfinder")
     return pkg_local
 
 
 # Data
 installDir = path.dirname(path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
+logDir = installDir + 'logs/'
 #onifw_cmd = "onifw > "
 onifw_cmd = cfg.check_prompt(installDir)
 debug = cfg.check_value(installDir, "debug", False)
@@ -102,12 +133,11 @@ class main:
         #Add input to log if enables
         if cfg.check_value(installDir,"save_session",False):
             with open("{}logs/oni.log".format(installDir), "a") as f:
-                for i in cmd:
-                    f.write("[input][{}] : ".format(date.today())+i+"\n")
+                f.write("[input][{}] : ".format(date.today())+''.join(e+" " for e in cmd)+"\n")
             f.close()
 
         if len(cmd)==0:
-            self.__init__()
+            pass
             #loopback
         else:
             marg = cmd[0]
@@ -129,11 +159,12 @@ class main:
                 if len(cmd)==1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
                     subprocess.run("ls {}tools/".format(installDir),shell=True)
-                    print(color.END)
+                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  pymap"+color.END)
                 elif cmd[1]=="-r" or cmd[1]=="--recommended":
                     instl.show_recommended()
                 else:
-                    print(color.WARNING + "[!] - %s : unknown command" % i for i in cmd)
+                    print(color.WARNING + "ls[!] - %s : unknown command" % cmd[1])
+                    #generator in print?
             elif marg== "update":
                 update.Updater(installDir)
             elif marg=="help":
@@ -143,16 +174,12 @@ class main:
                     print(fin.read())
                     print(color.END + color.WHITE)
             elif marg=="uninstall":
-                '''
-                    MUST CHECK IF WORKING!!!
-                '''
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
                     subprocess.run("cd {} && ../uninstall".format(installDir), shell=True)
                     #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
-                    self.__init__()
             
 
             # MISC
@@ -206,7 +233,6 @@ class main:
                 elif e == "crips":      launch.crips()
                 elif e == "wpscan":     launch.wpscan()
                 elif e == "setoolkit":  launch.setoolkit()
-                elif e == "ipfinder":   launch.ipfind()
                 elif e == "sslstrip":   launch.sslstrip()
                 elif e == "stmp":       launch.stmp()
                 elif e == "pyphi":      launch.pyphi()
@@ -220,6 +246,7 @@ class main:
                 elif e == "brutex":     launch.brutex()
                 elif e == "rapidscan":  launch.rscan()
                 elif e == "nikto":      launch.nikto()
+            
 
                 #Custom tool
                 else:
@@ -258,6 +285,27 @@ class main:
                         else:
                             print(color.WARNING +"PackageManager[!] %s : unknown command" % tools)
                         #instl.Installer(0, installDir, tools)
+
+            # Default scripts
+            elif marg == "ipfinder":
+                launch.ipfind()
+            elif marg == "hashcheck":
+                launch.hashcheck(logDir)
+            elif marg == "servicestatus":
+                launch.servicestatus(logDir)
+            elif marg == "firewall":
+                launch.firewall(logDir)
+            elif marg == "viewtraffic":
+                launch.viewtraffic(logDir)
+            elif marg == "netmanager":
+                launch.networkmanaged(logDir)
+            elif marg == "pymap":
+                launch.pymap(installDir,logDir)
+            elif marg == "shell":
+                print(color.LOGGING+"[*] - Opening shell prompt")
+                shell_cmd = input(color.END+"shell$ ")
+                shell(shell_cmd)
+            
             
             # Try custom package
             else:

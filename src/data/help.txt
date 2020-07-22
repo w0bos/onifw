@@ -1,14 +1,19 @@
     Command             Description
-    -----------         --------------------------------------
-    help                shows help
-    clear               clear screen
-    clean_cache         clean __pycache__/ folders
-    show_[option]       [logo] [title] [version]
-    pkg                 starts the installer, use pkg [package] to install
-                        a specific package. Use the pkg -c command to
-                        install custom package
-    list                [-r] shows all packages available
-    restore             restores the dictionnary
-    update              check if there is an update for the framework
-    uninstall           Uninstall onifw
-    quit                quit program
+    --------------+---------------------------------------
+    help          | shows help
+    clear         | clear screen
+    clean_cache   | clean __pycache__/ folders
+    show_[option] | [agreement] [logo] [title] [version] 
+    pkg           | package manager
+                  | [-a] [--all]            installs all recommended packages
+                  | [-i] [--install] [name] installs the name package
+                  | [-r] [--remove] [name]  removes the name package
+                  | [-f] [--force]          forces removal when installed with sudo
+                  | [-c] [--custom]         installs custom package
+    list          | shows installed packages
+                  | [-r] shows all packages available
+    shell         | run a shell command
+    restore       | restores the dictionnary
+    update        | check if there is an update for the framework
+    uninstall     | Uninstall onifw
+    quit          | quit program

@@ -3,6 +3,8 @@
 import os
 import socket
 
+from os import makedirs as mkdir
+from os import path
 import core.installer as instl
 from core.gui import color as color
 from time import gmtime, strftime
@@ -138,22 +140,39 @@ class nmap:
 
     def menu(self, target):
         print("   Nmap scan for: %s\n" % target)
-        print("   1 - Simple Scan [-sV]")
-        print("   2 - Port Scan [-Pn]")
-        print("   3 - Operating System Detection [-A]\n")
-        print("   99 - Return to information gathering menu \n")
+        print("   1 - Ping scan         [-sP]")
+        print("   2 - Syn scan          [-sS]")
+        print("   3 - UDP scan          [-sU]")
+        print("   4 - Version detection [-sV]")
+        print("   5 - OS detection      [-O]")
+        print("   6 - Aggressive scan   [-A]")
+        print("   c - Custom")
+        print("   99 - Return \n")
         response = input(color.LOGGING + "nmap > " + color.WHITE)
         clearScr()
         logPath = "logs/nmap-" + strftime("%Y-%m-%d_%H:%M:%S", gmtime())
         try:
             if response == "1":
-                os.system("nmap -sV -oN %s %s" % (logPath, target))
+                os.system("nmap -sP -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "2":
-                os.system("nmap -Pn -oN %s %s" % (logPath, target))
+                os.system("nmap -sS -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "3":
+                os.system("nmap -sU -oN %s %s" % (logPath, target))
+                response = input(continuePrompt)
+            elif response == "4":
+                os.system("nmap -sV -oN %s %s" % (logPath, target))
+                response = input(continuePrompt)
+            elif response == "5":
+                os.system("sudo nmap -O -oN %s %s" % (logPath, target))
+                response = input(continuePrompt)
+            elif response == "6":
                 os.system("nmap -A -oN %s %s" % (logPath, target))
+                response = input(continuePrompt)
+            elif response == "c":
+                flags = input("Which options: ")
+                os.system("nmap %s -oN %s %s" % (flags, logPath, target))
                 response = input(continuePrompt)
             elif response == "99":
                 pass
@@ -288,12 +307,6 @@ class setoolkit:
 
     def run(self):
         os.system("sudo %ssetoolkit/setoolkit" % (toolDir))
-
-class ipfind:
-    def __init__(self):
-        host = input(color.LOGGING + "IPfinder > Enter URL: " + color.WHITE)
-        ip = socket.gethostbyname(host)
-        print("[*] - The IP of %s is: %s" % (host, ip))
 
 class apwps:
     def __init__(self):
@@ -528,3 +541,123 @@ class hyde:
 
     def run(self):
         os.system("python3 %s/hyde/main.py" % (self.installDir))
+
+
+# Default 
+'''
+hashcheck
+viewtraffic
+netmanager
+pymap
+'''
+
+class ipfind:
+    def __init__(self):
+        host = input(color.LOGGING +
+                     "onifw/IPfinder > Enter URL: " + color.WHITE)
+        ip = socket.gethostbyname(host)
+        print("[*] - The IP of %s is: %s" % (host, ip))
+
+class hashcheck:
+    def __init__(self,logDir):
+        filepath=input(color.LOGGING+"Enter path of file: ")
+        print("Hash checker")
+        print("1 - MD5")
+        print("2 - sha1")
+        print("3 - sha224")
+        print("4 - sha256")
+        print("99 - exit")
+        hashtype = input("onifw/hashcheck> ")
+        if hashtype=="1":
+            os.system("md5sum {}".format(filepath))
+        elif hashtype == "2":
+            os.system("sha1sum {}".format(filepath))
+        elif hashtype=="3":
+            os.system("sha224sum {}".format(filepath))
+        elif hashtype == "4":
+            os.system("sha256sum {}".format(filepath))
+
+class servicestatus:
+    def __init__(self,logDir):
+        self.logDir=logDir
+        if not path.isdir(self.logDir):mkdir(self.logDir)  # Make folder
+        print(color.LOGGING)
+        os.system("ps -ef > {}/services.out".format(self.logDir))
+        print(color.END + color.NOTICE + "[*] - Log saved in the .onifw/src/logs/ dir")
+        print(color.END)
+
+
+class firewall:
+    def __init__(self,logDir):
+        self.logDir = logDir
+        if not path.isdir(self.logDir):
+            mkdir(self.logDir)  # Make folder
+        print(color.LOGGING)
+        print("FIREWALL SETUP")
+        print("1 - Export firewall current setup")
+        print("2 - Edit firewall table")
+        print("3 - Apply iptable")
+        print("99 - exit")
+        print(color.END)
+        choice = input("onifw/firewall > ")
+        if choice == "1":
+            os.system("iptables-save > {}/firewall.out".format(self.logDir))
+        elif choice == "2":
+            os.system("iptables-save > {}/firewall.out".format(self.logDir))
+            os.system("vi {}/firewall.out".format(logDir))
+        if choice == "3":
+            os.system("iptables-restore < {}/firewall.out".format(self.logDir))
+
+
+class viewtraffic:
+    def __init__(self,logDir):
+        self.logDir = logDir
+        if not path.isdir(self.logDir):
+            mkdir(self.logDir)  # Make folder
+        print("TRAFFIC ANALYSIS")
+        print("1 - Tcpdump")
+        print("2 - Tshark")
+        choice = input("onifw/trafficanalyzer > ")
+        if choice == "1":
+            os.system("sudo tcpdump -A -vv > {}/tcpdump.out".format(self.logDir))
+        elif choice == "2":
+            os.system("sudo tcpdump -w {}/tshark.pcap".format(self.logDir))
+
+
+class networkmanaged:
+    def __init__(self,logDir):
+        self.logDir = logDir
+        if not path.isdir(self.logDir):
+            mkdir(self.logDir)  # Make folder
+        print("wireless monitoring")
+        print("1 - Enable monitoring mode")
+        print("2 - Disable monitoring mode")
+        print("99 - Exit ")
+        ans = input(color.LOGGING+"onifw/netmanager > "+color.END)
+        if ans == "1":
+            inter_name = input("interface name: ")
+            try:
+                os.system("sudo iwconfig {} down".format(inter_name))
+                os.system("sudo iwconfig {} mode monitor".format(inter_name))
+                os.system("sudo iwconfig {} up".format(inter_name))
+            except:
+                print(
+                    color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
+        elif ans == "2":
+            inter_name = input("interface name: ")
+            try:
+                os.system("sudo iwconfig {} down".format(inter_name))
+                os.system("sudo iwconfig {} mode managed".format(inter_name))
+                os.system("sudo iwconfig {} up".format(inter_name))
+            except:
+                print(
+                    color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
+
+
+class pymap:
+    def __init__(self,installDir,logDir):
+        self.logDir = logDir
+        self.installDir = installDir
+        print("Which target to scan")
+        target = input("onifw/pymap > ")
+        os.system("{1}core/pymap -v {2}".format(self.installDir,target))
