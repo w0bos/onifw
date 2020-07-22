@@ -660,4 +660,4 @@ class pymap:
         self.installDir = installDir
         print("Which target to scan")
         target = input("onifw/pymap > ")
-        os.system("{0}core/pymap -v {1}".format(self.installDir,target))
+        os.system("{0}core/pymap {1}".format(self.installDir,target))
