@@ -8,18 +8,12 @@
             
         * Configuration
             - Log output of onifw in log/oni.log file
-            ? Add custom_banner flag to add a cutsom banner
-            ? Move the rc file to ~/.onirc
 
         * Fix
-            ! Some tools (nmap,arachni...) installed with pkg don't pas the make / make install
-            ! IndexOutOfBonds when installing some packages
+            ! Some tools (nmap,arachni...) installed with pkg don't start the make / make install
            
         * Misc
-            - Add short description of recommended packages
             - Add --install-recommended flag to the installer to install all at once
-            - Add flags to help command to display either complete or specific help
-            ? Add ascii art and choose a random at launch
 
     DONE:
         * Commands
@@ -31,6 +25,7 @@
         * Fix
             - Fix logging when doing multiple argument input
             - Add more options to Nmap
+            - IndexOutOfBonds when installing some packages
 
         * Misc
             - Simplify help command
@@ -48,7 +43,7 @@ from os import system as shell
 from os import path as path
 from os import makedirs as mkdir
 from sys import exit as abort
-from socket import create_connection
+from socket import create_connection, gethostbyname, gethostname
 from datetime import date
 
 #File loading
@@ -305,8 +300,10 @@ class main:
                 print(color.LOGGING+"[*] - Opening shell prompt")
                 shell_cmd = input(color.END+"shell$ ")
                 shell(shell_cmd)
-            
-            
+            elif marg == "myip":
+                print("Local IP: {}".format( gethostbyname( gethostname() ) ))
+                print("Remote IP: {}".format("Not implemented"))
+                
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])

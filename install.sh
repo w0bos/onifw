@@ -62,13 +62,13 @@ git clone https://github.com/w0bos/onifw "$INSTALL_DIR"
 #echo "#!$BASH_PATH python3 $INSTALL_DIR/oni.py" '${1+"$@"}' > "$INSTALL_DIR/onifw"
 if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/src/bin/onifw" "$BIN_DIR"
-    cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
-    cp -r "$INSTALL_DIR/src/core" "$BIN_DIR"
+    #cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
+    #cp -r "$INSTALL_DIR/src/core" "$BIN_DIR"
     #cp launcher "$BIN_DIR" onifw
 else
     sudo cp "$INSTALL_DIR/src/bin/onifw" "$BIN_DIR"
-    sudo cp -r "$INSTALL_DIR/src/core" "$BIN_DIR"
-    sudo cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
+    #sudo cp -r "$INSTALL_DIR/src/core" "$BIN_DIR"
+    #sudo cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
     #sudo cp launcher "$BIN_DIR" onifw
 fi
 #For merged
@@ -76,6 +76,17 @@ curl https://raw.githubusercontent.com/w0bos/onifw/master/src/uninstall > uninst
 sudo chmod +x uninstall
 mv uninstall "$INSTALL_DIR"
 sudo pip3 install packaging
+
+if [ $# -eq 1 ]
+    then
+        if [[ $1=="--install-all" ]]; then
+            echo "[*] - Install all flag"
+        else
+            echo "[!] - unkown flag $1"
+        fi
+fi
+
+
 
 if [ -d "$INSTALL_DIR" ] ;
 then
