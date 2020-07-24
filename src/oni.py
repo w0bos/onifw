@@ -56,6 +56,7 @@ import core.launcher        as launch
 import core.updater         as update
 import core.dict            as dictmgr
 import core.confighandler   as cfg
+from core.uninstaller       import Uninstall as removefw
 from   core.loading         import thread_loading
 from   core.gui             import color as color
 
@@ -172,12 +173,15 @@ class main:
                     print(fin.read())
                     print(color.END + color.WHITE)
             elif marg=="uninstall":
-                answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
-                if answer.lower() in ["y", "yes"]:
-                    subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
-                    #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
+                if cmd[1] in ["--no-script","ns"]:
+                    removefw(installDir)
                 else:
-                    print(color.LOGGING + "[*] - Aborting uninstall process.")
+                    answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
+                    if answer.lower() in ["y", "yes"]:
+                        subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
+                        #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
+                    else:
+                        print(color.LOGGING + "[*] - Aborting uninstall process.")
             
 
             # MISC
