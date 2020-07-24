@@ -41,7 +41,7 @@ import random
 
 # From
 from os import system as shell
-from os import path as path
+from os import path
 from os import chdir, getcwd
 from os import makedirs as mkdir
 from sys import exit as abort
