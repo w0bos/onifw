@@ -5,12 +5,13 @@ from configparser import ConfigParser
 from sys import exc_info as err
 from packaging import version
 from core.gui import color as color
-
-
+import subprocess
 
 class Updater:
 
     def __init__(self, installDir):
+        self.installDir=installDir
+        self.check_branch()
         try:
             with open("{}data/version.txt".format(installDir)) as f:
                 local_version = version.parse(f.readlines()[0].rstrip("\n\r"))
@@ -41,3 +42,10 @@ class Updater:
             print("[!] - An unexpected error occurred! Please try again")
             if cfg.check_value(installDir,"debug",False):
                 print(err())
+
+
+    def check_branch(self):
+        comm = ['cd','{}'.format(self.installDir),'&&','git','branch','--show-current']
+        current_branch=subprocess.run(comm, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        if current_branch=="dev":
+            print("[*] - Currently working on the dev branch")

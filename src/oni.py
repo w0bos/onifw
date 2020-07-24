@@ -19,6 +19,7 @@
         * Commands
             - shell -> Run a shell command
             - Add commands from dlab/plab
+            - cd -> change current directory
 
         * Configuration
 
@@ -41,6 +42,7 @@ import random
 # From
 from os import system as shell
 from os import path as path
+from os import chdir, getcwd
 from os import makedirs as mkdir
 from sys import exit as abort
 from socket import create_connection, gethostbyname, gethostname
@@ -79,6 +81,7 @@ def del_cache(leave=0):
     else:
         shell("rm -rf {}core/__pycache__".format(installDir))
         shell("rm -rf {}__pycache__".format(installDir))
+
 
 def pkgmgrhelp():
     print(color.NOTICE)
@@ -171,7 +174,7 @@ class main:
             elif marg=="uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    subprocess.run("cd {} && ../uninstall".format(installDir), shell=True)
+                    subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
                     #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
@@ -303,7 +306,27 @@ class main:
             elif marg == "myip":
                 print("Local IP: {}".format( gethostbyname( gethostname() ) ))
                 print("Remote IP: {}".format("Not implemented"))
-                
+            elif marg == "cd":
+                target_dir=cmd[1]
+                try:
+                    print("[*] - Changing current directory...")
+                    chdir(target_dir)
+                    print("[*] - Done")
+                    print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
+                    
+                except:
+                    print("[!] - And unexpected error occurred")
+            elif marg=="checkout":
+                if cmd[1]=="dev":
+                    ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                    if ans.lower() in ["y","yes"]:
+                        shell("cd {} && git checkout dev && git pull".format(installDir))
+                        print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                if cmd[1]=="master": 
+                    ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                    if ans.lower() in ["y","yes"]:
+                        shell("cd {} && git checkout master && git pull".format(installDir))
+                        print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])

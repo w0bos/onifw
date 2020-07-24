@@ -18,6 +18,9 @@ viewtraffic
 netmanager
 pymap
 shell
+myip
+cd
+checkout
 restore
 update
 
