@@ -16,7 +16,7 @@ servicestatus
 firewall
 viewtraffic
 netmanager
-pymap
+onimap
 shell
 myip
 cd

@@ -56,7 +56,6 @@ import core.launcher        as launch
 import core.updater         as update
 import core.dict            as dictmgr
 import core.confighandler   as cfg
-from core.uninstaller       import Uninstall as removefw
 from   core.loading         import thread_loading
 from   core.gui             import color as color
 
@@ -142,7 +141,6 @@ class main:
             marg = cmd[0]
             #main argument
 
-
             # BASE COMMANDS
             # PASS
             if marg=="quit":
@@ -158,7 +156,7 @@ class main:
                 if len(cmd)==1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
                     subprocess.run("ls {}tools/".format(installDir),shell=True)
-                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  pymap"+color.END)
+                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap"+color.END)
                 elif cmd[1]=="-r" or cmd[1]=="--recommended":
                     instl.show_recommended()
                 else:
@@ -173,16 +171,12 @@ class main:
                     print(fin.read())
                     print(color.END + color.WHITE)
             elif marg=="uninstall":
-                if cmd[1] in ["--no-script","ns"]:
-                    removefw(installDir)
+                answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
+                if answer.lower() in ["y", "yes"]:
+                    subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
+                    #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
-                    answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
-                    if answer.lower() in ["y", "yes"]:
-                        subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
-                        #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
-                    else:
-                        print(color.LOGGING + "[*] - Aborting uninstall process.")
-            
+                    print(color.LOGGING + "[*] - Aborting uninstall process.")
 
             # MISC
             # PASS
@@ -301,8 +295,8 @@ class main:
                 launch.viewtraffic(logDir)
             elif marg == "netmanager":
                 launch.networkmanaged(logDir)
-            elif marg == "pymap":
-                launch.pymap(installDir,logDir)
+            elif marg == "onimap":
+                launch.onimap(installDir,logDir)
             elif marg == "shell":
                 print(color.LOGGING+"[*] - Opening shell prompt")
                 shell_cmd = input(color.END+"shell$ ")

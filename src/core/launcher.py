@@ -548,7 +548,7 @@ class hyde:
 hashcheck
 viewtraffic
 netmanager
-pymap
+onimap
 '''
 
 class ipfind:
@@ -654,10 +654,10 @@ class networkmanaged:
                     color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
 
 
-class pymap:
+class onimap:
     def __init__(self,installDir,logDir):
         self.logDir = logDir
         self.installDir = installDir
         print("Which target to scan")
-        target = input("onifw/pymap > ")
-        os.system("{0}core/pymap {1}".format(self.installDir,target))
+        target = input("onifw/onimap > ")
+        os.system("{0}core/onimap {1}".format(self.installDir,target))
