@@ -301,6 +301,16 @@ class main:
                 print(color.LOGGING+"[*] - Opening shell prompt")
                 shell_cmd = input(color.END+"shell$ ")
                 shell(shell_cmd)
+            elif marg=="onibuster":
+                print("Set target")
+                rhost=input("target > ")
+                print("Set port (default:80)")
+                port = input("port > ")
+                if len(port)<1:
+                    port = 80
+                print("Which dictionnary file to use")
+                dictf = input("dictionnary > ")
+                shell("./core/onibuster {0} {1} {2}".format(rhost, port, dictf))
             elif marg == "myip":
                 print("Local IP: {}".format( gethostbyname( gethostname() ) ))
                 print("Remote IP: {}".format("Not implemented"))
@@ -311,7 +321,6 @@ class main:
                     chdir(target_dir)
                     print("[*] - Done")
                     print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
-                    
                 except:
                     print("[!] - And unexpected error occurred")
             elif marg=="checkout":
@@ -325,6 +334,9 @@ class main:
                     if ans.lower() in ["y","yes"]:
                         shell("cd {} && git checkout master && git pull".format(installDir))
                         print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                else:
+                    print("[!] - No branch provided\nUsage: git checkout [branch]")
+                    print("Branch : master / dev")
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
