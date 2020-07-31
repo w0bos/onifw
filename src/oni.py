@@ -245,8 +245,6 @@ class main:
                 elif e == "brutex":     launch.brutex()
                 elif e == "rapidscan":  launch.rscan()
                 elif e == "nikto":      launch.nikto()
-            
-
                 #Custom tool
                 else:
                     try:
@@ -288,6 +286,8 @@ class main:
             # Default scripts
             elif marg == "ipfinder":
                 launch.ipfind()
+            elif marg == "bg":
+                shell("python -c 'from pty import spawn; spawn(\"/bin/bash\")'")
             elif marg == "hashcheck":
                 launch.hashcheck(logDir)
             elif marg == "servicestatus":

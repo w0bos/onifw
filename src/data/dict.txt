@@ -21,6 +21,8 @@ onibuster
 shell
 myip
 cd
+bg
 checkout
 restore
 update
+
