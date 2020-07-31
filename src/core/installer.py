@@ -191,7 +191,6 @@ class User_install:
 
     def __init__(self, installDir, cmd):
         self.target = cmd[2:]
-        print(self.target)
         self.absDir = installDir
         self.installDir = []
         for i in range(len(self.target)):

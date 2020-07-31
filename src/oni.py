@@ -7,12 +7,13 @@
             - myIP  -> Displays local and remote IP
             
         * Configuration
-            - Log output of onifw in log/oni.log file
+            - Complete log output of onifw in log/oni.log file
 
         * Fix
             ! Some tools (nmap,arachni...) installed with pkg don't start the make / make install
            
         * Misc
+            - Add port configuration when using onimap
             - Add --install-recommended flag to the installer to install all at once
 
     DONE:
@@ -20,6 +21,7 @@
             - shell -> Run a shell command
             - Add commands from dlab/plab
             - cd -> change current directory
+            - onibuster -> starts a simple directory buster
 
         * Configuration
 
@@ -120,6 +122,7 @@ class main:
     def __init__(self):
         #Check is path exists
         if not path.isdir(toolDir): mkdir(toolDir)
+        if not path.isdir(logDir): mkdir(logDir)
         completer = auto.Autocomp(readfile(installDir + "data/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
@@ -156,7 +159,7 @@ class main:
                 if len(cmd)==1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
                     subprocess.run("ls {}tools/".format(installDir),shell=True)
-                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap"+color.END)
+                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster"+color.END)
                 elif cmd[1]=="-r" or cmd[1]=="--recommended":
                     instl.show_recommended()
                 else:
