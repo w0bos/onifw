@@ -146,6 +146,7 @@ class nmap:
         print("   4 - Version detection [-sV]")
         print("   5 - OS detection      [-O]")
         print("   6 - Aggressive scan   [-A]")
+        print("   7 - Scan for vulns    [--script vuln]")
         print("   c - Custom")
         print("   99 - Return \n")
         response = input(color.LOGGING + "nmap > " + color.WHITE)
@@ -169,6 +170,9 @@ class nmap:
                 response = input(continuePrompt)
             elif response == "6":
                 os.system("nmap -A -oN %s %s" % (logPath, target))
+                response = input(continuePrompt)
+            elif response == "7":
+                os.system("nmap --script vuln -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "c":
                 flags = input("Which options: ")

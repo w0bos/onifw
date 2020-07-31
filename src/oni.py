@@ -310,7 +310,7 @@ class main:
                     port = 80
                 print("Which dictionnary file to use")
                 dictf = input("dictionnary > ")
-                shell("./core/onibuster {0} {1} {2}".format(rhost, port, dictf))
+                shell("{0}/core/onibuster {1} {2} {3}".format(installDir, rhost, port, dictf))
             elif marg == "myip":
                 print("Local IP: {}".format( gethostbyname( gethostname() ) ))
                 print("Remote IP: {}".format("Not implemented"))
