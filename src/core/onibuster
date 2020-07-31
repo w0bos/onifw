@@ -23,7 +23,10 @@ with open(dictf, encoding="utf-8", errors="ignore") as f:
         socket.create_connection((rhost, rport))
         print("[*] - Starting to look for directories...")
         for i in content:
-            if len(i) > 1:
+            if i.startswith('#'):
+                pass
+
+            else if len(i) > 1:
                 code = requests.get("http://"+rhost+"/"+i).status_code
                 if code == 200 or code == 403:
                     print(
