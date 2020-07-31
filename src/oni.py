@@ -226,7 +226,7 @@ class main:
                 elif e == "leviathan":  launch.leviathan()
                 elif e == "brutetx":    launch.brutex()
                 elif e == "cupp":       launch.cupp()
-                elif e == "nmap":       launch.nmap()
+                elif e == "nmap":       launch.nmap(installDir)
                 elif e == "xsstrike":   launch.xsstrike()
                 elif e == "doork":      launch.doork()
                 elif e == "crips":      launch.crips()

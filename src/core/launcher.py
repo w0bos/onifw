@@ -17,7 +17,6 @@ alreadyInstalled = "Already Installed"
 continuePrompt = "\nClick [Return] to continue"
 
 installDir = os.path.dirname(os.path.abspath(__file__)) + '/../'
-
 toolDir = installDir + 'tools/'
 
 
@@ -119,9 +118,9 @@ class revsh:
         os.system("cd %s/ && %s/revsh" % (self.installDir, self.installDir))
 
 class nmap:
-    def __init__(self):
+    def __init__(self, installDir):
         self.installDir = toolDir + "nmap"
-
+        self.normalDir = installDir
         self.targetPrompt = color.LOGGING + "nmap > Enter Target IP/Subnet/Range/Host: " + color.WHITE
 
         if not self.installed():
@@ -151,7 +150,7 @@ class nmap:
         print("   99 - Return \n")
         response = input(color.LOGGING + "nmap > " + color.WHITE)
         clearScr()
-        logPath = "logs/nmap-" + strftime("%Y-%m-%d_%H:%M:%S", gmtime())
+        logPath = "{}logs/nmap-".format(self.normalDir) + strftime("%H:%M:%S", gmtime())
         try:
             if response == "1":
                 os.system("nmap -sP -oN %s %s" % (logPath, target))
@@ -178,8 +177,6 @@ class nmap:
                 flags = input("Which options: ")
                 os.system("nmap %s -oN %s %s" % (flags, logPath, target))
                 response = input(continuePrompt)
-            elif response == "99":
-                pass
             else:
                 self.menu(target)
         except KeyboardInterrupt:
