@@ -7,30 +7,28 @@
             - myIP  -> Displays local and remote IP
             
         * Configuration
-            - Log output of onifw in log/oni.log file
-            ? Add custom_banner flag to add a cutsom banner
-            ? Move the rc file to ~/.onirc
+            - Complete log output of onifw in log/oni.log file
 
         * Fix
-            ! Some tools (nmap,arachni...) installed with pkg don't pas the make / make install
-            ! IndexOutOfBonds when installing some packages
+            ! Some tools (nmap,arachni...) installed with pkg don't start the make / make install
            
         * Misc
-            - Add short description of recommended packages
+            - Add port configuration when using onimap
             - Add --install-recommended flag to the installer to install all at once
-            - Add flags to help command to display either complete or specific help
-            ? Add ascii art and choose a random at launch
 
     DONE:
         * Commands
             - shell -> Run a shell command
             - Add commands from dlab/plab
+            - cd -> change current directory
+            - onibuster -> starts a simple directory buster
 
         * Configuration
 
         * Fix
             - Fix logging when doing multiple argument input
             - Add more options to Nmap
+            - IndexOutOfBonds when installing some packages
 
         * Misc
             - Simplify help command
@@ -45,10 +43,11 @@ import random
 
 # From
 from os import system as shell
-from os import path as path
+from os import path
+from os import chdir, getcwd
 from os import makedirs as mkdir
 from sys import exit as abort
-from socket import create_connection
+from socket import create_connection, gethostbyname, gethostname
 from datetime import date
 
 #File loading
@@ -84,6 +83,7 @@ def del_cache(leave=0):
     else:
         shell("rm -rf {}core/__pycache__".format(installDir))
         shell("rm -rf {}__pycache__".format(installDir))
+
 
 def pkgmgrhelp():
     print(color.NOTICE)
@@ -122,6 +122,7 @@ class main:
     def __init__(self):
         #Check is path exists
         if not path.isdir(toolDir): mkdir(toolDir)
+        if not path.isdir(logDir): mkdir(logDir)
         completer = auto.Autocomp(readfile(installDir + "data/dict.txt"))
         readline.set_completer(completer.complete)
         readline.parse_and_bind('tab: complete')
@@ -143,7 +144,6 @@ class main:
             marg = cmd[0]
             #main argument
 
-
             # BASE COMMANDS
             # PASS
             if marg=="quit":
@@ -159,7 +159,7 @@ class main:
                 if len(cmd)==1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
                     subprocess.run("ls {}tools/".format(installDir),shell=True)
-                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  pymap"+color.END)
+                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster"+color.END)
                 elif cmd[1]=="-r" or cmd[1]=="--recommended":
                     instl.show_recommended()
                 else:
@@ -176,11 +176,10 @@ class main:
             elif marg=="uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    subprocess.run("cd {} && ../uninstall".format(installDir), shell=True)
+                    subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
                     #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
-            
 
             # MISC
             # PASS
@@ -227,7 +226,7 @@ class main:
                 elif e == "leviathan":  launch.leviathan()
                 elif e == "brutetx":    launch.brutex()
                 elif e == "cupp":       launch.cupp()
-                elif e == "nmap":       launch.nmap()
+                elif e == "nmap":       launch.nmap(installDir)
                 elif e == "xsstrike":   launch.xsstrike()
                 elif e == "doork":      launch.doork()
                 elif e == "crips":      launch.crips()
@@ -246,8 +245,6 @@ class main:
                 elif e == "brutex":     launch.brutex()
                 elif e == "rapidscan":  launch.rscan()
                 elif e == "nikto":      launch.nikto()
-            
-
                 #Custom tool
                 else:
                     try:
@@ -289,6 +286,8 @@ class main:
             # Default scripts
             elif marg == "ipfinder":
                 launch.ipfind()
+            elif marg == "bg":
+                shell("python -c 'from pty import spawn; spawn(\"/bin/bash\")'")
             elif marg == "hashcheck":
                 launch.hashcheck(logDir)
             elif marg == "servicestatus":
@@ -299,14 +298,48 @@ class main:
                 launch.viewtraffic(logDir)
             elif marg == "netmanager":
                 launch.networkmanaged(logDir)
-            elif marg == "pymap":
-                launch.pymap(installDir,logDir)
+            elif marg == "onimap":
+                launch.onimap(installDir,logDir)
             elif marg == "shell":
                 print(color.LOGGING+"[*] - Opening shell prompt")
                 shell_cmd = input(color.END+"shell$ ")
                 shell(shell_cmd)
-            
-            
+            elif marg=="onibuster":
+                print("Set target")
+                rhost=input("target > ")
+                print("Set port (default:80)")
+                port = input("port > ")
+                if len(port)<1:
+                    port = 80
+                print("Which dictionnary file to use")
+                dictf = input("dictionnary > ")
+                shell("{0}/core/onibuster {1} {2} {3}".format(installDir, rhost, port, dictf))
+            elif marg == "myip":
+                print("Local IP: {}".format( gethostbyname( gethostname() ) ))
+                print("Remote IP: {}".format("Not implemented"))
+            elif marg == "cd":
+                target_dir=cmd[1]
+                try:
+                    print("[*] - Changing current directory...")
+                    chdir(target_dir)
+                    print("[*] - Done")
+                    print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
+                except:
+                    print("[!] - And unexpected error occurred")
+            elif marg=="checkout":
+                if cmd[1]=="dev":
+                    ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                    if ans.lower() in ["y","yes"]:
+                        shell("cd {} && git checkout dev && git pull".format(installDir))
+                        print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                if cmd[1]=="master": 
+                    ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                    if ans.lower() in ["y","yes"]:
+                        shell("cd {} && git checkout master && git pull".format(installDir))
+                        print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                else:
+                    print("[!] - No branch provided\nUsage: git checkout [branch]")
+                    print("Branch : master / dev")
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])

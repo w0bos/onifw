@@ -51,9 +51,6 @@ def restoreDict(installDir):
         if cfg.check_value(installDir, "debug", False):
             print(err())
 
-"""
-DELETED DUPLICATE
-"""
 
 def updateConfig(installDir,name,command):
     """Add launch command to the onirc file

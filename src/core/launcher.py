@@ -17,7 +17,6 @@ alreadyInstalled = "Already Installed"
 continuePrompt = "\nClick [Return] to continue"
 
 installDir = os.path.dirname(os.path.abspath(__file__)) + '/../'
-
 toolDir = installDir + 'tools/'
 
 
@@ -119,9 +118,9 @@ class revsh:
         os.system("cd %s/ && %s/revsh" % (self.installDir, self.installDir))
 
 class nmap:
-    def __init__(self):
+    def __init__(self, installDir):
         self.installDir = toolDir + "nmap"
-
+        self.normalDir = installDir
         self.targetPrompt = color.LOGGING + "nmap > Enter Target IP/Subnet/Range/Host: " + color.WHITE
 
         if not self.installed():
@@ -146,11 +145,12 @@ class nmap:
         print("   4 - Version detection [-sV]")
         print("   5 - OS detection      [-O]")
         print("   6 - Aggressive scan   [-A]")
+        print("   7 - Scan for vulns    [--script vuln]")
         print("   c - Custom")
         print("   99 - Return \n")
         response = input(color.LOGGING + "nmap > " + color.WHITE)
         clearScr()
-        logPath = "logs/nmap-" + strftime("%Y-%m-%d_%H:%M:%S", gmtime())
+        logPath = "{}logs/nmap-".format(self.normalDir) + strftime("%H:%M:%S", gmtime())
         try:
             if response == "1":
                 os.system("nmap -sP -oN %s %s" % (logPath, target))
@@ -170,12 +170,13 @@ class nmap:
             elif response == "6":
                 os.system("nmap -A -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
+            elif response == "7":
+                os.system("nmap --script vuln -oN %s %s" % (logPath, target))
+                response = input(continuePrompt)
             elif response == "c":
                 flags = input("Which options: ")
                 os.system("nmap %s -oN %s %s" % (flags, logPath, target))
                 response = input(continuePrompt)
-            elif response == "99":
-                pass
             else:
                 self.menu(target)
         except KeyboardInterrupt:
@@ -548,7 +549,7 @@ class hyde:
 hashcheck
 viewtraffic
 netmanager
-pymap
+onimap
 '''
 
 class ipfind:
@@ -654,10 +655,10 @@ class networkmanaged:
                     color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
 
 
-class pymap:
+class onimap:
     def __init__(self,installDir,logDir):
         self.logDir = logDir
         self.installDir = installDir
         print("Which target to scan")
-        target = input("onifw/pymap > ")
-        os.system("{0}core/pymap {1}".format(self.installDir,target))
+        target = input("onifw/onimap > ")
+        os.system("{0}core/onimap {1}".format(self.installDir,target))

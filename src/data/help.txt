@@ -3,7 +3,8 @@
     help          | shows help
     clear         | clear screen
     clean_cache   | clean __pycache__/ folders
-    show_[option] | [agreement] [logo] [title] [version] 
+    show_[option] | [agreement] [logo] [title] [version]
+    bg            | puts onifw in a background process
     pkg           | package manager
                   | [-a] [--all]            installs all recommended packages
                   | [-i] [--install] [name] installs the name package

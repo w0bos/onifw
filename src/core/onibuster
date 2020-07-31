@@ -1,0 +1,42 @@
+#!/bin/python3
+
+import requests
+from sys import argv as args
+import socket
+
+
+'''
+Main component of onibuster
+@params
+    rhost: target
+    rport: port to use
+    wordlist: dictionnary file
+'''
+
+rhost = args[1]
+rport = args[2]
+dictf = args[3]
+flag = 0
+with open(dictf, encoding="utf-8", errors="ignore") as f:
+    content = [line.rstrip('\n') for line in f]
+    try:
+        socket.create_connection((rhost, rport))
+        print("[*] - Starting to look for directories...")
+        for i in content:
+            if i.startswith('#'):
+                pass
+
+            else :
+                if len(i) > 1:
+                    code = requests.get("http://"+rhost+"/"+i).status_code
+                    if code == 200 or code == 403:
+                        print(
+                            "[*] - {0} is a valid directory - Code {1}".format(i, code))
+                        flag = 1
+        if flag == 1:
+            print("[*] - Done.")
+        else:
+            print("[!] - No directory found with the given wordlist")
+    except:
+        print("[!] - Host unreachable")
+f.close()

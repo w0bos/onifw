@@ -17,7 +17,7 @@ if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
     TERMUX=true
 
 else
-    INSTALL_DIR="$HOME/.onifw"
+    INSTALL_DIR="$HOME/.onifw/"
     BIN_DIR="/usr/local/bin/"
     BASH_PATH="/bin/bash"
     TERMUX=false
@@ -30,9 +30,7 @@ if [ "$TERMUX" = true ]; then
     rm -rf "$BIN_DIR/onifw"
 
 elif [ "$TERMUX" = false ]; then
-    sudo rm -rf "$ETC_DIR/w0bos"
     sudo rm -rf "$INSTALL_DIR"
-    sudo rm -rf "$BIN_DIR/onifw"
 fi
 
 echo "[*] - onifw was sucessfully uninstalled.";

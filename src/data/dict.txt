@@ -16,9 +16,13 @@ servicestatus
 firewall
 viewtraffic
 netmanager
-pymap
+onimap
+onibuster
 shell
+myip
+cd
+bg
+checkout
 restore
 update
-
 
