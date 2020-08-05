@@ -11,7 +11,12 @@
 
         * Fix
             ! Some tools (nmap,arachni...) installed with pkg don't start the make / make install
-           
+            ! Some tools require modules (python pip) or foreign packages to work (openssl) ==> Auto install dependencies
+                                                                                    -> need OpenSSL
+            ! Some tools need to be compiled in order to work
+                            ==> Fix installer
+
+
         * Misc
             - Add port configuration when using onimap
             - Add --install-recommended flag to the installer to install all at once
@@ -29,6 +34,7 @@
             - Fix logging when doing multiple argument input
             - Add more options to Nmap
             - IndexOutOfBonds when installing some packages
+            - Fixed no arguments error that crash the framework
 
         * Misc
             - Simplify help command
@@ -267,7 +273,10 @@ class main:
                         #cinstall.Main(installDir)
                     elif "-r" in cmd or "--remove" in cmd:
                         #instl.Uninstaller(installDir, cmd)
-                        instl.uninstall(installDir,cmd)
+                        if len(cmd)>2:
+                            instl.uninstall(installDir,cmd)
+                        else:
+                            print("[!] - No arguments provided")
                     elif "-rf" in cmd or "-fr" in cmd or ("--force" and "--remove") in cmd:
                         #instl.Uninstaller(installDir, cmd, 1)
                         instl.uninstall(installDir, cmd,1)
@@ -318,14 +327,15 @@ class main:
                 print("Local IP: {}".format( gethostbyname( gethostname() ) ))
                 print("Remote IP: {}".format("Not implemented"))
             elif marg == "cd":
-                target_dir=cmd[1]
-                try:
-                    print("[*] - Changing current directory...")
-                    chdir(target_dir)
-                    print("[*] - Done")
-                    print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
-                except:
-                    print("[!] - And unexpected error occurred")
+                if len(cmd)>1:
+                    target_dir=cmd[1]
+                    try:
+                        print("[*] - Changing current directory...")
+                        chdir(target_dir)
+                        print("[*] - Done")
+                        print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
+                    except:
+                        print("[!] - And unexpected error occurred")
             elif marg=="checkout":
                 if cmd[1]=="dev":
                     ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
