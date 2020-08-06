@@ -28,7 +28,6 @@ def restoreDict(installDir):
     """Restore default dictionnary file
     """
     print("[*] - Restoring dictionnary to default...")
-    print(installDir)
     try:
         f = open("{}data/dict.txt".format(installDir))
         out = []

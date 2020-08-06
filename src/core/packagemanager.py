@@ -66,15 +66,18 @@ def abort():
 def uninstall(installDir, cmd, root=0):
     print("[*] - Removing folder")
     if not root:
-        shell("rm -rf {0}tools/{1}".format(installDir, cmd[2]))
+        for i in cmd:
+            shell("rm -rf {0}tools/{1}".format(installDir, i))
     else:
-        shell("sudo rm -rf {0}tools/{1}".format(installDir, cmd[2]))
-    print("[*] - Cleaning dictionnary...")
+        for i in cmd:
+            shell("sudo rm -rf {0}tools/{1}".format(installDir, i))
+    print(color.LOGGING+"[*] - Cleaning dictionnary..."+color.END)
     f = open("{}data/dict.txt".format(installDir))
     out = []
     for line in f:
-        if not cmd[2] in line:
-            out.append(line)
+        for i in cmd:
+            if not i in line:
+                out.append(line)
     f.close()
     f = open("{}data/dict.txt".format(installDir), 'w')
     f.writelines(out)
@@ -91,9 +94,11 @@ class Install:
             self.install_some()
 
     def install_all(self):
+        wordlist=[]
         ans = input(
             #color.IMPORTANT 
-            "[*] - Installation process can be quite long.\nProceed anyways?\n [y/N] : " ).lower()
+            color.IMPORTANT +
+            "[*] - Installation process can be quite long.\nProceed anyways?\n[y/N] : " + color.END ).lower()
             #+ color.WHITE).lower()
         if ans in ["y", "yes"]:
             for i in pkg:
@@ -102,8 +107,10 @@ class Install:
                 if i in ["crips", "arachni", "brutex", "revsh", "nmap"]:
                     self.build_tools(i,temp_install_dir)
                 else:
-                    print("[+] - Installing {}...".format(pkg[i]))
+                    print(color.LOGGING + "[+] - Installing " +
+                          color.NOTICE+"{}".format(i)+"...")
                     shell("git clone -q {0} {1}".format(pkg[i], temp_install_dir))
+                    wordlist.append(i)
 
             for i in range(len(scripts)):
                 print("[+] - Installing {}...".format(scripts[i][0]))
@@ -111,8 +118,9 @@ class Install:
                       (scripts[i][1], scripts[i][0]))
                 shell("mv %s.py %s%s.py" % (
                     scripts[i][0], temp_install_dir, scripts[i][0]))
+                wordlist.append(scripts[i][0])
 
-            self.add_words()
+            self.add_words(wordlist)
 
     def install_some(self):
         tempDir = []
@@ -128,7 +136,8 @@ class Install:
             else:
                 # target is package
                 if target in pkg:
-                    print("[+] - Installing {}...".format(target))
+                    print(color.LOGGING + "[+] - Installing " +
+                          color.NOTICE+"{}".format(target)+color.LOGGING+"...")
                     shell("git clone -q {0} {1}".format(pkg[target], tempDir[i]))
                 # target is script
                 elif target in scripts:
@@ -137,13 +146,14 @@ class Install:
                     shell("mv %s.py %s%s.py" % (
                         scripts[i][0], tempDir, scripts[i][0]))
                 else:
-                    print("[*] - Unkown package. Please retry or use the custom package installer")
+                    print(color.RED+"[*] - Unkown package. Please retry or use the custom package installer"+color.END)
 
         self.add_words(self.args)
         
     def build_tools(self, target, tempDir):
 
-        print("[+] - Installing {}...".format(target))
+        print(color.LOGGING)
+        print("[+] - Installing "+color.NOTICE+"{}".format(target)+color.LOGGING+"...")
         if target == "crips":
             shell("git clone -q %s %s" % (pkg[target], tempDir))
             shell("sudo chmod +x %s/install.sh" % (tempDir))
@@ -159,7 +169,7 @@ class Install:
 
         elif target == "revsh":
             #Configure OPENSSL
-            print("[+] - Configuring openssl for revsh...")
+            print(color.OKBLUE+"[+] - Configuring openssl for revsh..."+color.END)
             shell("git clone -q %s %s" %
                   ("https://github.com/openssl/openssl", self.toolDir+"openssl"))
             shell("cd {0} && ./config no-shared -static && make && make test".format(self.toolDir+"openssl"))
@@ -167,14 +177,12 @@ class Install:
             shell("cd %s/ && make && make install" % (tempDir))
 
         elif target == "nmap":
-            shell("git clone %s %s && cd %s/ && ./configure && make && make install" %
+            shell("git clone -q %s %s && cd %s/ && ./configure && make && make install" %
                   (pkg[target], tempDir, tempDir))
 
     def add_words(self, wordList=[]):
-        print("[*] - Done.")
+        print(color.OKGREEN+"[*] - Done."+color.END)
         if not(len(wordList)):
             for i in pkg:
                 wordList.append(i)
         dictmgr.addWords(self.installDir, wordList)
-
-Install("/home/scandion/Documents/Git/w0bos/onifw/src/", ["nikto", "revsh"])

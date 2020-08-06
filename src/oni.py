@@ -10,16 +10,12 @@
             - Complete log output of onifw in log/oni.log file
 
         * Fix
-            ! Some tools (nmap,arachni...) installed with pkg don't start the make / make install
-            ! Some tools require modules (python pip) or foreign packages to work (openssl) ==> Auto install dependencies
-                                                                                    -> need OpenSSL
-            ! Some tools need to be compiled in order to work
-                            ==> Fix installer
-
-
+            ! Some tools require modules (python pip) 
+            
         * Misc
             - Add port configuration when using onimap
             - Add --install-recommended flag to the installer to install all at once
+            
 
     DONE:
         * Commands
@@ -31,13 +27,17 @@
         * Configuration
 
         * Fix
+            - Fixed packages that didn't make make install
             - Fix logging when doing multiple argument input
             - Add more options to Nmap
             - IndexOutOfBonds when installing some packages
             - Fixed no arguments error that crash the framework
+            - Fixed tools not compiling using the old installer
+            - Fixed openssl install for revsh.
 
         * Misc
             - Simplify help command
+            - Rewrote the package manager
 
 '''
 
@@ -58,7 +58,7 @@ from datetime import date
 
 #File loading
 import core.completer       as auto
-import core.installer       as instl
+import core.packagemanager  as pacman
 import core.custom          as custom
 import core.launcher        as launch
 import core.updater         as update
@@ -66,6 +66,7 @@ import core.dict            as dictmgr
 import core.confighandler   as cfg
 from   core.loading         import thread_loading
 from   core.gui             import color as color
+
 
 
 
@@ -165,9 +166,9 @@ class main:
                 if len(cmd)==1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
                     subprocess.run("ls {}tools/".format(installDir),shell=True)
-                    print("ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster"+color.END)
+                    print("myip  ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster "+color.END)
                 elif cmd[1]=="-r" or cmd[1]=="--recommended":
-                    instl.show_recommended()
+                    pacman.show_recommended()
                 else:
                     print(color.WARNING + "ls[!] - %s : unknown command" % cmd[1])
                     #generator in print?
@@ -176,9 +177,7 @@ class main:
             elif marg=="help":
                 print(color.NOTICE)
                 with open("{}data/help.txt".format(installDir), 'r') as fin:
-                    print(color.color_random[0])
-                    print(fin.read())
-                    print(color.END + color.WHITE)
+                    print(color.color_random[0] + fin.read() + color.END + color.WHITE)
             elif marg=="uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
@@ -266,31 +265,28 @@ class main:
                     pkgmgrhelp()
                 else:
                     if "--all" in cmd or "-a" in cmd:
-                        instl.Install(installDir)
-                        #instl.Installer(0, installDir)
+                        pacman.Install(installDir)
                     elif "-c" in cmd or "--custom" in cmd:
                         custom.Main(installDir)
-                        #cinstall.Main(installDir)
                     elif "-r" in cmd or "--remove" in cmd:
-                        #instl.Uninstaller(installDir, cmd)
                         if len(cmd)>2:
-                            instl.uninstall(installDir,cmd)
+                            pacman.uninstall(installDir,cmd[2:])
                         else:
                             print("[!] - No arguments provided")
                     elif "-rf" in cmd or "-fr" in cmd or ("--force" and "--remove") in cmd:
-                        #instl.Uninstaller(installDir, cmd, 1)
-                        instl.uninstall(installDir, cmd,1)
+                        if len(cmd)>2:
+                            pacman.uninstall(installDir, cmd,1)
+                        else:
+                            print("[!] - No arguments provided")
                     elif "-i" in cmd or "--install" in cmd:
-                        instl.User_install(installDir, cmd)
+                        pacman.Install(installDir,cmd[2:])
+                        #.User_install(installDir, cmd)
                     elif "-h" in cmd or "--help" in cmd:
                         pkgmgrhelp()
                     else:
-                        tools = prompt.split(" ")[1:]
-                        if not(len(tools)):
-                            instl.Install(installDir)
-                        else:
-                            print(color.WARNING +"PackageManager[!] %s : unknown command" % tools)
-                        #instl.Installer(0, installDir, tools)
+                        if len(prompt.split(" ")[1:]) >= 1:
+                            print(
+                                color.WARNING + "PackageManager[!] %s : unknown command" % prompt.split(" ")[1:])
 
             # Default scripts
             elif marg == "ipfinder":
