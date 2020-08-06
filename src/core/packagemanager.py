@@ -84,9 +84,11 @@ def uninstall(installDir, cmd, root=0):
     f.close()
 
 
-def remove_all(installDir, root=0):
-    self.toolDir = installDir + 'tools/'
-    
+def remove_all(installDir):
+    toolDir = installDir + 'tools/'
+    # To avoid errors
+    shell("sudo rm -rf {}*".format(toolDir))
+
 
 class Install:
     def __init__(self, installDir, args=[]):

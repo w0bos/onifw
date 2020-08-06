@@ -273,6 +273,8 @@ class main:
                             pacman.uninstall(installDir,cmd[2:])
                         else:
                             print("[!] - No arguments provided")
+                    elif "-da" in cmd or "--delete-all" in cmd:
+                        pacman.remove_all(installDir)
                     elif "-rf" in cmd or "-fr" in cmd or ("--force" and "--remove") in cmd:
                         if len(cmd)>2:
                             pacman.uninstall(installDir, cmd,1)
