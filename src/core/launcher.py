@@ -32,8 +32,6 @@ class microsploit:
     def installed(self):
         return (os.path.isdir(self.installDir))
 
-
-
     def run(self):
         os.system("bash %s/Microsploit" % (self.installDir))
 
