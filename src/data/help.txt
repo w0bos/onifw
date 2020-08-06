@@ -1,20 +1,25 @@
-    Command             Description
-    --------------+---------------------------------------
-    help          | shows help
-    clear         | clear screen
-    clean_cache   | clean __pycache__/ folders
-    show_[option] | [agreement] [logo] [title] [version]
-    bg            | puts onifw in a background process
-    pkg           | package manager
-                  | [-a] [--all]            installs all recommended packages
-                  | [-i] [--install] [name] installs the name package
-                  | [-r] [--remove] [name]  removes the name package
-                  | [-f] [--force]          forces removal when installed with sudo
-                  | [-c] [--custom]         installs custom package
-    list          | shows installed packages
-                  | [-r] shows all packages available
-    shell         | run a shell command
-    restore       | restores the dictionnary
-    update        | check if there is an update for the framework
-    uninstall     | Uninstall onifw
-    quit          | quit program
+   Command    |            Description
+--------------+---------------------------------------
+bg            | puts onifw in a background process
+cd            | change current directory
+checkout      | checkout to another branch of onifw
+              | [master]                master branch
+              | [dev]                   dev branch
+              | Note: the dev branch might break your current install
+clean_cache   | clean __pycache__/ folders
+clear         | clear screen
+help          | shows help
+list, ls      | shows installed packages and scripts
+              | [-r] shows all packages available
+pkg           | package manager of onifw
+              | [-a] [--all]            installs all recommended packages
+              | [-i] [--install] [name] installs the name package
+              | [-r] [--remove] [name]  removes the name package
+              | [-f] [--force]          forces removal when installed with sudo
+              | [-c] [--custom]         installs custom package
+restore       | restores the dictionnary to default
+shell         | run a shell command
+show_[option] | [agreement] [logo] [title] [version]
+update        | check if there is an update for the framework
+uninstall     | Uninstall onifw
+quit          | quit program

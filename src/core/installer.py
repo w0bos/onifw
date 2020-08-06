@@ -186,7 +186,9 @@ class Install:
                         if cfg.check_value(self.installDir, "debug", False):
                             print(err())
 
-
+'''
+DONT USE PKG[<value>], PKG[<var>] instead
+'''
 class User_install:
 
     def __init__(self, installDir, cmd):
@@ -196,7 +198,7 @@ class User_install:
         for i in range(len(self.target)):
             tree = installDir + "tools/" + self.target[i]
             self.installDir.append(tree)
-        self.bugpkg = ["arachni", "crips", "brutex", "revshl", "nmap"]
+        self.bugpkg = ["arachni", "crips", "brutex", "revsh", "nmap"]
         self.install()
 
     def install(self):
@@ -213,37 +215,32 @@ class User_install:
                             print("[*] - Installing %s" % (self.target[i]))
                             shell("git clone %s %s" %
                                       (pkg[j][1], self.installDir[i]))
-
             else:
                 if self.target[i] == "crips":
-                    
                     shell("git clone %s %s" %
                               (pkg[8][1], self.installDir[i]))
                     shell("sudo chmod +x %s/install.sh" %
                               (self.installDir[i]))
                     shell("sudo %s/./install.sh" % (self.installDir[i]))
                 elif self.target[i] == "arachni":
-                    
                     shell("git clone %s %s" %
                               (pkg[24][1], self.installDir[i]))
                     shell("cd %s/ && bundle install" %
                               (self.installDir[i]))
                 elif self.target[i] == "brutex":
-                    
                     shell("sudo mkdir /usr/share/brutex")
                     shell("git clone %s %s" %
                               (pkg[12][1], self.installDir[i]))
                 elif self.target[i] == "revsh":
-                    
                     shell("git clone %s %s" %
-                              (pkg[24][1], self.installDir[i]))
+                              (pkg[23][1], self.installDir[i]))
                     shell("cd %s/ && make && make install" %
                               (self.installDir[i]))
-                
                 elif self.target[i] == "nmap":
-
                     shell("git clone %s %s && cd %s/ && ./configure" %
                               (pkg[5][1], self.installDir[i], self.installDir[i]))
+                    shell("git clone %s %s && cd %s/ && ./configure" %
+                          ("https://github.com/openssl/openssl", self.absDir+"tools/openssl", self.absDir+"tools/openssl"))
                     shell("cd %s/ && sudo make && make install" %
                               self.installDir[i])
                     # shell("sudo make install")
