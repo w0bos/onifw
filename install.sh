@@ -79,7 +79,7 @@ sudo pip3 install packaging
 
 if [ $# -eq 1 ]
     then
-        if [[ $1=="--install-all" ]]; then
+        if [ $1=="--install-all" ]; then
             echo "[*] - Install all flag"
         else
             echo "[!] - unkown flag $1"
