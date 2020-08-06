@@ -4,7 +4,7 @@
 
 ![](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Tested_On-Linux-orange.svg?longCache=true&style=popout-square)
-![](https://img.shields.io/badge/Version-1.12.3-dark_green.svg?longCache=true&style=popout-square)
+![](https://img.shields.io/badge/Version-1.12.5-dark_green.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Python-3-purple.svg?longCache=true&style=popout-square)
 
 ## Description

@@ -5,7 +5,6 @@ import socket
 
 from os import makedirs as mkdir
 from os import path
-import core.installer as instl
 from core.gui import color as color
 from time import gmtime, strftime
 

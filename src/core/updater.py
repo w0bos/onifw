@@ -26,7 +26,8 @@ class Updater:
                 if (latest_version>local_version):
                     ans = input(color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
                     if ans.lower() in ["yes","y"]:
-                        os.system("{}../install.sh".format(installDir))
+                        os.system("cd {} && git pull".format(installDir))
+                        #os.system("{}../install.sh".format(installDir))
                     else:
                         print("[*] - Update aborted")
     
