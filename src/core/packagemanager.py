@@ -83,6 +83,11 @@ def uninstall(installDir, cmd, root=0):
     f.writelines(out)
     f.close()
 
+
+def remove_all(installDir, root=0):
+    self.toolDir = installDir + 'tools/'
+    
+
 class Install:
     def __init__(self, installDir, args=[]):
         self.toolDir = installDir + 'tools/'
