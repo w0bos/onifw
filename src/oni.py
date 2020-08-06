@@ -273,6 +273,8 @@ class main:
                             pacman.uninstall(installDir,cmd[2:])
                         else:
                             print("[!] - No arguments provided")
+                    elif "-da" in cmd or "--delete-all" in cmd:
+                        pacman.remove_all(installDir)
                     elif "-rf" in cmd or "-fr" in cmd or ("--force" and "--remove") in cmd:
                         if len(cmd)>2:
                             pacman.uninstall(installDir, cmd,1)
@@ -336,12 +338,12 @@ class main:
                 if cmd[1]=="dev":
                     ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
                     if ans.lower() in ["y","yes"]:
-                        shell("cd {} && git checkout dev && git pull".format(installDir))
+                        shell("cd {} && git checkout dev".format(installDir))
                         print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
                 if cmd[1]=="master": 
-                    ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                    ans=input("[!] - Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
                     if ans.lower() in ["y","yes"]:
-                        shell("cd {} && git checkout master && git pull".format(installDir))
+                        shell("cd {} && git checkout master".format(installDir))
                         print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
                 else:
                     print("[!] - No branch provided\nUsage: git checkout [branch]")

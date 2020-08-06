@@ -26,14 +26,16 @@ class Updater:
                 if (latest_version>local_version):
                     ans = input(color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
                     if ans.lower() in ["yes","y"]:
-                        os.system("{}../install.sh".format(installDir))
+                        # Won't wipe old install
+                        os.system("cd {} && git pull".format(installDir))
+                        #os.system("{}../install.sh".format(installDir))
                     else:
                         print("[*] - Update aborted")
     
                 elif (latest_version==local_version) :
                     print(color.OKGREEN + "[*] - You're already running the latest version of onifw" + color.END)
                 elif (latest_version<local_version):
-                    print(color.IMPORTANT + "[*] - You are running an alpha version of onifw" + color.END)
+                    print(color.IMPORTANT + "[+] - You are running an alpha version of onifw" + color.END)
                 else:
                     print(color.WARNING + "[!] - Unknown error" + color.END)
     
@@ -46,6 +48,6 @@ class Updater:
     def check_branch(self):
         curr_branch = subprocess.check_output("cd {} && git branch --show-current".format(self.installDir), shell=True).decode("utf-8").strip('\n')
         if curr_branch == "dev":
-            print("[*] - Currently working on the dev branch. Updates can only be done while in the master branch")
-            print("[*] - Use checkout master to switch to the master branch")
+            print("[!] - Currently working on the dev branch. Updates can only be done while in the master branch")
+            print("[!] - Use checkout master to switch to the master branch")
             return True
