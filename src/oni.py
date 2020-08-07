@@ -14,6 +14,7 @@
             
         * Misc
             - Add port configuration when using onimap
+            - Edit cd command to work with path variables ($HOME, ~/, ../)
             - Add --install-recommended flag to the installer to install all at once
             
 
@@ -330,6 +331,7 @@ class main:
                     try:
                         print("[*] - Changing current directory...")
                         chdir(target_dir)
+                        #shell("cd {}".format(target_dir))
                         print("[*] - Done")
                         print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
                     except:
