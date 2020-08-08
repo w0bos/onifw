@@ -8,7 +8,7 @@ installDir = path.dirname(path.abspath(__file__)) + '/../'
 toolDir = installDir+"tools/"
 
 def cleanup():
-    pacman.remove_all(installDir)
+    pacman.remove_all(installDir,0)
     dmgr.restoreDict(installDir)
     sleep(0.1)
 
@@ -40,6 +40,7 @@ class testConfigHandler(unittest.TestCase):
 
     def test_install_builds_single(self):
         pacman.Install(installDir, ["brutex"])
+        cleanup()
     
     #def test_install_builds_multiple(self):
     #    pacman.Install(installDir, ["brutex", "nmap"])

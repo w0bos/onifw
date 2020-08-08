@@ -65,7 +65,7 @@ def abort():
 
 def uninstall(installDir, cmd, root=0):
     print("[*] - Removing folder")
-    if not root:
+    if root==0:
         for i in cmd:
             shell("rm -rf {0}tools/{1}".format(installDir, i))
     else:
@@ -87,7 +87,7 @@ def uninstall(installDir, cmd, root=0):
 def remove_all(installDir,root=1):
     toolDir = installDir + 'tools/'
     # To avoid errors
-    if root:
+    if root==1:
         shell("sudo rm -rf {}*".format(toolDir))
     else:
         shell("rm -rf {}*".format(toolDir))
