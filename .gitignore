@@ -2,6 +2,7 @@ tools/
 logs/
 __pycache__
 test/__pycache__
+test/default_dict.txt
 src/bin/__pycache__
 src/core/__pycache__
 src/data/__pycache__

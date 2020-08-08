@@ -48,6 +48,5 @@ class Updater:
     def check_branch(self):
         curr_branch = subprocess.check_output("cd {} && git branch --show-current".format(self.installDir), shell=True).decode("utf-8").strip('\n')
         if curr_branch == "dev":
-            print("[!] - Currently working on the dev branch. Updates can only be done while in the master branch")
-            print("[!] - Use checkout master to switch to the master branch")
+            print("[!] - Currently working on the dev branch. Updates can only be done while in the master branch\n[!] - Use checkout master to switch to the master branch")
             return True
