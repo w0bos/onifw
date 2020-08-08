@@ -84,50 +84,51 @@ def uninstall(installDir, cmd, root=0):
     f.close()
 
 
-def remove_all(installDir):
+def remove_all(installDir,root=1):
     toolDir = installDir + 'tools/'
     # To avoid errors
-    shell("sudo rm -rf {}*".format(toolDir))
+    if root:
+        shell("sudo rm -rf {}*".format(toolDir))
+    else:
+        shell("rm -rf {}*".format(toolDir))
 
 
 class Install:
-    def __init__(self, installDir, args=[]):
+    def __init__(self, installDir, args=[], force=False):
         self.toolDir = installDir + 'tools/'
         self.installDir = installDir
         self.args = args
         if len(args)<1:
-            self.install_all()
+            if force:
+                self.install_all()
+            else:
+                ans = input(
+                    color.IMPORTANT +
+                    "[*] - Installation process can be quite long.\nProceed anyways?\n[y/N] : " + color.END).lower()
+                if ans in ["y", "yes"]:
+                    self.install_all()
         else:
             self.install_some()
 
     def install_all(self):
         wordlist=[]
-        ans = input(
-            #color.IMPORTANT 
-            color.IMPORTANT +
-            "[*] - Installation process can be quite long.\nProceed anyways?\n[y/N] : " + color.END ).lower()
-            #+ color.WHITE).lower()
-        if ans in ["y", "yes"]:
-            for i in pkg:
-                temp_install_dir = self.toolDir+i
-
-                if i in ["crips", "arachni", "brutex", "revsh", "nmap"]:
-                    self.build_tools(i,temp_install_dir)
-                else:
-                    print(color.LOGGING + "[+] - Installing " +
-                          color.NOTICE+"{}".format(i)+"...")
-                    shell("git clone -q {0} {1}".format(pkg[i], temp_install_dir))
-                    wordlist.append(i)
-
-            for i in range(len(scripts)):
-                print("[+] - Installing {}...".format(scripts[i][0]))
-                shell("wget -q %s --output-document=%s.py" %
-                      (scripts[i][1], scripts[i][0]))
-                shell("mv %s.py %s%s.py" % (
-                    scripts[i][0], temp_install_dir, scripts[i][0]))
-                wordlist.append(scripts[i][0])
-
-            self.add_words(wordlist)
+        for i in pkg:
+            temp_install_dir = self.toolDir+i
+            if i in ["crips", "arachni", "brutex", "revsh", "nmap"]:
+                self.build_tools(i,temp_install_dir)
+            else:
+                print(color.LOGGING + "[+] - Installing " +
+                      color.NOTICE+"{}".format(i)+"...")
+                shell("git clone -q {0} {1}".format(pkg[i], temp_install_dir))
+                wordlist.append(i)
+        for i in range(len(scripts)):
+            print("[+] - Installing {}...".format(scripts[i][0]))
+            shell("wget -q %s --output-document=%s.py" %
+                  (scripts[i][1], scripts[i][0]))
+            shell("mv %s.py %s%s.py" % (
+                scripts[i][0], temp_install_dir, scripts[i][0]))
+            wordlist.append(scripts[i][0])
+        self.add_words(wordlist)
 
     def install_some(self):
         tempDir = []
@@ -171,7 +172,7 @@ class Install:
             shell("cd %s/ && bundle install" % (tempDir))
 
         elif target == "brutex":
-            shell("sudo mkdir /usr/share/brutex")
+            #shell("sudo mkdir /usr/share/brutex")
             shell("git clone -q %s %s" % (pkg[target], tempDir))
 
         elif target == "revsh":

@@ -5,7 +5,7 @@ from os import system as cmd
 from os import path as path
 from os import makedirs as mkdir
 from core.gui import color
-from core.updater import Updater
+#from core.updater import Updater
 from socket import create_connection
 from configparser import ConfigParser
 import readline
@@ -70,6 +70,7 @@ class ConfigOnstart:
                 print(color.RED + "[!] - No connectivity!" + color.WHITE)
                 print(color.RED + "[!] - Some tools might not work as intended" + color.END)
         if check_value(self.installDir, "check_updates", False):
+            from core.updater import Updater
             Updater(self.installDir)
         if check_value(self.installDir, "show_version", True):
             print(color.color_random[0]+self.version)
