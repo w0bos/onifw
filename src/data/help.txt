@@ -20,6 +20,7 @@ pkg           | package manager of onifw
 restore       | restores the dictionnary to default
 shell         | run a shell command
 show_[option] | [agreement] [logo] [title] [version]
+status        | show the status of the current install
 update        | check if there is an update for the framework
 uninstall     | Uninstall onifw
 quit          | quit program

@@ -18,6 +18,7 @@ viewtraffic
 netmanager
 onimap
 onibuster
+status
 shell
 myip
 cd
