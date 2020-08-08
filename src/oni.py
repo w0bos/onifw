@@ -154,7 +154,7 @@ class main:
 
             # BASE COMMANDS
             # PASS
-            if marg=="quit":
+            if marg=="quit" or marg=="exit":
                 clearScr()
                 print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
                 print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
@@ -337,19 +337,29 @@ class main:
                     except:
                         print("[!] - And unexpected error occurred")
             elif marg=="checkout":
-                if cmd[1]=="dev":
-                    ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
-                    if ans.lower() in ["y","yes"]:
-                        shell("cd {} && git checkout dev".format(installDir))
-                        print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
-                if cmd[1]=="master": 
-                    ans=input("[!] - Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
-                    if ans.lower() in ["y","yes"]:
-                        shell("cd {} && git checkout master".format(installDir))
-                        print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                if len(cmd)>1:
+                    if cmd[1]=="dev":
+                        ans=input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                        if ans.lower() in ["y","yes"]:
+                            shell("cd {} && git checkout dev".format(installDir))
+                            print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                    if cmd[1]=="master": 
+                        ans=input("[!] - Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
+                        if ans.lower() in ["y","yes"]:
+                            shell("cd {} && git checkout master".format(installDir))
+                            print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
                 else:
-                    print("[!] - No branch provided\nUsage: git checkout [branch]")
-                    print("Branch : master / dev")
+                    print("[!] - No branch provided :: Usage: git checkout [branch]")
+                    print("[!] - Branches available : master / dev")
+            elif marg=="status":
+                curr_branch = subprocess.check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
+                version= ""
+                with open("{}data/version.txt".format(installDir)) as f:
+                    version = f.readlines()[0].rstrip("\n\r")
+                f.close()
+                if curr_branch=="dev":
+                    print(color.NOTICE + "[+]" + color.HEADER + " - onifw {0} on {1} branch".format(version,curr_branch) + color.END)
+                    print(color.NOTICE + "[+]" + color.HEADER + " - Installation location: {}".format(installDir) + color.END)
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])

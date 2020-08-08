@@ -15,11 +15,10 @@ class testConfigHandler(unittest.TestCase):
     def test_branch_disabled(self):
         current = check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
         if current=="dev":
-            #self.assertEqual(up.Updater(installDir), "[!] - Currently working on the dev branch. Updates can only be done while in the master branch\n[!] - Use checkout master to switch to the master branch")
-            # function returns boolean
             self.assertTrue(up.Updater(installDir))
         else:
             self.assertNotEqual(current,"dev")
+    
     
     
 

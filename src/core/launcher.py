@@ -551,7 +551,7 @@ onimap
 
 class ipfind:
     def __init__(self):
-        host = input(color.LOGGING +
+        host = input(color.NOTICE +
                      "onifw/IPfinder > Enter URL: " + color.WHITE)
         ip = socket.gethostbyname(host)
         print("[*] - The IP of %s is: %s" % (host, ip))
@@ -565,7 +565,7 @@ class hashcheck:
         print("3 - sha224")
         print("4 - sha256")
         print("99 - exit")
-        hashtype = input("onifw/hashcheck> ")
+        hashtype = input(color.NOTICE + "onifw/hashcheck > " + color.END)
         if hashtype=="1":
             os.system("md5sum {}".format(filepath))
         elif hashtype == "2":
@@ -581,8 +581,7 @@ class servicestatus:
         if not path.isdir(self.logDir):mkdir(self.logDir)  # Make folder
         print(color.LOGGING)
         os.system("ps -ef > {}/services.out".format(self.logDir))
-        print(color.END + color.NOTICE + "[*] - Log saved in the .onifw/src/logs/ dir")
-        print(color.END)
+        print(color.END + color.NOTICE + "[*] - Log saved in the .onifw/src/logs/ dir" + color.END)
 
 
 class firewall:
@@ -597,7 +596,7 @@ class firewall:
         print("3 - Apply iptable")
         print("99 - exit")
         print(color.END)
-        choice = input("onifw/firewall > ")
+        choice = input(color.NOTICE + "onifw/firewallconfig > " + color.END)
         if choice == "1":
             os.system("iptables-save > {}/firewall.out".format(self.logDir))
         elif choice == "2":
@@ -615,7 +614,7 @@ class viewtraffic:
         print("TRAFFIC ANALYSIS")
         print("1 - Tcpdump")
         print("2 - Tshark")
-        choice = input("onifw/trafficanalyzer > ")
+        choice = input(color.NOTICE + "onifw/trafficanalyzer> " + color.END)
         if choice == "1":
             os.system("sudo tcpdump -A -vv > {}/tcpdump.out".format(self.logDir))
         elif choice == "2":
@@ -631,7 +630,7 @@ class networkmanaged:
         print("1 - Enable monitoring mode")
         print("2 - Disable monitoring mode")
         print("99 - Exit ")
-        ans = input(color.LOGGING+"onifw/netmanager > "+color.END)
+        ans = input(color.NOTICE+"onifw/netmanager > "+color.END)
         if ans == "1":
             inter_name = input("interface name: ")
             try:
@@ -657,5 +656,5 @@ class onimap:
         self.logDir = logDir
         self.installDir = installDir
         print("Which target to scan")
-        target = input("onifw/onimap > ")
+        target = input(color.NOTICE + "onifw/onimap > " + color.END)
         os.system("{0}core/onimap {1}".format(self.installDir,target))
