@@ -44,9 +44,6 @@
 
 # Imports
 import readline
-import subprocess
-import random
-
 
 # From
 from os import system as shell
@@ -56,6 +53,8 @@ from os import makedirs as mkdir
 from sys import exit as abort
 from socket import create_connection, gethostbyname, gethostname
 from datetime import date
+from random import randint
+from subprocess import run, check_output, PIPE
 
 #File loading
 import core.completer       as auto
@@ -109,7 +108,7 @@ def pkgmgrhelp():
 
 def loadtools():
     load_cmd = ['ls','{}'.format(toolDir)]
-    output = subprocess.run(load_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    output = run(load_cmd, stdout=PIPE).stdout.decode('utf-8')
     #Clean output
     pkg_local=output.splitlines()
     return pkg_local
@@ -166,7 +165,7 @@ class main:
             elif marg=="list" or marg=="ls":
                 if len(cmd)==1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
-                    subprocess.run("ls {}tools/".format(installDir),shell=True)
+                    run("ls {}tools/".format(installDir),shell=True)
                     print("myip  ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster "+color.END)
                 elif cmd[1]=="-r" or cmd[1]=="--recommended":
                     pacman.show_recommended()
@@ -182,15 +181,15 @@ class main:
             elif marg=="uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    subprocess.run("cd {} && . ../uninstall".format(installDir), shell=True)
-                    #subprocess.run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
+                    run("cd {} && . ../uninstall".format(installDir), shell=True)
+                    #run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
 
             # MISC
             # PASS
             elif marg == "show_version":
-                print(color.color_random[random.randint(0, len(color.color_random)-1)])
+                print(color.color_random[randint(0, len(color.color_random)-1)])
                 with open("{}data/version.txt".format(installDir)) as f:
                     version = f.readlines()[0].rstrip("\n\r")
                 f.close()
@@ -352,7 +351,7 @@ class main:
                     print("[!] - No branch provided :: Usage: git checkout [branch]")
                     print("[!] - Branches available : master / dev")
             elif marg=="status":
-                curr_branch = subprocess.check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
+                curr_branch = check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
                 version= ""
                 with open("{}data/version.txt".format(installDir)) as f:
                     version = f.readlines()[0].rstrip("\n\r")

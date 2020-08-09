@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
@@ -60,7 +59,7 @@ class Pythonapp:
                 cmds = "sudo python{0} {1}{2}/{3}.py".format(
                     ver, self.toolDir, name,exe)
         try:
-            os.system("git clone %s %s%s" % (link, self.toolDir, name))
+            shell("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
         except:
             temp = -1
@@ -83,11 +82,11 @@ class Capp:
         name = input("Tool name: ")
         nb_cmd = int(input("How many commands to build the tool?: "))
         try:
-            os.system("git clone %s %s %s" % (link, self.toolDir, name))
+            shell("git clone %s %s %s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % os.system("pwd"))
+                print("[*] - Current directory: %s" % shell("pwd"))
                 cmd = input("Custom command: ")
-                os.system(cmd)
+                shell(cmd)
             cmds = input("Launch command: ")
             dictmgr.addWords(self.installDir,name)
             dictmgr.addCustomWords(self.installDir,name)
@@ -123,11 +122,11 @@ class Otherapp:
         name_exe=input("Name of the main file (w/ entension): ")
         nb_cmd = int(input("How many commands to build the tool?: "))
         try:
-            os.system("git clone %s %s%s" % (link, self.toolDir, name))
+            shell("git clone %s %s%s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % os.system("pwd"))
+                print("[*] - Current directory: %s" % shell("pwd"))
                 cmd = input("Custom command: ")
-                os.system(cmd)
+                shell(cmd)
             if lang=="java":
                 cmds = "{0} = cd {1}{2} && {3}{4}".format(name, toolDir, name, lang_dict[lang], name_exe)
             else:

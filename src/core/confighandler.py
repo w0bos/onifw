@@ -1,11 +1,8 @@
-import sys
-import os
 from sys import exit as abort
 from os import system as cmd
-from os import path as path
+from os import path
 from os import makedirs as mkdir
 from core.gui import color
-#from core.updater import Updater
 from socket import create_connection
 from configparser import ConfigParser
 import readline

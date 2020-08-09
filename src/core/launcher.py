@@ -5,11 +5,13 @@ import socket
 
 from os import makedirs as mkdir
 from os import path
+from os import system as shell
 from core.gui import color as color
 from time import gmtime, strftime
 
+
 def clearScr():
-    os.system('cls||clear')
+    shell('cls||clear')
 
 
 alreadyInstalled = "Already Installed"
@@ -33,7 +35,7 @@ class microsploit:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("bash %s/Microsploit" % (self.installDir))
+        shell("bash %s/Microsploit" % (self.installDir))
 
 class poet:
     def __init__(self):
@@ -48,7 +50,7 @@ class poet:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("python2 %s/server.py" % (self.installDir))
+        shell("python2 %s/server.py" % (self.installDir))
 
 class weeman:
     def __init__(self):
@@ -63,7 +65,7 @@ class weeman:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("cd %s/ && python2 weeman.py" % (self.installDir))
+        shell("cd %s/ && python2 weeman.py" % (self.installDir))
 
 class sb0x:
     def __init__(self):
@@ -79,7 +81,7 @@ class sb0x:
 
 
     def run(self):
-        os.system("cd %s/ && python2 %s/sb0x.py" % (self.installDir, self.installDir))
+        shell("cd %s/ && python2 %s/sb0x.py" % (self.installDir, self.installDir))
 
 class nxcrypt:
     def __init__(self):
@@ -95,7 +97,7 @@ class nxcrypt:
 
 
     def run(self):
-        os.system("sudo python2 %s/NXcrypt.py --help" % (self.installDir))
+        shell("sudo python2 %s/NXcrypt.py --help" % (self.installDir))
 
 class revsh:
     def __init__(self):
@@ -111,8 +113,8 @@ class revsh:
 
 
     def run(self):
-        os.system("chmod +x %s/revsh.c" % self.installDir)
-        os.system("cd %s/ && %s/revsh" % (self.installDir, self.installDir))
+        shell("chmod +x %s/revsh.c" % self.installDir)
+        shell("cd %s/ && %s/revsh" % (self.installDir, self.installDir))
 
 class nmap:
     def __init__(self, installDir):
@@ -150,29 +152,29 @@ class nmap:
         logPath = "{}logs/nmap-".format(self.normalDir) + strftime("%H:%M:%S", gmtime())
         try:
             if response == "1":
-                os.system("nmap -sP -oN %s %s" % (logPath, target))
+                shell("nmap -sP -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "2":
-                os.system("nmap -sS -oN %s %s" % (logPath, target))
+                shell("nmap -sS -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "3":
-                os.system("nmap -sU -oN %s %s" % (logPath, target))
+                shell("nmap -sU -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "4":
-                os.system("nmap -sV -oN %s %s" % (logPath, target))
+                shell("nmap -sV -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "5":
-                os.system("sudo nmap -O -oN %s %s" % (logPath, target))
+                shell("sudo nmap -O -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "6":
-                os.system("nmap -A -oN %s %s" % (logPath, target))
+                shell("nmap -A -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "7":
-                os.system("nmap --script vuln -oN %s %s" % (logPath, target))
+                shell("nmap --script vuln -oN %s %s" % (logPath, target))
                 response = input(continuePrompt)
             elif response == "c":
                 flags = input("Which options: ")
-                os.system("nmap %s -oN %s %s" % (flags, logPath, target))
+                shell("nmap %s -oN %s %s" % (flags, logPath, target))
                 response = input(continuePrompt)
             else:
                 self.menu(target)
@@ -195,9 +197,9 @@ class xsstrike:
 
     def run(self, response):
         if not len(response):
-            os.system("python3 %s/xsstrike.py -h" % (self.installDir))
+            shell("python3 %s/xsstrike.py -h" % (self.installDir))
         else :
-            os.system("python3 %s/xsstrike.py %s" % (self.installDir, response))
+            shell("python3 %s/xsstrike.py %s" % (self.installDir, response))
 
 class doork:
     def __init__(self):
@@ -219,7 +221,7 @@ class doork:
         logPath = "logs/doork-" + \
             strftime("%Y-%m-%d_%H:%M:%S", gmtime()) + ".txt"
         try:
-            os.system("python2 %s/doork.py -t %s -o %s" %
+            shell("python2 %s/doork.py -t %s -o %s" %
                       (self.installDir, target, logPath))
         except KeyboardInterrupt:
             pass
@@ -240,7 +242,7 @@ class crips:
 
     def run(self):
         try:
-            os.system("python2 %s/crips.py" % self.installDir)
+            shell("python2 %s/crips.py" % self.installDir)
         except:
             pass
 
@@ -270,15 +272,15 @@ class wpscan:
         wpscanOptions = "--no-banner --random-agent --url %s" % target
         try:
             if response == "1":
-                os.system(
+                shell(
                     "ruby tools/wpscan/lib/wpscan.rb %s --enumerate u --log %s" % (wpscanOptions, logPath))
                 response = input(continuePrompt)
             elif response == "2":
-                os.system(
+                shell(
                     "ruby tools/wpscan/lib/wpscan.rb %s --enumerate p --log %s" % (wpscanOptions, logPath))
                 response = input(continuePrompt)
             elif response == "3":
-                os.system(
+                shell(
                     "ruby tools/wpscan/lib/wpscan.rb %s --enumerate --log %s" % (wpscanOptions, logPath))
                 response = input(continuePrompt)
             elif response == "r":
@@ -304,7 +306,7 @@ class setoolkit:
         return (os.path.isfile("%s/setoolkit/setoolkit" % (toolDir)))
 
     def run(self):
-        os.system("sudo %ssetoolkit/setoolkit" % (toolDir))
+        shell("sudo %ssetoolkit/setoolkit" % (toolDir))
 
 class apwps:
     def __init__(self):
@@ -320,7 +322,7 @@ class apwps:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("python2 %s/autopixie.py" % self.installDir)
+        shell("python2 %s/autopixie.py" % self.installDir)
 
 class snmp:
     def __init__(self):
@@ -337,21 +339,21 @@ class snmp:
 
     def run(self):
         target = input("Enter Target IP: ")
-        os.system("python2 %s/snmpbrute.py -t %s" % (self.installDir,target))
+        shell("python2 %s/snmpbrute.py -t %s" % (self.installDir,target))
 
 class pyphi:
     def __init__(self):
-        os.system("wget http://pastebin.com/raw/DDVqWp4Z --output-document=pypisher.py")
+        shell("wget http://pastebin.com/raw/DDVqWp4Z --output-document=pypisher.py")
         clearScr()
-        os.system("mv pypisher.py %spypisher.py" % (toolDir))
-        os.system("python2 %spypisher.py" % (toolDir))
+        shell("mv pypisher.py %spypisher.py" % (toolDir))
+        shell("python2 %spypisher.py" % (toolDir))
 
 class stmp:
     def __init__(self):
-        os.system("wget http://pastebin.com/raw/Nz1GzWDS --output-document=smtp.py")
+        shell("wget http://pastebin.com/raw/Nz1GzWDS --output-document=smtp.py")
         clearScr()
-        os.system("mv smtp.py %ssmtp.py" % (toolDir))
-        os.system("python2 %ssmtp.py" % (toolDir))
+        shell("mv smtp.py %ssmtp.py" % (toolDir))
+        shell("python2 %ssmtp.py" % (toolDir))
 
 class sslstrip:
     def __init__(self):
@@ -368,7 +370,7 @@ class sslstrip:
 
     def run(self):
         target = input("Enter Target IP: ")
-        os.system("python2 %s/sslstrip.py %s" % (self.installDir, target))
+        shell("python2 %s/sslstrip.py %s" % (self.installDir, target))
 
 class cupp:
     
@@ -385,7 +387,7 @@ class cupp:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("python3 %s/cupp.py -i" % self.installDir)
+        shell("python3 %s/cupp.py -i" % self.installDir)
 
 class brutex:
     def __init__(self):
@@ -402,7 +404,7 @@ class brutex:
 
     def run(self):
         target = input(color.LOGGING + "BruteX > " + color.WHITE + "Enter Target IP: ")
-        os.system("brutex %s" % target)
+        shell("brutex %s" % target)
 
 class leviathan:
     
@@ -419,7 +421,7 @@ class leviathan:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("python2 %s/leviathan.py -i" % self.installDir)
+        shell("python2 %s/leviathan.py -i" % self.installDir)
 
 class nikto:
     def __init__(self):
@@ -437,7 +439,7 @@ class nikto:
         target = input(self.targetPrompt)
         self.menu(target)
     def menu(self, target):
-        os.system("perl %s/program/nikto.pl -h %s" % (self.installDir, target))
+        shell("perl %s/program/nikto.pl -h %s" % (self.installDir, target))
                
 class rscan:
     def __init__(self):
@@ -453,7 +455,7 @@ class rscan:
         return (os.path.isdir(self.installDir))
 
     def run(self, target):
-        os.system("python2 %s/rapidscan.py %s" % (self.installDir, target))
+        shell("python2 %s/rapidscan.py %s" % (self.installDir, target))
 
 class arachni:
     def __init__(self):
@@ -464,7 +466,7 @@ class arachni:
 
     def run(self):
         target = input(color.LOGGING + "Arachni > " + color.LOGGING + "Enter Target Hostname/URL: ")
-        os.system("sudo arachni %s" %(target))
+        shell("sudo arachni %s" %(target))
 
 class sqlmap:
     def __init__(self):
@@ -477,7 +479,7 @@ class sqlmap:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("python2 %s/sqlmap.py --wizard" % (self.installDir))
+        shell("python2 %s/sqlmap.py --wizard" % (self.installDir))
 
 class slowloris:
     def __init__(self):
@@ -493,7 +495,7 @@ class slowloris:
         return (os.path.isdir(self.installDir))
 
     def run(self,target):
-        os.system("python3 %s/slowloris.py %s" % (self.installDir, target))
+        shell("python3 %s/slowloris.py %s" % (self.installDir, target))
 
 class pwnloris:
     def __init__(self):
@@ -509,7 +511,7 @@ class pwnloris:
         return (os.path.isdir(self.installDir))
 
     def run(self,target):
-        os.system("python3 %s/pwnloris.py %s" % (self.installDir, target))
+        shell("python3 %s/pwnloris.py %s" % (self.installDir, target))
 
 class atscan:
     def __init__(self):
@@ -524,7 +526,7 @@ class atscan:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("perl %s/atscan.pl --interactive" % (self.installDir))
+        shell("perl %s/atscan.pl --interactive" % (self.installDir))
 
 class hyde:
     def __init__(self):
@@ -538,7 +540,7 @@ class hyde:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        os.system("python3 %s/hyde/main.py" % (self.installDir))
+        shell("python3 %s/hyde/main.py" % (self.installDir))
 
 
 # Default 
@@ -567,20 +569,20 @@ class hashcheck:
         print("99 - exit")
         hashtype = input(color.NOTICE + "onifw/hashcheck > " + color.END)
         if hashtype=="1":
-            os.system("md5sum {}".format(filepath))
+            shell("md5sum {}".format(filepath))
         elif hashtype == "2":
-            os.system("sha1sum {}".format(filepath))
+            shell("sha1sum {}".format(filepath))
         elif hashtype=="3":
-            os.system("sha224sum {}".format(filepath))
+            shell("sha224sum {}".format(filepath))
         elif hashtype == "4":
-            os.system("sha256sum {}".format(filepath))
+            shell("sha256sum {}".format(filepath))
 
 class servicestatus:
     def __init__(self,logDir):
         self.logDir=logDir
         if not path.isdir(self.logDir):mkdir(self.logDir)  # Make folder
         print(color.LOGGING)
-        os.system("ps -ef > {}/services.out".format(self.logDir))
+        shell("ps -ef > {}/services.out".format(self.logDir))
         print(color.END + color.NOTICE + "[*] - Log saved in the .onifw/src/logs/ dir" + color.END)
 
 
@@ -598,12 +600,12 @@ class firewall:
         print(color.END)
         choice = input(color.NOTICE + "onifw/firewallconfig > " + color.END)
         if choice == "1":
-            os.system("iptables-save > {}/firewall.out".format(self.logDir))
+            shell("iptables-save > {}/firewall.out".format(self.logDir))
         elif choice == "2":
-            os.system("iptables-save > {}/firewall.out".format(self.logDir))
-            os.system("vi {}/firewall.out".format(logDir))
+            shell("iptables-save > {}/firewall.out".format(self.logDir))
+            shell("vi {}/firewall.out".format(logDir))
         if choice == "3":
-            os.system("iptables-restore < {}/firewall.out".format(self.logDir))
+            shell("iptables-restore < {}/firewall.out".format(self.logDir))
 
 
 class viewtraffic:
@@ -616,9 +618,9 @@ class viewtraffic:
         print("2 - Tshark")
         choice = input(color.NOTICE + "onifw/trafficanalyzer> " + color.END)
         if choice == "1":
-            os.system("sudo tcpdump -A -vv > {}/tcpdump.out".format(self.logDir))
+            shell("sudo tcpdump -A -vv > {}/tcpdump.out".format(self.logDir))
         elif choice == "2":
-            os.system("sudo tcpdump -w {}/tshark.pcap".format(self.logDir))
+            shell("sudo tcpdump -w {}/tshark.pcap".format(self.logDir))
 
 
 class networkmanaged:
@@ -634,18 +636,18 @@ class networkmanaged:
         if ans == "1":
             inter_name = input("interface name: ")
             try:
-                os.system("sudo iwconfig {} down".format(inter_name))
-                os.system("sudo iwconfig {} mode monitor".format(inter_name))
-                os.system("sudo iwconfig {} up".format(inter_name))
+                shell("sudo iwconfig {} down".format(inter_name))
+                shell("sudo iwconfig {} mode monitor".format(inter_name))
+                shell("sudo iwconfig {} up".format(inter_name))
             except:
                 print(
                     color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
         elif ans == "2":
             inter_name = input("interface name: ")
             try:
-                os.system("sudo iwconfig {} down".format(inter_name))
-                os.system("sudo iwconfig {} mode managed".format(inter_name))
-                os.system("sudo iwconfig {} up".format(inter_name))
+                shell("sudo iwconfig {} down".format(inter_name))
+                shell("sudo iwconfig {} mode managed".format(inter_name))
+                shell("sudo iwconfig {} up".format(inter_name))
             except:
                 print(
                     color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
@@ -657,4 +659,4 @@ class onimap:
         self.installDir = installDir
         print("Which target to scan")
         target = input(color.NOTICE + "onifw/onimap > " + color.END)
-        os.system("{0}core/onimap {1}".format(self.installDir,target))
+        shell("{0}core/onimap {1}".format(self.installDir,target))

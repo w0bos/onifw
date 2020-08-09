@@ -1,11 +1,12 @@
-import os
-
+from os import makedirs as mkdir
+from os import path
+from os import system as shell
 import core.confighandler as cfg
 from configparser import ConfigParser
 from sys import exc_info as err
 from packaging import version
 from core.gui import color as color
-import subprocess
+from subprocess import check_output
 
 class Updater:
 
@@ -17,8 +18,8 @@ class Updater:
                     local_version = version.parse(f.readlines()[0].rstrip("\n\r"))
                 f.close()
     
-                if not os.path.isdir("{}/temp".format(installDir)):  os.makedirs("{}/temp".format(installDir))
-                os.system("wget -q -O {}/temp/latest_version.txt https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt".format(installDir))
+                if not path.isdir("{}/temp".format(installDir)):  mkdir("{}/temp".format(installDir))
+                shell("wget -q -O {}/temp/latest_version.txt https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt".format(installDir))
                 with open("{}/temp/latest_version.txt".format(installDir)) as f:
                     latest_version = version.parse(f.readlines()[0].rstrip("\n\r"))
                 f.close()
@@ -27,8 +28,8 @@ class Updater:
                     ans = input(color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
                     if ans.lower() in ["yes","y"]:
                         # Won't wipe old install
-                        os.system("cd {} && git pull".format(installDir))
-                        #os.system("{}../install.sh".format(installDir))
+                        shell("cd {} && git pull".format(installDir))
+                        #shell("{}../install.sh".format(installDir))
                     else:
                         print("[*] - Update aborted")
     
@@ -39,14 +40,14 @@ class Updater:
                 else:
                     print(color.WARNING + "[!] - Unknown error" + color.END)
     
-                os.system("rm -rf {}/temp".format(installDir))
+                shell("rm -rf {}/temp".format(installDir))
             except:
                 print("[!] - An unexpected error occurred! Please try again")
                 if cfg.check_value(installDir,"debug",False):
                     print(err())
 
     def check_branch(self):
-        curr_branch = subprocess.check_output("cd {} && git branch --show-current".format(self.installDir), shell=True).decode("utf-8").strip('\n')
+        curr_branch = check_output("cd {} && git branch --show-current".format(self.installDir), shell=True).decode("utf-8").strip('\n')
         if curr_branch == "dev":
             print("[!] - Currently working on the dev branch. Updates can only be done while in the master branch\n[!] - Use checkout master to switch to the master branch")
             return True
