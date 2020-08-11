@@ -67,9 +67,6 @@ import core.confighandler   as cfg
 from   core.loading         import thread_loading
 from   core.gui             import color as color
 
-
-
-
 # Misc functions
 def clearScr():
     shell("cls||clear")

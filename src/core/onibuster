@@ -29,7 +29,7 @@ with open(dictf, encoding="utf-8", errors="ignore") as f:
             else :
                 if len(i) > 1:
                     code = requests.get("http://"+rhost+"/"+i).status_code
-                    if code == 200 or code == 403:
+                    if code != 404:
                         print(
                             "[*] - {0} is a valid directory - Code {1}".format(i, code))
                         flag = 1
