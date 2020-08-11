@@ -55,22 +55,22 @@ class ConfigOnstart:
     def startup(self):
         if check_value(self.installDir,"show_ascii_art",True):
             with open("{}data/logo_ascii.txt".format(self.installDir), 'r') as fin:
-                print(color.color_random[0])
-                print(fin.read())
+                print(color.color_random[1]+fin.read())
                 print(color.END)
             fin.close()
+        if check_value(self.installDir, "check_updates", False):
+            from core.updater import Updater
+            Updater(self.installDir)
+        if check_value(self.installDir, "show_version", True):
+            print(color.color_random[0]+"\t\tVersion: "+self.version)
         if check_value(self.installDir, "check_connectivity", True):
             if get_connection():
                 print(color.OKGREEN + "\n[*] - Connected to a network")
             else:
                 print(color.BOLD)
                 print(color.RED + "[!] - No connectivity!" + color.WHITE)
-                print(color.RED + "[!] - Some tools might not work as intended" + color.END)
-        if check_value(self.installDir, "check_updates", False):
-            from core.updater import Updater
-            Updater(self.installDir)
-        if check_value(self.installDir, "show_version", True):
-            print(color.color_random[0]+self.version)
+                print(
+                    color.RED + "[!] - Some tools might not work as intended" + color.END)
         if check_value(self.installDir, "show_options", False):
             print(color.BOLD + color.LOGGING + "configuration:" + color.END)
             print("show_ascii_art: "    +color.NOTICE  +str(check_value(self.installDir,"show_ascii_art",True))       + color.END)

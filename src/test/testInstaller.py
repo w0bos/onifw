@@ -26,6 +26,11 @@ class testConfigHandler(unittest.TestCase):
         pacman.Install(installDir, ["hyde","poet"])
         cleanup()
 
+    
+    """
+    Those test should not create anything except packages from recommended.
+    Scripts won't install ==> Error message.
+    """
     def test_install_script(self):
         pacman.Install(installDir, ["smtp"])
         cleanup()

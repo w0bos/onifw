@@ -373,6 +373,7 @@ if __name__ == '__main__':
         if cfg.check_value(installDir,"show_loading",True):
             print(color.color_random[1])
             thread_loading()
+        clearScr()
         cfg.ConfigOnstart(installDir)
         cfg.ConfigMisc(installDir)
         main()
