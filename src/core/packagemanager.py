@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 
 import core.dict as dictmgr
-import core.confighandler as cfg
-
 from os import system as shell
 from core.gui import color
-from configparser import ConfigParser
-from sys import exc_info as err
 
 
 # Dict to stop using absolute values

@@ -1,7 +1,6 @@
 #!/bin/python3
 
 import sys, socket
-from os import system as bash
 from datetime import datetime as date
 def main(target, verbose=False):
     """

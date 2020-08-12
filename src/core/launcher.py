@@ -8,9 +8,7 @@ from os import path
 from os import system as shell
 from core.gui import color as color
 from time import gmtime, strftime
-from subprocess import run, check_output, PIPE
-from requests import get
-from getpass import getuser
+from subprocess import check_output
 
 def clearScr():
     shell('cls||clear')

@@ -43,21 +43,18 @@
 
 '''
 
-# Imports
-import readline
-
 # From
 from os import system as shell
 from os import chdir, getcwd, path
 from os import makedirs as mkdir
 from sys import exit as abort
-from socket import create_connection, gethostbyname, gethostname
 from datetime import date
 from random import randint
 from subprocess import run, check_output, PIPE
 from requests import get
 from getpass import getuser
 from readline import set_completer, parse_and_bind
+from socket import gethostbyname, gethostname
 
 #File loading
 import core.completer       as auto
@@ -69,6 +66,7 @@ import core.dict            as dictmgr
 import core.confighandler   as cfg
 from   core.loading         import thread_loading
 from   core.gui             import color as color
+
 
 # Misc functions
 def clearScr():

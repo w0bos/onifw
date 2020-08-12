@@ -2,7 +2,6 @@
 
 from core.gui import color
 import core.confighandler as cfg
-from configparser import ConfigParser
 from sys import exc_info as err
 
 def addWords(installDir,wordList):

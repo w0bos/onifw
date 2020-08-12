@@ -1,12 +1,9 @@
-from sys import exit as abort
 from os import system as cmd
 from os import path
 from os import makedirs as mkdir
 from core.gui import color
 from socket import create_connection
 from configparser import ConfigParser
-import readline
-
 
 
 # Misc functions

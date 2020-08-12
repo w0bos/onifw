@@ -4,7 +4,6 @@ import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
 import core.confighandler as cfghandler
-from configparser import ConfigParser
 from sys import exc_info as err
 
 
