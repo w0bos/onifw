@@ -8,7 +8,9 @@ from os import path
 from os import system as shell
 from core.gui import color as color
 from time import gmtime, strftime
-
+from subprocess import run, check_output, PIPE
+from requests import get
+from getpass import getuser
 
 def clearScr():
     shell('cls||clear')
@@ -543,13 +545,20 @@ class hyde:
         shell("python3 %s/hyde/main.py" % (self.installDir))
 
 
+
+
+"""
+
+CUSTOM
+
+"""
+
+
+
+
+
+
 # Default 
-'''
-hashcheck
-viewtraffic
-netmanager
-onimap
-'''
 
 class ipfind:
     def __init__(self):
@@ -659,4 +668,24 @@ class onimap:
         self.installDir = installDir
         print("Which target to scan")
         target = input(color.NOTICE + "onifw/onimap > " + color.END)
-        shell("{0}core/onimap {1}".format(self.installDir,target))
+        shell("python3 {0}core/onimap.py {1}".format(self.installDir,target))
+
+
+class onibuster:
+    def __init__(self, installDir, logDir):
+        self.logDir = logDir
+        self.installDir = installDir
+        print("Set target")
+        rhost = input("target > ")
+        print("Set port (default:80)")
+        port = input("port > ")
+        if len(port) < 1:
+            port = 80
+            print("Which dictionnary file to use")
+            dictf = input("dictionnary > ")
+            shell("python3 {0}/core/onibuster.py {1} {2} {3}".format(installDir, rhost, port, dictf))
+
+class bg:
+    def __init__(self):
+       sh = check_output("echo $SHELL", shell=True).decode("utf-8").rstrip("\r\n")
+       shell("python -c 'from pty import spawn; spawn(\"%s\")'" % sh)

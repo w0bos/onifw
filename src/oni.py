@@ -133,7 +133,7 @@ class main:
         completer = auto.Autocomp(readfile(installDir + "data/dict.txt"))
         set_completer(completer.complete)
         parse_and_bind('tab: complete')
-        prompt = input(color.color_random[0]+onifw_cmd + color.END)
+        prompt = input(color.BOLD + color.color_random[0] + onifw_cmd + color.END)
         
         # Ask input
         cmd = prompt.split()
@@ -295,8 +295,7 @@ class main:
             elif marg == "ipfinder":
                 launch.ipfind()
             elif marg == "bg":
-                sh = check_output("echo $SHELL", shell=True).decode("utf-8").rstrip("\r\n")
-                shell("python -c 'from pty import spawn; spawn(\"%s\")'" % sh)
+                launch.bg()
             elif marg == "hashcheck":
                 launch.hashcheck(logDir)
             elif marg == "servicestatus":
@@ -314,15 +313,7 @@ class main:
                 shell_cmd = input(color.END+"shell$ ")
                 shell(shell_cmd)
             elif marg=="onibuster":
-                print("Set target")
-                rhost=input("target > ")
-                print("Set port (default:80)")
-                port = input("port > ")
-                if len(port)<1:
-                    port = 80
-                print("Which dictionnary file to use")
-                dictf = input("dictionnary > ")
-                shell("{0}/core/onibuster {1} {2} {3}".format(installDir, rhost, port, dictf))
+                launch.onibuster(installDir,logDir)
             elif marg == "myip":
                 print("Local IP: {}".format(gethostbyname(gethostname())))
                 print("Remote IP: {}".format(get('https://api.ipify.org').text))
@@ -386,4 +377,5 @@ if __name__ == '__main__':
         print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
         if cfg.check_value(installDir, "delete_cache", True):
             del_cache()
+
 

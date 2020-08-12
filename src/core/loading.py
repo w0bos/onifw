@@ -2,7 +2,18 @@ from sys import stdout
 from random import choice
 from threading import Thread
 from time import sleep
-import setup
+from socket import create_connection
+#import setup
+
+
+def init():
+    try:
+        create_connection(("www.google.com", 80))
+        isconnected = True
+    except:
+        isconnected = False
+
+    return isconnected
 
 def loadingHack(importlib):
 	chaine = "[*]"+' Loading the framework'
@@ -42,7 +53,7 @@ def loadingUpper(importlib):
 def thread_loading():
 	num = choice([1])
 
-	importlib = Thread(target=setup.init)
+	importlib = Thread(target=init)
 	importlib.start()
 
 	if num == 1:
