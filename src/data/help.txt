@@ -8,7 +8,7 @@ checkout      | checkout to another branch of onifw
               | Note: the dev branch might break your current install
 clean_cache   | clean __pycache__/ folders
 clear         | clear screen
-help          | shows help
+help, ?       | shows help
 list, ls      | shows installed packages and scripts
               | [-r] shows all packages available
 pkg           | package manager of onifw

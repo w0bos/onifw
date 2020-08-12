@@ -4,7 +4,7 @@
 '''
     TODO:
         * Commands
-            - myIP  -> Displays local and remote IP
+            - help [command] ==> Show more help
             
         * Configuration
             - Complete log output of onifw in log/oni.log file
@@ -20,6 +20,7 @@
 
     DONE:
         * Commands
+            - myIP  -> Displays local and remote IP
             - shell -> Run a shell command
             - Add commands from dlab/plab
             - cd -> change current directory
@@ -47,14 +48,16 @@ import readline
 
 # From
 from os import system as shell
-from os import path
-from os import chdir, getcwd
+from os import chdir, getcwd, path
 from os import makedirs as mkdir
 from sys import exit as abort
 from socket import create_connection, gethostbyname, gethostname
 from datetime import date
 from random import randint
 from subprocess import run, check_output, PIPE
+from requests import get
+from getpass import getuser
+from readline import set_completer, parse_and_bind
 
 #File loading
 import core.completer       as auto
@@ -128,8 +131,8 @@ class main:
         if not path.isdir(toolDir): mkdir(toolDir)
         if not path.isdir(logDir): mkdir(logDir)
         completer = auto.Autocomp(readfile(installDir + "data/dict.txt"))
-        readline.set_completer(completer.complete)
-        readline.parse_and_bind('tab: complete')
+        set_completer(completer.complete)
+        parse_and_bind('tab: complete')
         prompt = input(color.color_random[0]+onifw_cmd + color.END)
         
         # Ask input
@@ -146,8 +149,6 @@ class main:
             #loopback
         else:
             marg = cmd[0]
-            #main argument
-
             # BASE COMMANDS
             # PASS
             if marg=="quit" or marg=="exit":
@@ -171,10 +172,13 @@ class main:
                     #generator in print?
             elif marg== "update":
                 update.Updater(installDir)
-            elif marg=="help":
-                print(color.NOTICE)
-                with open("{}data/help.txt".format(installDir), 'r') as fin:
-                    print(color.color_random[0] + fin.read() + color.END + color.WHITE)
+            elif marg=="help" or marg=="?":
+                
+                if len(cmd)<2:
+                    with open("{}data/help.txt".format(installDir), 'r') as fin:
+                        print(color.NOTICE+color.color_random[0] + fin.read() + color.END + color.WHITE)
+                else:
+                    print("[-] - WIP")
             elif marg=="uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
@@ -291,7 +295,8 @@ class main:
             elif marg == "ipfinder":
                 launch.ipfind()
             elif marg == "bg":
-                shell("python -c 'from pty import spawn; spawn(\"/bin/bash\")'")
+                sh = check_output("echo $SHELL", shell=True).decode("utf-8").rstrip("\r\n")
+                shell("python -c 'from pty import spawn; spawn(\"%s\")'" % sh)
             elif marg == "hashcheck":
                 launch.hashcheck(logDir)
             elif marg == "servicestatus":
@@ -319,16 +324,15 @@ class main:
                 dictf = input("dictionnary > ")
                 shell("{0}/core/onibuster {1} {2} {3}".format(installDir, rhost, port, dictf))
             elif marg == "myip":
-                print("Local IP: {}".format( gethostbyname( gethostname() ) ))
-                print("Remote IP: {}".format("Not implemented"))
+                print("Local IP: {}".format(gethostbyname(gethostname())))
+                print("Remote IP: {}".format(get('https://api.ipify.org').text))
             elif marg == "cd":
                 if len(cmd)>1:
                     target_dir=cmd[1]
                     try:
                         print("[*] - Changing current directory...")
-                        chdir(target_dir)
+                        chdir("/home/{}".format(getuser())+"/"+target_dir)
                         #shell("cd {}".format(target_dir))
-                        print("[*] - Done")
                         print("[*] - Current directory: "+color.NOTICE+getcwd()+color.END)
                     except:
                         print("[!] - And unexpected error occurred")
