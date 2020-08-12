@@ -20,14 +20,21 @@ def get_connection():
 # Check values
 
 
-def check_value(installDir,value,default):
+def check_value(installDir,value,default, boolean=True):
     configFile = installDir + "onirc"
     parser = ConfigParser()
     parser.read(configFile)
-    if parser.has_option('config', value):
-        return parser.getboolean('config', value)
+    if boolean:
+        if parser.has_option('config', value):
+            return parser.getboolean('config', value)
+        else:
+            return default
     else:
-        return default
+        if parser.has_option('config', value):
+            return parser.get('config', value)
+        else:
+            return default
+
 
 
 def check_prompt(installDir):
@@ -50,11 +57,17 @@ class ConfigOnstart:
         self.startup()
     
     def startup(self):
-        if check_value(self.installDir,"show_ascii_art",True):
-            with open("{}data/logo_ascii.txt".format(self.installDir), 'r') as fin:
+        if check_value(self.installDir, "custom_ascii",0, False) != 0:
+            with open("{}".format(check_value(self.installDir, "custom_ascii", 0, False)),"r") as fin:
                 print(color.color_random[1]+fin.read())
                 print(color.END)
             fin.close()
+        else:
+            if check_value(self.installDir, "show_ascii", True):
+                with open("{}data/logo_ascii.txt".format(self.installDir), 'r') as fin:
+                    print(color.color_random[1]+fin.read())
+                    print(color.END)
+                fin.close()
         if check_value(self.installDir, "check_updates", False):
             from core.updater import Updater
             Updater(self.installDir)
@@ -70,7 +83,8 @@ class ConfigOnstart:
                     color.RED + "[!] - Some tools might not work as intended" + color.END)
         if check_value(self.installDir, "show_options", False):
             print(color.BOLD + color.LOGGING + "configuration:" + color.END)
-            print("show_ascii_art: "    +color.NOTICE  +str(check_value(self.installDir,"show_ascii_art",True))       + color.END)
+            print("show_ascii: "        +color.NOTICE  +str(check_value(self.installDir,"show_ascii",True))           + color.END)
+            print("custom_ascii: "      +color.NOTICE  +str(check_value(self.installDir, "custom_ascii",0, True))     + color.END)
             print("check_connectivity: "+color.NOTICE  +str(check_value(self.installDir,"check_connectivity",True))   + color.END)
             print("check_updates: "     +color.NOTICE  +str(check_value(self.installDir,"check_updates",False))       + color.END)
             print("show_version: "      +color.NOTICE  +str(check_value(self.installDir,"show_version",True))         + color.END)
