@@ -3,6 +3,7 @@ from os import path
 from os import makedirs as mkdir
 from core.gui import color
 from socket import create_connection
+import core.logHandler as logh
 from configparser import ConfigParser
 
 
@@ -130,11 +131,11 @@ class CustomTool:
 class ConfigMisc:
     def __init__(self, installDir):
         self.installDir = installDir
-        self.logDir = installDir + "logs"
+        self.logDir = installDir + "logs/"
         self.loadMisc()
 
     def loadMisc(self):
         if check_value(self.installDir,"save_session",False):
             if not path.isdir(self.logDir): mkdir(self.logDir) # Make the dir
             if not path.isfile(self.logDir+"oni.log"): cmd("touch {}/oni.log".format(self.logDir))
-        
+            logh.LogHandler(self.installDir, self.logDir, [], True)

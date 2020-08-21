@@ -6,9 +6,10 @@ import socket
 from os import makedirs as mkdir
 from os import path
 from os import system as shell
-from core.gui import color as color
+from core.gui import color
 from time import gmtime, strftime
 from subprocess import check_output
+from socket import gethostname, gethostbyname
 
 def clearScr():
     shell('cls||clear')
@@ -687,3 +688,21 @@ class bg:
     def __init__(self):
        sh = check_output("echo $SHELL", shell=True).decode("utf-8").rstrip("\r\n")
        shell("python -c 'from pty import spawn; spawn(\"%s\")'" % sh)
+
+class run_shell:
+    def __init__(self):
+        print(color.LOGGING+"[*] - Opening shell prompt")
+        shell_cmd=input(color.NOTICE+"shell$"+color.END)
+        shell(shell_cmd)
+
+class myip:
+    def __init__(self):
+        print("Local IP: {}".format(gethostbyname(gethostname())))
+        print("Remote IP: {}".format(get("https://api.ipify.org").text))
+
+
+class cd:
+    def __init__(self, cmd):
+        self.cmd = cmd
+
+

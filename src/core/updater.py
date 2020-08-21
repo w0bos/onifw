@@ -1,11 +1,13 @@
 from os import makedirs as mkdir
 from os import path
+from core.gui import color
 from os import system as shell
 import core.confighandler as cfg
 from sys import exc_info as err
 from packaging import version
-from core.gui import color as color
 from subprocess import check_output
+
+
 
 class Updater:
 

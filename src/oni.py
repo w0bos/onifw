@@ -48,7 +48,6 @@ from os import system as shell
 from os import chdir, getcwd, path
 from os import makedirs as mkdir
 from sys import exit as abort
-from datetime import date
 from random import randint
 from subprocess import run, check_output, PIPE
 from requests import get
@@ -64,8 +63,9 @@ import core.launcher        as launch
 import core.updater         as update
 import core.dict            as dictmgr
 import core.confighandler   as cfg
+import core.logHandler      as logger
 from   core.loading         import thread_loading
-from   core.gui             import color as color
+from   core.gui             import color
 
 
 # Misc functions
@@ -137,10 +137,7 @@ class main:
         cmd = prompt.split()
 
         #Add input to log if enables
-        if cfg.check_value(installDir, "save_session", False):
-            with open("{}logs/oni.log".format(installDir), "a") as f:
-                f.write("[input][{}] : ".format(date.today())+''.join(e+" " for e in cmd)+"\n")
-            f.close()
+        logger.LogHandler(installDir, logDir, cmd)
 
         if len(cmd) == 0:
             pass
@@ -170,7 +167,7 @@ class main:
                     #generator in print?
             elif marg == "update":
                 update.Updater(installDir)
-            elif marg == "help" or marg == " ?":
+            elif marg in ["help", "?"]:
                 if len(cmd) < 2:
                     with open("{}data/help.txt".format(installDir), 'r') as fin:
                         print(
