@@ -13,9 +13,18 @@ Main component of onibuster
     wordlist: dictionnary file
 '''
 
-rhost = args[1]
-rport = args[2]
-dictf = args[3]
+def show_help():
+    print("[!] - Wrong arguments")
+    print("Usage: ./onimap [rhost] [rport] [wordlist]")
+
+
+try:
+    rhost = args[1]
+    rport = args[2]
+    dictf = args[3]
+except IndexError:
+    show_help()
+    exit()
 
 flag = 0
 with open(dictf, encoding="utf-8", errors="ignore") as f:

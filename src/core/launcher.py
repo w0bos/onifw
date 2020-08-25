@@ -4,9 +4,11 @@ import os
 import socket
 
 from os import makedirs as mkdir
-from os import path
+from os import path, chdir, getcwd
 from os import system as shell
 from core.gui import color
+from requests import get
+from getpass import getuser
 from time import gmtime, strftime
 from subprocess import check_output
 from socket import gethostname, gethostbyname
@@ -121,7 +123,7 @@ class nmap:
     def __init__(self, installDir):
         self.installDir = toolDir + "nmap"
         self.normalDir = installDir
-        self.targetPrompt = color.LOGGING + "nmap > Enter Target IP/Subnet/Range/Host: " + color.WHITE
+        self.targetPrompt = color.LOGGING + "nmap >  " + color.WHITE
 
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
@@ -134,6 +136,7 @@ class nmap:
         return (os.path.isfile("/usr/bin/nmap") or os.path.isfile("/usr/local/bin/nmap"))
 
     def run(self):
+        print("[?] - Enter target IP/Subnet/Range/Host")
         target = input(self.targetPrompt)
         self.menu(target)
 
@@ -189,7 +192,8 @@ class xsstrike:
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
             clearScr()
         else:
-            response = input(color.LOGGING + "xsstrike > Enter a command (leave blank if unsure) :" + color.WHITE)
+            print("[?] - Enter a command: (leave blank if unsure)")
+            response = input(color.LOGGING + "xsstrike > " + color.WHITE)
             self.run(response)
         
 
@@ -210,7 +214,8 @@ class doork:
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
             clearScr()
         else:
-            target = input(color.LOGGING + "doork > Enter a Target: " + color.WHITE)
+            print("[?] - Enter a target")
+            target = input(color.LOGGING + "doork > " + color.WHITE)
             self.run(target)
 
     def installed(self):
@@ -254,7 +259,8 @@ class wpscan:
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
-            target = input(color.LOGGING + "wpscan > Enter a Target: " + color.WHITE)
+            print("[?] - Enter a target")
+            target = input(color.LOGGING + "wpscan > " + color.WHITE)
             self.menu(target)
 
     def installed(self):
@@ -342,19 +348,6 @@ class snmp:
         target = input("Enter Target IP: ")
         shell("python2 %s/snmpbrute.py -t %s" % (self.installDir,target))
 
-class pyphi:
-    def __init__(self):
-        shell("wget http://pastebin.com/raw/DDVqWp4Z --output-document=pypisher.py")
-        clearScr()
-        shell("mv pypisher.py %spypisher.py" % (toolDir))
-        shell("python2 %spypisher.py" % (toolDir))
-
-class stmp:
-    def __init__(self):
-        shell("wget http://pastebin.com/raw/Nz1GzWDS --output-document=smtp.py")
-        clearScr()
-        shell("mv smtp.py %ssmtp.py" % (toolDir))
-        shell("python2 %ssmtp.py" % (toolDir))
 
 class sslstrip:
     def __init__(self):
@@ -370,7 +363,7 @@ class sslstrip:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        target = input("Enter Target IP: ")
+        target = input("[?] - Enter Target IP: ")
         shell("python2 %s/sslstrip.py %s" % (self.installDir, target))
 
 class cupp:
@@ -404,7 +397,8 @@ class brutex:
         return (os.path.isdir(self.installDir))
 
     def run(self):
-        target = input(color.LOGGING + "BruteX > " + color.WHITE + "Enter Target IP: ")
+        print("[?] - Enter target IP")
+        target = input(color.LOGGING + "BruteX > " + color.WHITE)
         shell("brutex %s" % target)
 
 class leviathan:
@@ -427,7 +421,7 @@ class leviathan:
 class nikto:
     def __init__(self):
         self.installDir = toolDir + "nikto"
-        self.targetPrompt = color.IMPORTANT + "Nikto > " + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
+        self.targetPrompt = color.IMPORTANT + "Nikto > " + color.WHITE
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
@@ -437,6 +431,7 @@ class nikto:
         return (os.path.isfile("%s/program/nikto.pl" % self.installDir))
 
     def run(self):
+        print("[?] - Enter Target IP/Subnet/Range/Host")
         target = input(self.targetPrompt)
         self.menu(target)
     def menu(self, target):
@@ -448,7 +443,8 @@ class rscan:
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
-            self.targetPrompt = color.LOGGING + "rscan > "  + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
+            self.targetPrompt = color.LOGGING + "rscan > "  + color.WHITE
+            print("[?] - Enter target ip/subnet/range/host")
             target=input(self.targetPrompt)
             self.run(target)
 
@@ -466,7 +462,8 @@ class arachni:
         else:self.run()
 
     def run(self):
-        target = input(color.LOGGING + "Arachni > " + color.LOGGING + "Enter Target Hostname/URL: ")
+        print("[?] - Enter target")
+        target = input(color.LOGGING + "Arachni > " + color.LOGGING)
         shell("sudo arachni %s" %(target))
 
 class sqlmap:
@@ -485,10 +482,11 @@ class sqlmap:
 class slowloris:
     def __init__(self):
         self.installDir = toolDir + "slowloris"
-        self.targetPrompt = color.LOGGING + "slowloris > " + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
+        self.targetPrompt = color.LOGGING + "slowloris > " + color.WHITE
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
+            print("[?] - Enter Target IP/Subnet/Range/Host: ")
             target = input(self.targetPrompt)
             self.run(target)
 
@@ -501,10 +499,11 @@ class slowloris:
 class pwnloris:
     def __init__(self):
         self.installDir = toolDir + "pwnloris"
-        self.targetPrompt = color.LOGGING + "pwnloris > " + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
+        self.targetPrompt = color.LOGGING + "pwnloris > " + color.WHITE
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
+            print("[?] - Enter Target IP/Subnet/Range/Host: ")
             target = input(self.targetPrompt)
             self.run(target)
 
@@ -517,11 +516,10 @@ class pwnloris:
 class atscan:
     def __init__(self):
         self.installDir = toolDir + "atscan"
-        self.targetPrompt = color.LOGGING + "ATscan > " + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
-
-        else:self.run()
+        else:
+            self.run()
 
     def installed(self):
         return (os.path.isdir(self.installDir))
@@ -532,10 +530,10 @@ class atscan:
 class hyde:
     def __init__(self):
         self.installDir = toolDir + "hyde"
-        self.targetPrompt = color.LOGGING + "Hyde > " + color.WHITE + "Enter Target IP/Subnet/Range/Host: "
         if not self.installed():
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
-        else:self.run()
+        else:
+            self.run()
 
     def installed(self):
         return (os.path.isdir(self.installDir))
@@ -561,14 +559,15 @@ CUSTOM
 
 class ipfind:
     def __init__(self):
+        print("[?] - Enter URL")
         host = input(color.NOTICE +
-                     "onifw/IPfinder > Enter URL: " + color.WHITE)
+                     "onifw/IPfinder > "+ color.WHITE)
         ip = socket.gethostbyname(host)
         print("[*] - The IP of %s is: %s" % (host, ip))
 
 class hashcheck:
     def __init__(self,logDir):
-        filepath=input(color.LOGGING+"Enter path of file: ")
+        filepath=input(color.LOGGING+"[?] - Enter path of file: ")
         print("Hash checker")
         print("1 - MD5")
         print("2 - sha1")
@@ -665,7 +664,7 @@ class onimap:
     def __init__(self,installDir,logDir):
         self.logDir = logDir
         self.installDir = installDir
-        print("Which target to scan")
+        print("[?] - Which target to scan")
         target = input(color.NOTICE + "onifw/onimap > " + color.END)
         shell("python3 {0}core/onimap.py {1}".format(self.installDir,target))
 
@@ -674,15 +673,15 @@ class onibuster:
     def __init__(self, installDir, logDir):
         self.logDir = logDir
         self.installDir = installDir
-        print("Set target")
+        print("[?] - Set target")
         rhost = input("target > ")
-        print("Set port (default:80)")
+        print("[?] - Set port (default:80)")
         port = input("port > ")
         if len(port) < 1:
             port = 80
-            print("Which dictionnary file to use")
-            dictf = input("dictionnary > ")
-            shell("python3 {0}/core/onibuster.py {1} {2} {3}".format(installDir, rhost, port, dictf))
+        print("[?] - Which dictionnary file to use")
+        dictf = input("dictionnary > ")
+        shell("python3 {0}/core/onibuster.py {1} {2} {3}".format(installDir, rhost, port, dictf))
 
 class bg:
     def __init__(self):
@@ -692,17 +691,55 @@ class bg:
 class run_shell:
     def __init__(self):
         print(color.LOGGING+"[*] - Opening shell prompt")
-        shell_cmd=input(color.NOTICE+"shell$"+color.END)
+        shell_cmd=input(color.NOTICE+"shell$ "+color.END)
         shell(shell_cmd)
 
 class myip:
     def __init__(self):
-        print("Local IP: {}".format(gethostbyname(gethostname())))
-        print("Remote IP: {}".format(get("https://api.ipify.org").text))
-
+        print(color.NOTICE + "Local IP: {}".format(gethostbyname(gethostname())))
+        print("Remote IP: {}".format(get("https://api.ipify.org").text) + color.END)
 
 class cd:
     def __init__(self, cmd):
-        self.cmd = cmd
+        if len(cmd) > 1:
+            target_dir = cmd[1]
+            try:
+                print("[+] - Changing current directory...")
+                chdir("/home/{}".format(getuser()) + "/" + target_dir)
+                print("[*] - Current directory: " +
+                      color.NOTICE + getcwd() + color.END)
+            except:
+                print("[!] - And unexpected error occurred")
+
+class checkout:
+    def __init__(self, cmd, installDir):
+        if len(cmd) > 1:
+            if cmd[1] == "dev":
+                ans = input(
+                    "[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                if ans.lower() in ["y", "yes"]:
+                    shell("cd {} && git checkout dev".format(installDir))
+                    print(
+                        "[*] - Done.\n[*] - Restart onifw for changes to take effect")
+            if cmd[1] == "master":
+                ans = input(
+                    "[!] - Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
+                if ans.lower() in ["y", "yes"]:
+                    shell("cd {} && git checkout master".format(installDir))
+                    print(
+                        "[*] - Done.\n[*] - Restart onifw for changes to take effect")
+        else:
+            print("[!] - No branch provided :: Usage: git checkout [branch]")
+            print("[!] - Branches available : master / dev")
 
 
+class status:
+    def __init__(self, installDir):
+        curr_branch = check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
+        version = ""
+        with open("{}data/version.txt".format(installDir)) as f:
+            version = f.readlines()[0].rstrip("\n\r")
+        f.close()
+        if curr_branch == "dev":
+            print(color.NOTICE + "[+]" + color.HEADER + " - onifw {0} on {1} branch".format(version, curr_branch) + color.END)
+            print(color.NOTICE + "[+]" + color.HEADER + " - Installation location: {}".format(installDir) + color.END)

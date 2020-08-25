@@ -70,8 +70,8 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         print("\n\n")
 
 def helper():
-    print("pymap")
-    print("Usage: ./pymap [flag] [host]")
+    print("onimap")
+    print("Usage: ./onimap [flag] [host]")
     print("host is an ip address or name")
     print("Available flags:")
     print("-v    displays verbose")

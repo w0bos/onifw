@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 '''
     TODO:
         * Commands
@@ -16,7 +15,6 @@
             - Add port configuration when using onimap
             - Edit cd command to work with path variables ($HOME, ~/, ../)
             - Add --install-recommended flag to the installer to install all at once
-
 
     DONE:
         * Commands
@@ -50,7 +48,6 @@ from os import makedirs as mkdir
 from sys import exit as abort
 from random import randint
 from subprocess import run, check_output, PIPE
-from requests import get
 from getpass import getuser
 from readline import set_completer, parse_and_bind
 from socket import gethostbyname, gethostname
@@ -66,21 +63,17 @@ import core.confighandler   as cfg
 import core.logHandler      as logger
 from   core.loading         import thread_loading
 from   core.gui             import color
-
-
+    
 # Misc functions
 def clearScr():
     shell("cls||clear")
-
 
 def readfile(file_dir):
     f = open(file_dir)
     content = [line.rstrip('\n') for line in f]
     return content
 
-
 def del_cache(leave=0):
-
     if leave == 1:
         shell("rm -rf {}core/__pycache__".format(installDir))
         shell("rm -rf {}__pycache__".format(installDir))
@@ -88,7 +81,6 @@ def del_cache(leave=0):
     else:
         shell("rm -rf {}core/__pycache__".format(installDir))
         shell("rm -rf {}__pycache__".format(installDir))
-
 
 def pkgmgrhelp():
     print(color.NOTICE)
@@ -103,14 +95,12 @@ def pkgmgrhelp():
     print("      -c --custom     add custom package")
     print(color.WHITE)
 
-
 def loadtools():
     load_cmd = ['ls', '{}'.format(toolDir)]
     output = run(load_cmd, stdout=PIPE).stdout.decode('utf-8')
     #Clean output
     pkg_local = output.splitlines()
     return pkg_local
-
 
 # Data
 installDir = path.dirname(path.abspath(__file__)) + '/'
@@ -119,7 +109,6 @@ logDir = installDir + 'logs/'
 #onifw_cmd = "onifw > "
 onifw_cmd = cfg.check_prompt(installDir)
 debug = cfg.check_value(installDir, "debug", False)
-
 
 # Class
 class main:
@@ -212,7 +201,6 @@ class main:
                 fin.close()
             elif marg == "restore":
                 dictmgr.restoreDict(installDir)
-
 
             # TOOL LAUNCHER
             elif marg in loadtools():
@@ -332,58 +320,23 @@ class main:
             elif marg == "onimap":
                 launch.onimap(installDir, logDir)
             elif marg == "shell":
-                print(color.LOGGING+"[*] - Opening shell prompt")
-                shell_cmd = input(color.END + "shell$ ")
-                shell(shell_cmd)
+                launch.run_shell()
             elif marg == "onibuster":
                 launch.onibuster(installDir, logDir)
             elif marg == "myip":
-                print("Local IP: {}".format(gethostbyname(gethostname())))
-                print("Remote IP: {}".format(get('https://api.ipify.org').text))
+                launch.myip()
             elif marg == "cd":
-                if len(cmd) > 1:
-                    target_dir = cmd[1]
-                    try:
-                        print("[*] - Changing current directory...")
-                        chdir("/home/{}".format(getuser()) + "/" + target_dir)
-                        #shell("cd {}".format(target_dir))
-                        print("[*] - Current directory: " + color.NOTICE + getcwd() + color.END)
-                    except:
-                        print("[!] - And unexpected error occurred")
+                launch.cd(cmd)
             elif marg == "checkout":
-                if len(cmd) > 1:
-                    if cmd[1] == "dev":
-                        ans = input("[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
-                        if ans.lower() in ["y", "yes"]:
-                            shell("cd {} && git checkout dev".format(installDir))
-                            print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
-                    if cmd[1] == "master":
-                        ans = input("[!] - Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
-                        if ans.lower() in ["y", "yes"]:
-                            shell("cd {} && git checkout master".format(installDir))
-                            print("[*] - Done.\n[*] - Restart onifw for changes to take effect")
-                else:
-                    print("[!] - No branch provided :: Usage: git checkout [branch]")
-                    print("[!] - Branches available : master / dev")
+                launch.checkout(cmd, installDir)
             elif marg == "status":
-                curr_branch = check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
-                version = ""
-                with open("{}data/version.txt".format(installDir)) as f:
-                    version = f.readlines()[0].rstrip("\n\r")
-                f.close()
-                if curr_branch == "dev":
-                    print(color.NOTICE + "[+]" + color.HEADER + " - onifw {0} on {1} branch".format(version, curr_branch) + color.END)
-                    print(color.NOTICE + "[+]" + color.HEADER + " - Installation location: {}".format(installDir) + color.END)
+                launch.status(installDir)
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
 
-
-
-
         #loopback while no command
         self.__init__()
-
 
 if __name__ == '__main__':
     try:
