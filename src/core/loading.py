@@ -17,7 +17,7 @@ def init():
 
 def loadingHack(importlib):
 	chaine = "[*]"+' Loading the framework'
-	charspec = ")@€]£+-$*.X^%{_/&\\#}[~!(?;"
+	charspec = ")@€]£+-$>*.`X%{_/&\\#}[~!(?;^§<"
 
 	while importlib.is_alive():
 		chainehack = ""

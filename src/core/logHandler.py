@@ -1,11 +1,4 @@
-import readline
-import subprocess
-
-import core.completer as auto
-import core.dict as dictmgr
 import core.confighandler as cfg
-
-from core.gui import color
 from datetime import date
 
 class LogHandler:
@@ -21,9 +14,6 @@ class LogHandler:
             if self.log_status:
                 if len(self.cmd)>=1:
                     self.write_logs()
-                #else:
-                    
-                    #self.handle_no_cmd()
 
 
     def write_logs(self):
@@ -35,7 +25,7 @@ class LogHandler:
 
     def handle_no_cmd(self):
         pass
-    
+
     def write_boot(self):
         with open(self.logFile,"a") as file_log:
             file_log.write("[Starting onifw][{}]\n".format(date.today()))

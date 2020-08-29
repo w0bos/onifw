@@ -2,19 +2,16 @@
 # -*- coding: utf-8 -*-
 '''
     TODO:
-        * Commands
+        ! Commands
             - help [command] ==> Show more help
 
         * Configuration
-            - Complete log output of onifw in log/oni.log file
 
         * Fix
             ! Some tools require modules (python pip)
 
         * Misc
-            - Add port configuration when using onimap
             - Edit cd command to work with path variables ($HOME, ~/, ../)
-            - Add --install-recommended flag to the installer to install all at once
 
     DONE:
         * Commands
@@ -25,6 +22,7 @@
             - onibuster -> starts a simple directory buster
 
         * Configuration
+            - Complete log output of onifw in log/oni.log file
 
         * Fix
             - Fixed packages that didn't make make install
@@ -36,6 +34,7 @@
             - Fixed openssl install for revsh.
 
         * Misc
+            - Add port configuration when using onimap
             - Simplify help command
             - Rewrote the package manager
 
@@ -43,14 +42,12 @@
 
 # From
 from os import system as shell
-from os import chdir, getcwd, path
+from os import path
 from os import makedirs as mkdir
 from sys import exit as abort
 from random import randint
-from subprocess import run, check_output, PIPE
-from getpass import getuser
+from subprocess import run, PIPE
 from readline import set_completer, parse_and_bind
-from socket import gethostbyname, gethostname
 
 #File loading
 import core.completer       as auto
@@ -106,7 +103,6 @@ def loadtools():
 installDir = path.dirname(path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
 logDir = installDir + 'logs/'
-#onifw_cmd = "onifw > "
 onifw_cmd = cfg.check_prompt(installDir)
 debug = cfg.check_value(installDir, "debug", False)
 
@@ -121,10 +117,8 @@ class main:
         set_completer(completer.complete)
         parse_and_bind('tab: complete')
         prompt = input(color.BOLD + color.color_random[0] + onifw_cmd + color.END)
-
         # Ask input
         cmd = prompt.split()
-
         #Add input to log if enables
         logger.LogHandler(installDir, logDir, cmd)
 
@@ -162,7 +156,7 @@ class main:
                         print(
                             color.NOTICE+color.color_random[0] + fin.read() + color.END + color.WHITE)
                 else:
-                    print("[-] - WIP")
+                    print(color.WARNING+"[-] - WIP"+color.END)
             elif marg == "uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:

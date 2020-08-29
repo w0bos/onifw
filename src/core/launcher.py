@@ -701,12 +701,19 @@ class myip:
 
 class cd:
     def __init__(self, cmd):
+        flag = True
         if len(cmd) > 1:
-            target_dir = cmd[1]
+            value = cmd[1]
+            if cmd[1][0] == "$":
+                value = check_output("echo {}".format(cmd[1]), shell=True).decode("utf-8").strip('\n')
+                flag = False
             try:
-                print("[+] - Changing current directory...")
-                chdir("/home/{}".format(getuser()) + "/" + target_dir)
-                print("[*] - Current directory: " +
+                print(color.OKBLUE+"[+] - Changing current directory...")
+                if flag:
+                    chdir("/home/{}".format(getuser()) + "/" + value)
+                else:
+                    chdir(value)
+                print(color.LOGGING+"[*] - Current directory: " +
                       color.NOTICE + getcwd() + color.END)
             except:
                 print("[!] - And unexpected error occurred")
