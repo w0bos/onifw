@@ -1,9 +1,8 @@
 import unittest
 import core.packagemanager as pacman
 import core.dict as dmgr
-from os import path, system
-from time import sleep
 from os import path
+from time import sleep
 installDir = path.dirname(path.abspath(__file__)) + '/../'
 toolDir = installDir+"tools/"
 

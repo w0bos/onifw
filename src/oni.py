@@ -11,7 +11,7 @@
             ! Some tools require modules (python pip)
 
         * Misc
-            - Edit cd command to work with path variables ($HOME, ~/, ../)
+            
 
     DONE:
         * Commands
@@ -34,6 +34,7 @@
             - Fixed openssl install for revsh.
 
         * Misc
+            - Edit cd command to work with path variables ($HOME, ~/, ../)
             - Add port configuration when using onimap
             - Simplify help command
             - Rewrote the package manager

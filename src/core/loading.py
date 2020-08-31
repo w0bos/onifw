@@ -51,7 +51,7 @@ def loadingUpper(importlib):
 
 
 def thread_loading():
-	num = choice([1])
+	num = choice([1,2])
 
 	importlib = Thread(target=init)
 	importlib.start()

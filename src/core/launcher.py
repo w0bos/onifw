@@ -3,6 +3,8 @@
 import os
 import socket
 
+from core.errorHandler import ErrorHandler
+from sys import exc_info as err
 from os import makedirs as mkdir
 from os import path, chdir, getcwd
 from os import system as shell
@@ -459,7 +461,8 @@ class arachni:
         self.installDir = toolDir + "arachni"
         if not os.path.isdir(self.installDir):
             print("[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
-        else:self.run()
+        else:
+            self.run()
 
     def run(self):
         print("[?] - Enter target")
@@ -549,10 +552,6 @@ class hyde:
 CUSTOM
 
 """
-
-
-
-
 
 
 # Default 
@@ -656,8 +655,7 @@ class networkmanaged:
                 shell("sudo iwconfig {} mode managed".format(inter_name))
                 shell("sudo iwconfig {} up".format(inter_name))
             except:
-                print(
-                    color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
+               ErrorHandler(err(),False) 
 
 
 class onimap:
@@ -716,7 +714,7 @@ class cd:
                 print(color.LOGGING+"[*] - Current directory: " +
                       color.NOTICE + getcwd() + color.END)
             except:
-                print("[!] - And unexpected error occurred")
+                ErrorHandler(err(), False)
 
 class checkout:
     def __init__(self, cmd, installDir):
@@ -742,11 +740,19 @@ class checkout:
 
 class status:
     def __init__(self, installDir):
-        curr_branch = check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
+        curr_branch = check_output("cd {} && git branch --show-current".format(
+            installDir), shell=True).decode("utf-8").strip('\n')
         version = ""
         with open("{}data/version.txt".format(installDir)) as f:
-            version = f.readlines()[0].rstrip("\n\r")
+            version = color.NOTICE + \
+                f.readlines()[0].rstrip("\n\r") + color.END
         f.close()
+        latest_version = check_output(
+            "curl -s https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt", shell=True).decode("utf-8").strip('\n')
+        header = color.NOTICE + "[+]" + color.HEADER
+        print(header + " - onifw {0}{1}{2} on {3}{4}{5} branch".format(
+            color.NOTICE, version, color.HEADER, color.IMPORTANT, curr_branch, color.HEADER))
+        print(header + " - Latest version : {0}{1}".format(color.OKBLUE,latest_version))
+        print(header + " - Installation location: {}".format(installDir)+color.END)
         if curr_branch == "dev":
-            print(color.NOTICE + "[+]" + color.HEADER + " - onifw {0} on {1} branch".format(version, curr_branch) + color.END)
-            print(color.NOTICE + "[+]" + color.HEADER + " - Installation location: {}".format(installDir) + color.END)
+            print(header + " - Status : "+color.BOLD +color.RED+"unstable"+color.END)

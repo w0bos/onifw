@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from core.gui import color
-import core.confighandler as cfg
 from sys import exc_info as err
+from core.errorHandler import ErrorHandler
 
 def addWords(installDir,wordList):
     """Add words to dictionnary file
@@ -18,9 +18,7 @@ def addWords(installDir,wordList):
         f.close()
         print("[*] - Done.")
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ")
-        if cfg.check_value(installDir, "debug", False):
-            print(err())
+        ErrorHandler(err(), False)
 
 
 def restoreDict(installDir):
@@ -45,9 +43,7 @@ def restoreDict(installDir):
         f.writelines(out)
         f.close()
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ")
-        if cfg.check_value(installDir, "debug", False):
-            print(err())
+        ErrorHandler(err(), False)
 
 
 def updateConfig(installDir,name,command):
@@ -65,6 +61,5 @@ def updateConfig(installDir,name,command):
         print("[*] - Done.")
     except:
         print(color.LOGGING + "[!] - Unexpected error: ")
-        if cfg.check_value(installDir, "debug", False):
-            print(err())
+        ErrorHandler(err(), False)
     

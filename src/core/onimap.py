@@ -2,6 +2,9 @@
 
 import sys, socket
 from datetime import datetime as date
+from core.errorHandler import ErrorHandler
+from sys import exc_info
+
 def main(target, verbose=False):
     """
     Main component of pymap
@@ -40,8 +43,7 @@ def main(target, verbose=False):
         print("[!] - Couldn't connect to server")
         sys.exit(1)
     except:
-        print("[!] - Unexpected error")
-        sys.exit(1)
+        ErrorHandler(exc_info(),False)
     if flag==False:
         print("[***] - No ports open")
         sys.exit(1)

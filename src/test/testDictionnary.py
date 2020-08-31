@@ -1,7 +1,6 @@
 import unittest
 import core.dict as dmgr
 from os import path
-from time import sleep
 installDir = path.dirname(path.abspath(__file__)) + '/../'
 
 

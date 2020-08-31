@@ -3,17 +3,14 @@
 import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
-import core.confighandler as cfghandler
 from sys import exc_info as err
-
+from core.errorHandler import ErrorHandler
 
 version = "0.2"
 
 def clearScr():
     shell("clear||cls")
 
-def load_debug(installDir):
-    return cfghandler.debug_value(installDir)
 
 class Main:
 
@@ -62,8 +59,7 @@ class Pythonapp:
             temp = 1
         except:
             temp = -1
-            if load_debug(self.installDir):
-                print(err())
+            ErrorHandler(err(), False)
         if temp:
             dictmgr.addWords(self.installDir,[name])
 
@@ -92,9 +88,7 @@ class Capp:
             dictmgr.updateConfig(self.installDir,name,cmds)
 
         except:
-            print("[!] - An unexpected error occurred!")
-            if load_debug(self.installDir):
-                print(err())
+            ErrorHandler(err(), False)
 
 
 class Otherapp:
@@ -141,6 +135,4 @@ class Otherapp:
                 f.close()
             
         except:
-            print("[!] - An unexpected error occurred!")
-            if load_debug(self.installDir):
-                print(err())
+            ErrorHandler(err(), False)
