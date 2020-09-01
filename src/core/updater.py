@@ -13,7 +13,7 @@ class Updater:
 
     def __init__(self, installDir):
         self.installDir=installDir
-        if self.check_branch():
+        if not self.check_branch():
             try:
                 with open("{}data/version.txt".format(installDir)) as f:
                     local_version = version.parse(f.readlines()[0].rstrip("\n\r"))

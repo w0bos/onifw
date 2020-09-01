@@ -54,15 +54,16 @@ from readline import set_completer, parse_and_bind
 import core.completer       as auto
 import core.packagemanager  as pacman
 import core.custom          as custom
-import core.launcher        as launch
 import core.updater         as update
 import core.dict            as dictmgr
 import core.confighandler   as cfg
 import core.logHandler      as logger
+import core.toolLauncher    as tl
 from   core.loading         import thread_loading
 from   core.gui             import color
     
 # Misc functions
+
 def clearScr():
     shell("cls||clear")
 
@@ -202,61 +203,64 @@ class main:
                 # Add dictionnary to array on launch instead of hard coded one
                 e = cmd[0]
                 if e == "microsploit":
-                    launch.microsploit()
+                    tl.toolmanager("microsploit", "bash",
+                                   False, False, "Microsploit")
                 elif e == "poet":
-                    launch.poet()
+                    tl.toolmanager("poet", "python2", False, False, "server")
                 elif e == "weeman":
-                    launch.weeman()
+                    tl.toolmanager("weeman", "python2", False, True)
                 elif e == "sb0x":
-                    launch.sb0x()
-                elif e == "nxcrypt":
-                    launch.nxcrypt()
-                elif e == "revsh":
-                    launch.revsh()
-                elif e == "leviathan":
-                    launch.leviathan()
-                elif e == "brutetx":
-                    launch.brutex()
-                elif e == "cupp":
-                    launch.cupp()
+                    tl.toolmanager("sb0x", "python2", False, True)
                 elif e == "nmap":
-                    launch.nmap(installDir)
+                    tl.nmap()
                 elif e == "xsstrike":
-                    launch.xsstrike()
+                    tl.toolmanager("xsstrike", "python3", True,
+                                   False, "", "-u", "--crawl -l 5 -t 10")
                 elif e == "doork":
-                    launch.doork()
+                    tl.doork()
                 elif e == "crips":
-                    launch.crips()
+                    tl.toolmanager("crips", "python2")
                 elif e == "wpscan":
-                    launch.wpscan()
+                    tl.wpscan()
                 elif e == "setoolkit":
-                    launch.setoolkit()
-                elif e == "sslstrip":
-                    launch.sslstrip()
-                elif e == "stmp":
-                    launch.stmp()
-                elif e == "pyphi":
-                    launch.pyphi()
+                    tl.setoolkit()
                 elif e == "snmp":
-                    launch.snmp()
+                    tl.toolmanager("snmp", "python2", True,
+                                   False, "snmpbrute", "-t")
                 elif e == "apwps":
-                    launch.apwps()
+                    tl.toolmanager("apwps", "python2",
+                                   False, False, "autopixie")
                 elif e == "atscan":
-                    launch.atscan()
-                elif e == "pwnloris":
-                    launch.pwnloris()
-                elif e == "slowloris":
-                    launch.slowloris()
-                elif e == "sqlmap":
-                    launch.sqlmap()
-                elif e == "arachni":
-                    launch.arachni()
-                elif e == "brutex":
-                    launch.brutex()
+                    tl.atscan()
                 elif e == "rapidscan":
-                    launch.rscan()
+                    tl.toolmanager("rapidscan", "python2", True)
+                elif e == "sqlmap":
+                    tl.sqlmap()
+                elif e == "ssltrip":
+                    tl.toolmanager("ssltrip", "python2",
+                                   True, False, "sslstrip")
+                elif e == "cupp":
+                    tl.toolmanager("cupp", "python3", False, False, "", "-i")
+                elif e == "leviathan":
+                    tl.toolmanager("leviathan", "python2",
+                                   False, False, "", "-i")
                 elif e == "nikto":
-                    launch.nikto()
+                    tl.toolmanager("nikto", "perl", True, False,
+                                   "/program/nikto", "-h")
+                elif e == "arachni":
+                    tl.arachni()
+                elif e == "slowloris":
+                    tl.toolmanager("slowloris", "python3", True, False)
+                
+                # OLD INSTALLER
+
+
+            #TOOLS THAT MUST BE COMPILED
+                elif e == "revsh":
+                    tl.revsh()
+                elif e == "brutex":
+                    tl.brutex()
+
                 #Custom tool
                 else:
                     try:
