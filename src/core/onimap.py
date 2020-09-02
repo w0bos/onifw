@@ -1,8 +1,6 @@
-#!/bin/python3
-
+#!/usr/bin/python3
 import sys, socket
 from datetime import datetime as date
-from core.errorHandler import ErrorHandler
 from sys import exc_info
 
 def main(target, verbose=False):
@@ -43,7 +41,7 @@ def main(target, verbose=False):
         print("[!] - Couldn't connect to server")
         sys.exit(1)
     except:
-        ErrorHandler(exc_info(),False)
+        print(exc_info())
     if flag==False:
         print("[***] - No ports open")
         sys.exit(1)
@@ -78,6 +76,8 @@ def helper():
     print("Available flags:")
     print("-v    displays verbose")
 #debug
+
+
 if len(sys.argv)>=2:
     target=socket.gethostbyname(sys.argv[len(sys.argv)-1])
     if len(sys.argv)==2:
