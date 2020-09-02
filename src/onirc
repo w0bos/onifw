@@ -1,11 +1,8 @@
 # Configuration file of onifw
 [config]
-debug=true
-show_loading=false
-check_connectivity=false
+
 ###########################
 #       CUSTOM TOOLS      #
-#                         #
 #       DO NOT EDIT       #
 ###########################
 [custom]
