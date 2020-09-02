@@ -296,33 +296,33 @@ class main:
 
             # Default scripts
             elif marg == "ipfinder":
-                launch.ipfind()
+                tl.ipfind()
             elif marg == "bg":
-                launch.bg()
+                tl.bg()
             elif marg == "hashcheck":
-                launch.hashcheck(logDir)
+                tl.hashcheck(logDir)
             elif marg == "servicestatus":
-                launch.servicestatus(logDir)
+                tl.servicestatus(logDir)
             elif marg == "firewall":
-                launch.firewall(logDir)
+                tl.firewall(logDir)
             elif marg == "viewtraffic":
-                launch.viewtraffic(logDir)
+                tl.viewtraffic(logDir)
             elif marg == "netmanager":
-                launch.networkmanaged(logDir)
+                tl.networkmanaged(logDir)
             elif marg == "onimap":
-                launch.onimap(installDir, logDir)
+                tl.onimap(installDir, logDir)
             elif marg == "shell":
-                launch.run_shell()
+                tl.run_shell()
             elif marg == "onibuster":
-                launch.onibuster(installDir, logDir)
+                tl.onibuster(installDir, logDir)
             elif marg == "myip":
-                launch.myip()
+                tl.myip()
             elif marg == "cd":
-                launch.cd(cmd)
+                tl.cd(cmd)
             elif marg == "checkout":
-                launch.checkout(cmd, installDir)
+                tl.checkout(cmd, installDir)
             elif marg == "status":
-                launch.status(installDir)
+                tl.status(installDir)
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])

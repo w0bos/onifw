@@ -2,7 +2,7 @@
 
 
 from os import system, chdir, getcwd
-from os.path import isdir, dirname, abspath, isfile
+from os.path import isdir, dirname, abspath
 from os import makedirs as mkdir
 from core.gui import color
 from subprocess import check_output

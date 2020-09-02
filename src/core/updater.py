@@ -1,5 +1,3 @@
-from os import makedirs as mkdir
-from os import path
 from core.gui import color
 from os import system as shell
 from core.errorHandler import ErrorHandler
