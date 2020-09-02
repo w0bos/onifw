@@ -21,11 +21,6 @@ class Updater:
     
                 latest_version = check_output(
                     "curl -s https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt", shell=True).decode("utf-8").strip('\r\n')
-                #if not path.isdir("{}/temp".format(installDir)):  mkdir("{}/temp".format(installDir))
-                #shell("wget -q -O {}/temp/latest_version.txt https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt".format(installDir))
-                #with open("{}/temp/latest_version.txt".format(installDir)) as f:
-                #    latest_version = version.parse(f.readlines()[0].rstrip("\n\r"))
-                #f.close()
                 late = version.parse(latest_version)
                 if (late>local_version):
                     ans = input(color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
@@ -44,10 +39,7 @@ class Updater:
     
                 shell("rm -rf {}/temp".format(installDir))
             except:
-                ErrorHandler(err(), False, True)
-                #print("[!] - An unexpected error occurred! Please try again")
-                #if cfg.check_value(installDir,"debug",False):
-                #    print(err())    
+                ErrorHandler(err(), False, True)   
 
     def check_branch(self):
         curr_branch = check_output("cd {} && git branch --show-current".format(self.installDir), shell=True).decode("utf-8").strip('\n')

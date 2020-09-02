@@ -29,32 +29,21 @@ extensions = {
     "bash":""
 }
 
-
-
-
 class toolmanager:
     def __init__(self, tool_name, lang="", need_args=False, change_dir=False, exe_name="", pre_cmd="", post_cmd="", sudo=False):
         self.tool_name = tool_name
         self.lang = lang
         self.installDir = toolDir + self.tool_name
-        
         self.prefix = self.lang
         self.arg=""
-
         if not isdir(self.installDir):
             print(color.IMPORTANT +
                   "[!] - Tool not installed or not located in the tool/ directory" +
                   color.END)
             return
-
-
-        """
-            CHECK ALL FLAGS
-        """
         for i in extensions:
             if i in self.lang:
-                self.extension = extensions[i]
-        
+                self.extension = extensions[i]     
         if need_args:
             print(color.LOGGING +
                   "[?] - Please specify a target" + color.END)
@@ -75,13 +64,6 @@ class toolmanager:
             self.cmd = "cd {0} && {1}".format(self.installDir, self.cmd)
         if not len(self.arg)<1:
             self.cmd += " " + self.arg
-        
-        
-         # CHECK ALL BOOLEANS
-        print("#####")
-        print("{}".format(self.cmd))
-        print("#####")
-
         try:
             system(self.cmd)
         except:

@@ -84,14 +84,15 @@ def del_cache(leave=0):
 def pkgmgrhelp():
     print(color.NOTICE)
     print("[*] - Usage : pkg [cmd] [package]")
-    print("      Multiple packages can be installed at once.")
-    print("      Use the [list] commad to see what packages are available")
-    print("      Flags:")
-    print("      -a --all        install all packages")
-    print("      -i --install    install named package")
-    print("      -r --remove     remove package")
-    print("      -f --force      forces the removal (when installed in sudo)")
-    print("      -c --custom     add custom package")
+    print("Multiple packages can be installed at once.")
+    print("Use the [list] commad to see what packages are available")
+    print("Flags:")
+    print("-a --all             install all packages")
+    print("-i --install         install named package")
+    print("-r --remove          remove package")
+    print("-da --delete-all     removes all installed packages")
+    print("-f --force           forces the removal (when installed in sudo)")
+    print("-c --custom          add custom package")
     print(color.WHITE)
 
 def loadtools():
