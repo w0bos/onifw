@@ -176,14 +176,6 @@ class main:
                     version = f.readlines()[0].rstrip("\n\r")
                 f.close()
                 print("[*] - Installed version", version)
-            elif marg == "show_logo":
-                print(color.HEADER)
-                with open("{}data/logo.txt".format(installDir), 'r') as fin:
-                    print(color.color_random[0])
-                    print(fin.read())
-                    print(color.END)
-                    print(color.END + color.WHITE)
-                fin.close()
             elif marg == "show_title":
                 with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
                     print(color.color_random[0])
