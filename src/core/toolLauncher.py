@@ -432,7 +432,7 @@ class onibuster:
 
 class bg:
     def __init__(self):
-       sh = check_output("echo $system", system=True).decode(
+       sh = check_output("echo $system", shell=True).decode(
            "utf-8").rstrip("\r\n")
        system("python -c 'from pty import spawn; spawn(\"%s\")'" % sh)
 
@@ -455,7 +455,7 @@ class cd:
             value = cmd[1]
             if cmd[1][0] == "$":
                 value = check_output("echo {}".format(
-                    cmd[1]), system=True).decode("utf-8").strip('\n')
+                    cmd[1]), shell=True).decode("utf-8").strip('\n')
                 flag = False
             try:
                 print(color.OKBLUE+"[+] - Changing current directory...")
@@ -491,8 +491,7 @@ class checkout:
 
 class status:
     def __init__(self, installDir):
-        curr_branch = check_output("cd {} && git branch --show-current".format(
-            installDir), system=True).decode("utf-8").strip('\n')
+        curr_branch = check_output("cd {} && git branch --show-current".format(installDir), shell=True).decode("utf-8").strip('\n')
         version = ""
         with open("{}data/version.txt".format(installDir)) as f:
             version = f.readlines()[0].rstrip("\n\r")
