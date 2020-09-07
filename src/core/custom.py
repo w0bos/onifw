@@ -5,11 +5,10 @@ from os import system as shell
 from core.gui import color
 from sys import exc_info as err
 from core.errorHandler import ErrorHandler
+from core.onilib import clearScr
 
 version = "0.2"
 
-def clearScr():
-    shell("clear||cls")
 
 
 class Main:

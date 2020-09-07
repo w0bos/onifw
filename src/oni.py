@@ -61,25 +61,8 @@ import core.logHandler      as logger
 import core.toolLauncher    as tl
 from   core.loading         import thread_loading
 from   core.gui             import color
-    
-# Misc functions
+from   core.onilib          import clearScr, readfile, loadtools, del_cache    
 
-def clearScr():
-    shell("cls||clear")
-
-def readfile(file_dir):
-    f = open(file_dir)
-    content = [line.rstrip('\n') for line in f]
-    return content
-
-def del_cache(leave=0):
-    if leave == 1:
-        shell("rm -rf {}core/__pycache__".format(installDir))
-        shell("rm -rf {}__pycache__".format(installDir))
-        abort(1)
-    else:
-        shell("rm -rf {}core/__pycache__".format(installDir))
-        shell("rm -rf {}__pycache__".format(installDir))
 
 def pkgmgrhelp():
     print(color.NOTICE)
@@ -95,12 +78,6 @@ def pkgmgrhelp():
     print("-c --custom          add custom package")
     print(color.WHITE)
 
-def loadtools():
-    load_cmd = ['ls', '{}'.format(toolDir)]
-    output = run(load_cmd, stdout=PIPE).stdout.decode('utf-8')
-    #Clean output
-    pkg_local = output.splitlines()
-    return pkg_local
 
 # Data
 installDir = path.dirname(path.abspath(__file__)) + '/'
@@ -136,9 +113,10 @@ class main:
                 clearScr()
                 print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
                 print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
-                del_cache(1)
+                del_cache(installDir)
+                exit()
             elif marg == "clean_cache":
-                del_cache()
+                del_cache(installDir)
             elif marg == "clear":
                 clearScr()
             elif marg == "list" or marg == "ls":
@@ -164,7 +142,6 @@ class main:
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
                     run("cd {} && . ../uninstall".format(installDir), shell=True)
-                    #run("rm -rf $HOME/.onifw && sudo rm /usr/bin/local/onifw")
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
 
@@ -192,7 +169,7 @@ class main:
                 dictmgr.restoreDict(installDir)
 
             # TOOL LAUNCHER
-            elif marg in loadtools():
+            elif marg in loadtools(toolDir):
                 # Add dictionnary to array on launch instead of hard coded one
                 e = cmd[0]
                 if e == "microsploit":

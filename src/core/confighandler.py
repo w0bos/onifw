@@ -5,47 +5,7 @@ from core.gui import color
 from socket import create_connection
 import core.logHandler as logh
 from configparser import ConfigParser
-
-
-# Misc functions
-
-def get_connection():
-    try:
-        create_connection(("www.google.com", 80))
-        isconnected = True
-    except:
-        isconnected = False
-    return isconnected
-
-
-# Check values
-
-
-def check_value(installDir,value,default, boolean=True):
-    configFile = installDir + "onirc"
-    parser = ConfigParser()
-    parser.read(configFile)
-    if boolean:
-        if parser.has_option('config', value):
-            return parser.getboolean('config', value)
-        else:
-            return default
-    else:
-        if parser.has_option('config', value):
-            return parser.get('config', value)
-        else:
-            return default
-
-
-
-def check_prompt(installDir):
-    configFile = installDir + "onirc"
-    parser = ConfigParser()
-    parser.read(configFile)
-    if parser.has_option('config', 'prompt'):
-        return str(parser.get('config', 'prompt'))+" "
-    else:
-        return "onifw > "
+from core.onilib import check_prompt, check_value, get_connection
 
 
 

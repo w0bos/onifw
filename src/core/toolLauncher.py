@@ -12,9 +12,8 @@ from getpass import getuser
 from sys import exc_info as err
 from time import gmtime, strftime
 from core.errorHandler import ErrorHandler
+from core.onilib import clearScr
 
-def clearScr():
-    system("cls||clear")
 
 installDir = dirname(abspath(__file__)) + '/../'
 toolDir = installDir + 'tools/'
