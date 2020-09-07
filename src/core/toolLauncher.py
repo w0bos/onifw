@@ -432,14 +432,14 @@ class onibuster:
 
 class bg:
     def __init__(self):
-       sh = check_output("echo $system", shell=True).decode(
+       sh = check_output("echo $SHELL", shell=True).decode(
            "utf-8").rstrip("\r\n")
        system("python -c 'from pty import spawn; spawn(\"%s\")'" % sh)
 
-class run_system:
+class run_shell:
     def __init__(self):
         print(color.LOGGING+"[*] - Opening system prompt")
-        system_cmd = input(color.NOTICE+"system$ "+color.END)
+        system_cmd = input(color.OKBLUE+"shell$ "+color.END)
         system(system_cmd)
 
 class myip:

@@ -15,7 +15,7 @@ def main(target, verbose=False):
     # SMTP, HTTP, HTTPS, FTP, TELNET, IMAP, RDP, SSH, DNS, DHCP, POP3
     default_ports=[25,80,443,20,21,23,143,3389,22,53,67,68,110]
     print("-"*30)
-    print("ONYMAP 1.2")
+    print("ONIMAP 1.2")
     print("Scanning target: "+target)
     print("Time started: "+str(date.now()))
     print("-"*30)
