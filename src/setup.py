@@ -7,5 +7,6 @@ setup(
     version="1.13",
     description="pentest framework",
     author="w0bos",
-    author_email="w0bos@protonmail.com"
+    author_email="w0bos@protonmail.com",
+    packages=["packaging"]
 )
