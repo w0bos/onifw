@@ -145,8 +145,7 @@ class Install:
             shell("cd %s/ && bundle install" % (tempDir))
 
         elif target == "brutex":
-            #shell("sudo mkdir /usr/share/brutex")
-            shell("git clone -q %s %s && cd %s && ./install.sh" % (pkg[target], tempDir, tempDir))
+            shell("sudo git clone -q %s %s && cd %s && ./install.sh" % (pkg[target], tempDir, tempDir))
 
         elif target == "revsh":
             #Configure OPENSSL
