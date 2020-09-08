@@ -42,12 +42,10 @@
 '''
 
 # From
-from os import system as shell
 from os import path
 from os import makedirs as mkdir
-from sys import exit as abort
 from random import randint
-from subprocess import run, PIPE
+from subprocess import run
 from readline import set_completer, parse_and_bind
 
 #File loading

@@ -2,7 +2,6 @@ from os import system as cmd
 from os import path
 from os import makedirs as mkdir
 from core.gui import color
-from socket import create_connection
 import core.logHandler as logh
 from configparser import ConfigParser
 from core.onilib import check_prompt, check_value, get_connection
