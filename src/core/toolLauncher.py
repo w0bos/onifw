@@ -21,11 +21,11 @@ continuePrompt = "\nClick [Return] to continue"
 
 
 extensions = {
-    "python":".py",
-    "ruby": ".rb",
-    "shell":".sh",
-    "perl":".pl",
-    "bash":""
+    "python":   ".py",
+    "ruby":     ".rb",
+    "shell":    ".sh",
+    "perl":     ".pl",
+    "bash":     ""
 }
 
 class toolmanager:
@@ -69,20 +69,6 @@ class toolmanager:
             ErrorHandler(err(), False)
 
 
-
-
-
-
-
-
-       
-
-                
-
-
-##########################
-#       UNHANDLED        #
-##########################
 
 class doork:
     def __init__(self):
@@ -132,8 +118,8 @@ class revsh:
     def __init__(self):
         self.installDir = toolDir + "revsh"
         if not self.installed():
-            print(
-                "[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
+            print("[*] - Tool not installed.")
+            print("[*] - Please use pkg -i [pkg] to install it.")
         else:
             clearScr()
             self.run()
@@ -167,12 +153,8 @@ class brutex:
 
 
 
-        
-        
 
-"""
-SAFE
-"""
+# CUSTOM #
 
 
 class arachni:
@@ -302,7 +284,7 @@ class wpscan:
 
 
 ##########################
-#        CUSTOM
+#        CUSTOM          #
 ##########################
 
 

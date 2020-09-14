@@ -44,6 +44,7 @@
 # From
 from os import path
 from os import makedirs as mkdir
+from sys import exit as leave
 from random import randint
 from subprocess import run
 from readline import set_completer, parse_and_bind
@@ -99,7 +100,6 @@ class main:
         cmd = prompt.split()
         #Add input to log if enables
         logger.LogHandler(installDir, logDir, cmd)
-
         if len(cmd) == 0:
             pass
             #loopback
@@ -107,20 +107,20 @@ class main:
             marg = cmd[0]
             # BASE COMMANDS
             # PASS
-            if marg == "quit" or marg == "exit":
+            if marg in ["quit", "exit"]:
                 clearScr()
                 print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
                 print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
                 del_cache(installDir)
-                exit()
+                leave()
             elif marg == "clean_cache":
                 del_cache(installDir)
             elif marg == "clear":
                 clearScr()
-            elif marg == "list" or marg == "ls":
+            elif marg in ["list", "ls"]:
                 if len(cmd) == 1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
-                    run("ls {}tools/".format(installDir), shell=True)
+                    run("ls {}tools/".format(installDir), check=True)
                     print("myip  ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster "+color.END)
                 elif cmd[1] == "-r" or cmd[1] == "--recommended":
                     pacman.show_recommended()
@@ -139,7 +139,7 @@ class main:
             elif marg == "uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    run("cd {} && . ../uninstall".format(installDir), shell=True)
+                    run("cd {} && . ../uninstall".format(installDir), check=True)
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
 
@@ -165,7 +165,6 @@ class main:
                 fin.close()
             elif marg == "restore":
                 dictmgr.restoreDict(installDir)
-
             # TOOL LAUNCHER
             elif marg in loadtools(toolDir):
                 # Add dictionnary to array on launch instead of hard coded one
@@ -221,14 +220,11 @@ class main:
                     tl.toolmanager("slowloris", "python3", True, False)
                 
                 # OLD INSTALLER
-
-
             #TOOLS THAT MUST BE COMPILED
                 elif e == "revsh":
                     tl.revsh()
                 elif e == "brutex":
                     tl.brutex()
-
                 #Custom tool
                 else:
                     try:
@@ -237,7 +233,6 @@ class main:
                     except:
                         print(color.WARNING +
                               "[!] - %s : unknown command" % cmd[0])
-
             # Package managment
             elif marg == "pkg":
                 if len(cmd) == 1:
@@ -301,7 +296,6 @@ class main:
             # Try custom package
             else:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
-
         #loopback while no command
         self.__init__()
 
@@ -319,4 +313,4 @@ if __name__ == '__main__':
         print("\n" + color.LOGGING + color.BOLD)
         print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
         if cfg.check_value(installDir, "delete_cache", True):
-            del_cache()
+            del_cache(installDir)

@@ -5,9 +5,9 @@ class Autocomp(object):
         if state == 0:
             if text:
                 self.matches = [s for s in self.options if s and s.startswith(text)]
-            else :
+            else:
                 self.matches = self.options[:]               
-        try :
+        try:
             return self.matches[state]
         except IndexError:
             return None

@@ -35,7 +35,7 @@ def loadtools(toolDir):
         directory.
     """
     load_cmd = ['ls', '{}'.format(toolDir)]
-    output = run(load_cmd, stdout=PIPE).stdout.decode('utf-8')
+    output = run(load_cmd, stdout=PIPE, check=True).stdout.decode('utf-8')
     pkg_local = output.splitlines()
     return pkg_local
 
