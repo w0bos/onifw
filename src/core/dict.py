@@ -76,4 +76,4 @@ def addCustomWords(installDir,name):
         f.close()
         print("[*] - Done.")
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])
+        ErrorHandler(err(), False)
