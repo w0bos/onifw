@@ -24,6 +24,9 @@ def readfile(file_dir):
     content = [line.rstrip('\n') for line in f]
     return content
 
+
+
+
 """
 ONI.PY FUNCTIONS
 """

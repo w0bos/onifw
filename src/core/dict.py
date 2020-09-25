@@ -63,3 +63,17 @@ def updateConfig(installDir,name,command):
         print(color.LOGGING + "[!] - Unexpected error: ")
         ErrorHandler(err(), False)
     
+def addCustomWords(installDir,name):
+    """Add words to the custom dictionnary
+    Arguments:
+        - name : name of the custom tool
+        - installDir : Directory of current install
+    """
+    print("[*] - Adding custom words...")
+    try:
+        with open("{}data/ctools.txt".format(installDir), "a") as f:
+            f.write(name + "\n")
+        f.close()
+        print("[*] - Done.")
+    except:
+        print(color.LOGGING + "[!] - Unexpected error: ", einfo()[0])

@@ -7,3 +7,4 @@ src/bin/__pycache__
 src/core/__pycache__
 src/data/__pycache__
 src/tools
+.undodir/

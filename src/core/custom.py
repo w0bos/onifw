@@ -61,9 +61,7 @@ class Pythonapp:
             ErrorHandler(err(), False)
         if temp:
             dictmgr.addWords(self.installDir,[name])
-
             dictmgr.addCustomWords(self.installDir, name)
-
             dictmgr.updateConfig(self.installDir, name, cmds)
 
             print("[*] - You may need to restart onifw in order to use the custom tool.")
