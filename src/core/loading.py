@@ -23,12 +23,12 @@ def loadingHack(importlib):
 		chainehack = ""
 		for c in chaine:
 			chainehack += c
-			r = choice(charspec)+choice(charspec)+choice(charspec)
-			if len(chainehack+r) <= len(chaine):
+			r = choice(charspec) + choice(charspec) + choice(charspec)
+			if len(chainehack + r) <= len(chaine):
 				pass
 			else:
 				r = ""
-			stdout.write('\r'+chainehack+r+"...")
+			stdout.write('\r' + chainehack + r + "...")
 			sleep(0.06)
 
 def loadingUpper(importlib):
@@ -42,7 +42,7 @@ def loadingUpper(importlib):
 			c = string[x]
 			c = c.upper()
 			string[x] = c
-			stdout.write("\r[*] "+''.join(string) +'...')
+			stdout.write("\r[*] " + ''.join(string) + '...')
 			sleep(0.1)
 			c = string[x]
 			c = c.lower()
@@ -52,18 +52,12 @@ def loadingUpper(importlib):
 
 def thread_loading():
 	num = choice([1,2])
-
-	importlib = Thread(target=init)
+	importlib = Thread(target = init)
 	importlib.start()
-
 	if num == 1:
-		load = Thread(target=loadingHack(importlib))
+		load = Thread(target = loadingHack(importlib))
 	elif num == 2:
-		load = Thread(target=loadingUpper(importlib))
+		load = Thread(target = loadingUpper(importlib))
 	load.start()
 	importlib.join()
 	load.join()
-
-
-
-

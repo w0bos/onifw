@@ -4,13 +4,13 @@
 from os import system, chdir, getcwd
 from os.path import isdir, dirname, abspath
 from os import makedirs as mkdir
-from core.gui import color
 from subprocess import check_output
 from socket import gethostbyname, gethostname
 from requests.api import get
 from getpass import getuser
 from sys import exc_info as err
 from time import gmtime, strftime
+from core.gui import color
 from core.errorHandler import ErrorHandler
 from core.onilib import clearScr
 
@@ -93,7 +93,7 @@ class doork:
             strftime("%Y-%m-%d_%H:%M:%S", gmtime()) + ".txt"
         try:
             system("python2 %s/doork.py -t %s -o %s" %
-                  (self.installDir, target, logPath))
+                   (self.installDir, target, logPath))
         except KeyboardInterrupt:
             pass
 

@@ -26,7 +26,7 @@ class Main:
             Pythonapp(self.installDir, self.toolDir)
         elif ans == "2":
             Capp(self.installDir, self.toolDir)
-        elif ans=="3":
+        elif ans == "3":
             Otherapp(self.installDir, self.toolDir)
         elif ans.lower()=="q":
             pass 
@@ -49,10 +49,10 @@ class Pythonapp:
         if not cmds:
             if issudo != "y":
                 cmds = "python{0} {1}{2}/{3}.py".format(
-                    ver, self.toolDir, name,exe)
+                    ver, self.toolDir, name, exe)
             else:
                 cmds = "sudo python{0} {1}{2}/{3}.py".format(
-                    ver, self.toolDir, name,exe)
+                    ver, self.toolDir, name, exe)
         try:
             shell("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
@@ -60,10 +60,9 @@ class Pythonapp:
             temp = -1
             ErrorHandler(err(), False)
         if temp:
-            dictmgr.addWords(self.installDir,[name])
+            dictmgr.addWords(self.installDir, [name])
             dictmgr.addCustomWords(self.installDir, name)
             dictmgr.updateConfig(self.installDir, name, cmds)
-
             print("[*] - You may need to restart onifw in order to use the custom tool.")
 
 
@@ -80,9 +79,9 @@ class Capp:
                 cmd = input("Custom command: ")
                 shell(cmd)
             cmds = input("Launch command: ")
-            dictmgr.addWords(self.installDir,name)
-            dictmgr.addCustomWords(self.installDir,name)
-            dictmgr.updateConfig(self.installDir,name,cmds)
+            dictmgr.addWords(self.installDir, name)
+            dictmgr.addCustomWords(self.installDir, name)
+            dictmgr.updateConfig(self.installDir, name, cmds)
 
         except:
             ErrorHandler(err(), False)
@@ -95,11 +94,11 @@ class Otherapp:
 
     def __init__(self, installDir, toolDir):
         lang_dict = {
-            "perl":     "perl",
-            "ruby":     "ruby",
-            "go":       "go", 
+            "perl": "perl",
+            "ruby": "ruby",
+            "go": "go", 
             "java-jar": "jar", 
-            "java":     "java",
+            "java": "java",
         }
         self.installDir, self.toolDir = installDir, toolDir
         print(color.OKBLUE + "Available languages:")
@@ -117,7 +116,7 @@ class Otherapp:
                 print("[*] - Current directory: %s" % shell("pwd"))
                 cmd = input("Custom command: ")
                 shell(cmd)
-            if lang=="java":
+            if lang == "java":
                 cmds = "{0} = cd {1}{2} && {3}{4}".format(name, toolDir, name, lang_dict[lang], name_exe)
             else:
                 cmds = "{0} = {1} {2}{3}{4}".format(name, lang_dict[lang], toolDir, name, name_exe)
@@ -130,6 +129,5 @@ class Otherapp:
             with open("{}data/ctools.txt".format(self.installDir), "a") as f:
                 f.write(name + '\n')
                 f.close()
-            
         except:
             ErrorHandler(err(), False)

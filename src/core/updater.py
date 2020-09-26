@@ -20,17 +20,17 @@ class Updater:
                 latest_version = check_output(
                     "curl -s https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt", shell=True).decode("utf-8").strip('\r\n')
                 late = version.parse(latest_version)
-                if (late>local_version):
+                if late>local_version:
                     ans = input(color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
-                    if ans.lower() in ["yes","y"]:
+                    if ans.lower() in ["yes", "y"]:
                         # Won't wipe old install
                         shell("cd {} && git pull".format(installDir))
                     else:
                         print("[*] - Update aborted")
     
-                elif (late==local_version) :
+                elif late==local_version:
                     print(color.OKGREEN + "[*] - You're already running the latest version of onifw" + color.END)
-                elif (late<local_version):
+                elif late<local_version:
                     print(color.BOLD + color.IMPORTANT + "[+] - You are running an alpha version of onifw" + color.END)
                 else:
                     print(color.WARNING + "[!] - Unknown error" + color.END)

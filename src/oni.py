@@ -11,7 +11,6 @@
             ! Some tools require modules (python pip)
 
         * Misc
-            
 
     DONE:
         * Commands
@@ -298,7 +297,6 @@ class main:
                 print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
         #loopback while no command
         self.__init__()
-
 if __name__ == '__main__':
     try:
         clearScr()
