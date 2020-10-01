@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 from core.gui import color
-import core.confighandler as cfg
-from configparser import ConfigParser
 from sys import exc_info as err
+from core.errorHandler import ErrorHandler
 
-def addWords(installDir,wordList):
+def addWords(installDir, wordList):
     """Add words to dictionnary file
     
     Arguments:
@@ -19,9 +18,7 @@ def addWords(installDir,wordList):
         f.close()
         print("[*] - Done.")
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ")
-        if cfg.check_value(installDir, "debug", False):
-            print(err())
+        ErrorHandler(err(), False)
 
 
 def restoreDict(installDir):
@@ -46,12 +43,10 @@ def restoreDict(installDir):
         f.writelines(out)
         f.close()
     except:
-        print(color.LOGGING + "[!] - Unexpected error: ")
-        if cfg.check_value(installDir, "debug", False):
-            print(err())
+        ErrorHandler(err(), False)
 
 
-def updateConfig(installDir,name,command):
+def updateConfig(installDir, name, command):
     """Add launch command to the onirc file
     Arguments:
         - installDir : directory of current install
@@ -61,11 +56,24 @@ def updateConfig(installDir,name,command):
     print("[*] - Updating configuration...")
     try:
         with open("{}onirc".format(installDir), "a") as f:
-            f.write("{0} = {1}\n".format(name,command))
+            f.write("{0} = {1}\n".format(name, command))
         f.close()
         print("[*] - Done.")
     except:
         print(color.LOGGING + "[!] - Unexpected error: ")
-        if cfg.check_value(installDir, "debug", False):
-            print(err())
+        ErrorHandler(err(), False)
     
+def addCustomWords(installDir, name):
+    """Add words to the custom dictionnary
+    Arguments:
+        - name : name of the custom tool
+        - installDir : Directory of current install
+    """
+    print("[*] - Adding custom words...")
+    try:
+        with open("{}data/ctools.txt".format(installDir), "a") as f:
+            f.write(name + "\n")
+        f.close()
+        print("[*] - Done.")
+    except:
+        ErrorHandler(err(), False)

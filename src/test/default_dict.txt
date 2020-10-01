@@ -7,7 +7,6 @@ clear
 clean_cache
 ls
 show_title
-show_logo
 show_version
 show_agreement
 ipfinder
@@ -18,6 +17,7 @@ viewtraffic
 netmanager
 onimap
 onibuster
+status
 shell
 myip
 cd

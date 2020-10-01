@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
 
-import os
 import core.dict as dictmgr
 from os import system as shell
 from core.gui import color
-import core.confighandler as cfghandler
-from configparser import ConfigParser
 from sys import exc_info as err
+from core.errorHandler import ErrorHandler
 
 
 version = "0.2"
 
-def clearScr():
-    shell("clear||cls")
 
-def load_debug(installDir):
-    return cfghandler.debug_value(installDir)
 
 class Main:
 
@@ -32,7 +26,7 @@ class Main:
             Pythonapp(self.installDir, self.toolDir)
         elif ans == "2":
             Capp(self.installDir, self.toolDir)
-        elif ans=="3":
+        elif ans == "3":
             Otherapp(self.installDir, self.toolDir)
         elif ans.lower()=="q":
             pass 
@@ -55,24 +49,20 @@ class Pythonapp:
         if not cmds:
             if issudo != "y":
                 cmds = "python{0} {1}{2}/{3}.py".format(
-                    ver, self.toolDir, name,exe)
+                    ver, self.toolDir, name, exe)
             else:
                 cmds = "sudo python{0} {1}{2}/{3}.py".format(
-                    ver, self.toolDir, name,exe)
+                    ver, self.toolDir, name, exe)
         try:
-            os.system("git clone %s %s%s" % (link, self.toolDir, name))
+            shell("git clone %s %s%s" % (link, self.toolDir, name))
             temp = 1
         except:
             temp = -1
-            if load_debug(self.installDir):
-                print(err())
+            ErrorHandler(err(), False)
         if temp:
-            dictmgr.addWords(self.installDir,[name])
-
+            dictmgr.addWords(self.installDir, [name])
             dictmgr.addCustomWords(self.installDir, name)
-
             dictmgr.updateConfig(self.installDir, name, cmds)
-
             print("[*] - You may need to restart onifw in order to use the custom tool.")
 
 
@@ -83,20 +73,18 @@ class Capp:
         name = input("Tool name: ")
         nb_cmd = int(input("How many commands to build the tool?: "))
         try:
-            os.system("git clone %s %s %s" % (link, self.toolDir, name))
+            shell("git clone %s %s %s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % os.system("pwd"))
+                print("[*] - Current directory: %s" % shell("pwd"))
                 cmd = input("Custom command: ")
-                os.system(cmd)
+                shell(cmd)
             cmds = input("Launch command: ")
-            dictmgr.addWords(self.installDir,name)
-            dictmgr.addCustomWords(self.installDir,name)
-            dictmgr.updateConfig(self.installDir,name,cmds)
+            dictmgr.addWords(self.installDir, name)
+            dictmgr.addCustomWords(self.installDir, name)
+            dictmgr.updateConfig(self.installDir, name, cmds)
 
         except:
-            print("[!] - An unexpected error occurred!")
-            if load_debug(self.installDir):
-                print(err())
+            ErrorHandler(err(), False)
 
 
 class Otherapp:
@@ -106,11 +94,11 @@ class Otherapp:
 
     def __init__(self, installDir, toolDir):
         lang_dict = {
-            "perl":     "perl",
-            "ruby":     "ruby",
-            "go":       "go", 
+            "perl": "perl",
+            "ruby": "ruby",
+            "go": "go", 
             "java-jar": "jar", 
-            "java":     "java",
+            "java": "java",
         }
         self.installDir, self.toolDir = installDir, toolDir
         print(color.OKBLUE + "Available languages:")
@@ -123,12 +111,12 @@ class Otherapp:
         name_exe=input("Name of the main file (w/ entension): ")
         nb_cmd = int(input("How many commands to build the tool?: "))
         try:
-            os.system("git clone %s %s%s" % (link, self.toolDir, name))
+            shell("git clone %s %s%s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % os.system("pwd"))
+                print("[*] - Current directory: %s" % shell("pwd"))
                 cmd = input("Custom command: ")
-                os.system(cmd)
-            if lang=="java":
+                shell(cmd)
+            if lang == "java":
                 cmds = "{0} = cd {1}{2} && {3}{4}".format(name, toolDir, name, lang_dict[lang], name_exe)
             else:
                 cmds = "{0} = {1} {2}{3}{4}".format(name, lang_dict[lang], toolDir, name, name_exe)
@@ -141,8 +129,5 @@ class Otherapp:
             with open("{}data/ctools.txt".format(self.installDir), "a") as f:
                 f.write(name + '\n')
                 f.close()
-            
         except:
-            print("[!] - An unexpected error occurred!")
-            if load_debug(self.installDir):
-                print(err())
+            ErrorHandler(err(), False)

@@ -1,6 +1,6 @@
 import unittest
 from core import updater as up
-from os import path, system
+from os import path
 from subprocess import check_output
 
 

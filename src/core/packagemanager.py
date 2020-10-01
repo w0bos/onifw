@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 
 import core.dict as dictmgr
-import core.confighandler as cfg
-
 from os import system as shell
 from core.gui import color
-from configparser import ConfigParser
-from sys import exc_info as err
 
 
 # Dict to stop using absolute values
@@ -15,7 +11,6 @@ pkg = {
     "poet"         :   "https://github.com/mossberg/poet",
     "weeman"       :   "https://github.com/samyoyo/weeman",
     "sb0x"         :   "https://github.com/lostcitizen/sb0x-project",
-    "nxcrypt"      :   "https://github.com/Hadi999/NXcrypt",
     "nmap"         :   "https://github.com/nmap/nmap",
     "xsstrike"     :   "https://github.com/UltimateHackers/XSStrike.git",
     "doork"        :   "https://github.com/AeonDave/doork.git",
@@ -29,7 +24,6 @@ pkg = {
     "sqlmap"       :   "https://github.com/sqlmapproject/sqlmap",
     "slowloris"    :   "https://github.com/gkbrk/slowloris",
     "atscan"       :   "https://github.com/AlisamTechnology/ATSCAN",
-    "hyde"         :   "https://github.com/hyde/hyde",
     "nikto"        :   "https://github.com/sullo/nikto",
     "rapidscan"    :   "https://github.com/skavngr/rapidscan",
     "apwps"        :   "https://github.com/nxxxu/AutoPixieWps",
@@ -38,14 +32,7 @@ pkg = {
     "arachni"      :   "https://github.com/Arachni/arachni.git"
 }
 
-scripts = [
-    ["pypisher",        "http://pastebin.com/raw/DDVqWp4Z"],
-    ["smtp",            "http://pastebin.com/raw/Nz1GzWDS"]
-]
 
-
-def load_debug(installDir):
-    return cfg.debug_value(installDir)
 
 def show_recommended():
     print("\033[32m" + "Recommended packages\n" + "\033[93m")
@@ -104,7 +91,8 @@ class Install:
             else:
                 ans = input(
                     color.IMPORTANT +
-                    "[*] - Installation process can be quite long.\nProceed anyways?\n[y/N] : " + color.END).lower()
+                    "[*] - Installation process can be quite long.\nProceed anyways?\n[y/N] : " 
+                    + color.END).lower()
                 if ans in ["y", "yes"]:
                     self.install_all()
         else:
@@ -121,13 +109,6 @@ class Install:
                       color.NOTICE+"{}".format(i)+"...")
                 shell("git clone -q {0} {1}".format(pkg[i], temp_install_dir))
                 wordlist.append(i)
-        for i in range(len(scripts)):
-            print("[+] - Installing {}...".format(scripts[i][0]))
-            shell("wget -q %s --output-document=%s.py" %
-                  (scripts[i][1], scripts[i][0]))
-            shell("mv %s.py %s%s.py" % (
-                scripts[i][0], temp_install_dir, scripts[i][0]))
-            wordlist.append(scripts[i][0])
         self.add_words(wordlist)
 
     def install_some(self):
@@ -147,21 +128,13 @@ class Install:
                     print(color.LOGGING + "[+] - Installing " +
                           color.NOTICE+"{}".format(target)+color.LOGGING+"...")
                     shell("git clone -q {0} {1}".format(pkg[target], tempDir[i]))
-                # target is script
-                elif target in scripts:
-                    shell("wget %s --output-document=%s.py" %
-                          (scripts[i][1], scripts[i][0]))
-                    shell("mv %s.py %s%s.py" % (
-                        scripts[i][0], tempDir, scripts[i][0]))
                 else:
                     print(color.RED+"[*] - Unkown package. Please retry or use the custom package installer"+color.END)
 
         self.add_words(self.args)
         
     def build_tools(self, target, tempDir):
-
-        print(color.LOGGING)
-        print("[+] - Installing "+color.NOTICE+"{}".format(target)+color.LOGGING+"...")
+        print(color.LOGGING + "[+] - Installing "+color.NOTICE+"{}".format(target)+color.LOGGING+"...")
         if target == "crips":
             shell("git clone -q %s %s" % (pkg[target], tempDir))
             shell("sudo chmod +x %s/install.sh" % (tempDir))
@@ -172,8 +145,7 @@ class Install:
             shell("cd %s/ && bundle install" % (tempDir))
 
         elif target == "brutex":
-            #shell("sudo mkdir /usr/share/brutex")
-            shell("git clone -q %s %s" % (pkg[target], tempDir))
+            shell("sudo git clone -q %s %s && cd %s && ./install.sh" % (pkg[target], tempDir, tempDir))
 
         elif target == "revsh":
             #Configure OPENSSL
@@ -187,6 +159,14 @@ class Install:
         elif target == "nmap":
             shell("git clone -q %s %s && cd %s/ && ./configure && make && make install" %
                   (pkg[target], tempDir, tempDir))
+
+    def install_dependencies(self,target):
+        """
+        Install dependecies with pip
+        """
+        pass
+       
+
 
     def add_words(self, wordList=[]):
         print(color.OKGREEN+"[*] - Done."+color.END)

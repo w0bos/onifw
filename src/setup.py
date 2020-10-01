@@ -1,15 +1,12 @@
-import socket
+#!/usr/bin/env python
 
-#lame code
-#need to fix this
+from distutils.core import setup
 
-def init():
-    try:
-        socket.create_connection(("www.google.com", 80))
-        isconnected = True
-    except:
-        isconnected = False
-
-    return isconnected
-
-
+setup(
+    name="onifw",
+    version="1.13",
+    description="pentest framework",
+    author="w0bos",
+    author_email="w0bos@protonmail.com",
+    packages=["packaging"]
+)

@@ -1,5 +1,4 @@
 import unittest
-import core
 
 from core import confighandler as cfg
 from os import path

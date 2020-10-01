@@ -1,8 +1,8 @@
-#!/bin/python3
-
+#!/usr/bin/python3
 import sys, socket
-from os import system as bash
 from datetime import datetime as date
+from sys import exc_info
+
 def main(target, verbose=False):
     """
     Main component of pymap
@@ -15,7 +15,7 @@ def main(target, verbose=False):
     # SMTP, HTTP, HTTPS, FTP, TELNET, IMAP, RDP, SSH, DNS, DHCP, POP3
     default_ports=[25,80,443,20,21,23,143,3389,22,53,67,68,110]
     print("-"*30)
-    print("ONYMAP 1.2")
+    print("ONIMAP 1.2")
     print("Scanning target: "+target)
     print("Time started: "+str(date.now()))
     print("-"*30)
@@ -41,8 +41,7 @@ def main(target, verbose=False):
         print("[!] - Couldn't connect to server")
         sys.exit(1)
     except:
-        print("[!] - Unexpected error")
-        sys.exit(1)
+        print(exc_info())
     if flag==False:
         print("[***] - No ports open")
         sys.exit(1)
@@ -71,12 +70,14 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         print("\n\n")
 
 def helper():
-    print("pymap")
-    print("Usage: ./pymap [flag] [host]")
+    print("onimap")
+    print("Usage: ./onimap [flag] [host]")
     print("host is an ip address or name")
     print("Available flags:")
     print("-v    displays verbose")
 #debug
+
+
 if len(sys.argv)>=2:
     target=socket.gethostbyname(sys.argv[len(sys.argv)-1])
     if len(sys.argv)==2:
