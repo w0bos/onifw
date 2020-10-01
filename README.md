@@ -8,7 +8,9 @@
 ![](https://img.shields.io/badge/Version-1.13-dark_green.svg?longCache=true&style=popout-square)
 
 ## Description
-**onifw** is a console-based framework for pentester. It comes with some common tools. You can either install all the recommended tools or install some of them. **onifw** is also able to use custom tools.
+**onifw** is a console-based framework for pentesting and comes with some 
+common tools pre-configured.
+You can install those tools or add custom ones
 
 ## Installation
 
@@ -29,7 +31,10 @@ curl 'https://raw.githubusercontent.com/w0bos/onifw/master/install.sh' > install
 
 - `packaging`
     
-    with ```pip install packaging```
+    with 
+    ```shell
+    python3 -m pip install packaging
+    ```
 
 
 ## Usage
@@ -44,17 +49,17 @@ Use the `help` command in order to see all the available commands
 ## Configuration
 onifw comes with some options that you can edit in the `src/onirc` file. These options with their default value are:
 ```ini
-show_ascii_art = true
-show_version = true
-check_connectivity = true
-check_updates = false
-show_options = false
-delete_cache = true
-remove_tools = false
-save_session = false
-prompt = onifw >
-debug = false
-show_loading = true
+show_ascii_art      = true
+show_version        = true
+check_connectivity  = true
+check_updates       = false
+show_options        = false
+delete_cache        = true
+remove_tools        = false
+save_session        = false
+prompt              = onifw >
+debug               = false
+show_loading        = true
 ```
 
 
