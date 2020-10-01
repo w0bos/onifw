@@ -2,8 +2,10 @@
 
 import core.dict as dictmgr
 from os import system as shell
+from sys import exc_info as err
 from core.gui import color
-
+from core.onilib import readfile
+from core.errorHandler import ErrorHandler
 
 # Dict to stop using absolute values
 pkg = {
@@ -160,12 +162,16 @@ class Install:
             shell("git clone -q %s %s && cd %s/ && ./configure && make && make install" %
                   (pkg[target], tempDir, tempDir))
 
-    def install_dependencies(self,target):
+    def install_dependencies(self, targetDir, target):
         """
         Install dependecies with pip
         """
-        pass
-       
+        tool_req_file = targetDir + "requiremets.txt"
+        try:
+            shell("sudo pip install -r {}".format(tool_req_file))
+        except:
+            ErrorHandler(err(), False, True)
+
 
 
     def add_words(self, wordList=[]):

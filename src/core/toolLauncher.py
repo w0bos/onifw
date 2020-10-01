@@ -389,13 +389,21 @@ class networkmanaged:
                 print(
                     color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
 
+
 class onimap:
     def __init__(self, installDir, logDir):
         self.logDir = logDir
         self.installDir = installDir
-        print("[?] - Which target to scan")
-        target = input(color.NOTICE + "onifw/onimap > " + color.END)
-        system("python3 {0}core/onimap.py {1}".format(self.installDir, target))
+        target = input(
+            color.NOTICE + "[?] - Which target to scan\nonifw/onimap > " + color.END)
+        ports = input(
+            color.NOTICE + "[?] - Ports (separated by , ) [leave blank for auto]?\nonifw/onimap > " + color.END)
+        if len(ports)<1:
+            system(
+                "python3 {0}core/onimap.py -r {1}".format(self.installDir, target))
+        else:
+            system(
+                "python3 {0}core/onimap.py -r {1} -p {2}".format(self.installDir, target, ports))
 
 class onibuster:
     def __init__(self, installDir, logDir):

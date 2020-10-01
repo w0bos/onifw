@@ -15,7 +15,7 @@ Main component of onibuster
 
 def show_help():
     print("[!] - Wrong arguments")
-    print("Usage: ./onimap [rhost] [rport] [wordlist]")
+    print("Usage: ./onibuster [rhost] [rport] [wordlist]")
 
 
 try:
