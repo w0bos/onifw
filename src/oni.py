@@ -119,7 +119,7 @@ class main:
             elif marg in ["list", "ls"]:
                 if len(cmd) == 1:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
-                    run("ls {}tools/".format(installDir), check=True)
+                    run("ls {}tools/".format(installDir), shell=True)
                     print("myip  ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster "+color.END)
                 elif cmd[1] == "-r" or cmd[1] == "--recommended":
                     pacman.show_recommended()
@@ -138,7 +138,7 @@ class main:
             elif marg == "uninstall":
                 answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
-                    run("cd {} && . ../uninstall".format(installDir), check=True)
+                    run("cd {} && . ../uninstall".format(installDir), shell=True)
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
 

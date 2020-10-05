@@ -5,7 +5,7 @@
 ![](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Tested_On-Linux-orange.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Build-passing-green.svg?longCache=true&style=popout-square)
-![](https://img.shields.io/badge/Version-1.12.6-dark_green.svg?longCache=true&style=popout-square)
+![](https://img.shields.io/badge/Version-1.14-dark_green.svg?longCache=true&style=popout-square)
 
 ## Description
 **onifw** is a console-based framework for pentester. It comes with some common tools. You can either install all the recommended tools or install some of them. **onifw** is also able to use custom tools.
