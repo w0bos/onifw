@@ -5,7 +5,7 @@
 ![](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Tested_On-Linux-orange.svg?longCache=true&style=popout-square)
 ![](https://img.shields.io/badge/Build-passing-green.svg?longCache=true&style=popout-square)
-![](https://img.shields.io/badge/Version-1.13-dark_green.svg?longCache=true&style=popout-square)
+![](https://img.shields.io/badge/Version-1.13.1-dark_green.svg?longCache=true&style=popout-square)
 
 ## Description
 **onifw** is a console-based framework for pentesting and comes with some 
