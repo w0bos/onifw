@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-import core.dict as dictmgr
 from os import system as shell
 from sys import exc_info as err
+
+import core.dict as dictmgr
+from core.errorHandler import ErrorHandler
 from core.gui import color
 from core.onilib import readfile
-from core.errorHandler import ErrorHandler
+from core.onilib import abort, uninstall, remove_all
 
 # Dict to stop using absolute values
 pkg = {
@@ -35,51 +37,20 @@ pkg = {
 }
 
 
-
 def show_recommended():
+    """
+    Displays the list of recommended packages\n
+    \nArguments:\n
+    packages : Required (dict)
+    """
     print("\033[32m" + "Recommended packages\n" + "\033[93m")
     keys = [i for i in pkg.keys()]
-    for i in range(0,len(keys),2):
-        if i<len(keys)-1:
+    for i in range(0, len(keys), 2):
+        if i < len(keys)-1:
             print("%-15s" "%s" % (keys[i], keys[i+1]))
         else:
             print("%s" % (keys[i]))
     print("\033[97m")
-
-
-def abort():
-    input(color.LOGGING +
-          "[*] - Installation canceled, press [return] to go back" + color.WHITE)
-
-
-def uninstall(installDir, cmd, root=0):
-    print("[*] - Removing folder")
-    if root==0:
-        for i in cmd:
-            shell("rm -rf {0}tools/{1}".format(installDir, i))
-    else:
-        for i in cmd:
-            shell("sudo rm -rf {0}tools/{1}".format(installDir, i))
-    print(color.LOGGING+"[*] - Cleaning dictionnary..."+color.END)
-    f = open("{}data/dict.txt".format(installDir))
-    out = []
-    for line in f:
-        for i in cmd:
-            if not i in line:
-                out.append(line)
-    f.close()
-    f = open("{}data/dict.txt".format(installDir), 'w')
-    f.writelines(out)
-    f.close()
-
-
-def remove_all(installDir,root=1):
-    toolDir = installDir + 'tools/'
-    # To avoid errors
-    if root==1:
-        shell("sudo rm -rf {}*".format(toolDir))
-    else:
-        shell("rm -rf {}*".format(toolDir))
 
 
 class Install:

@@ -6,6 +6,7 @@ from datetime import datetime as date
 from sys import exc_info as err
 from sys import argv as args
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, setdefaulttimeout, TCP_NODELAY, IPPROTO_TCP
+from socket import create_connection
 
 def helper():
     """
@@ -29,11 +30,9 @@ def main(targ, timeout, ports):
     Main component of onimap
     @params:
 
-        target:         - Required  :   ip/hostname of the scan (str)
-
-        timeout:        - Required  :   default socket time (float)
-
-        ports:          - Required  :   array of ports to scan Array(int)
+        target:  - Required : ip/hostname of the scan (str)
+        timeout: - Required : default socket time (float)
+        ports:   - Required : array of ports to scan Array(int)
     """
     flag = False
     port_opens = "Onimap2 results:\nPORT\t| STATUS\n"

@@ -14,7 +14,6 @@ if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
     BIN_DIR="$PREFIX/bin"
     BASH_PATH="$PREFIX/bin/bash"
     TERMUX=true
-
     pkg install -y git python3 python2 perl gcc ruby
 
 else
@@ -22,7 +21,6 @@ else
     BIN_DIR="/usr/local/bin"
     BASH_PATH="/bin/bash"
     TERMUX=false
-
 fi
 
 echo "[*] - Looking for old install...";
@@ -62,14 +60,9 @@ git clone https://github.com/w0bos/onifw "$INSTALL_DIR"
 #echo "#!$BASH_PATH python3 $INSTALL_DIR/oni.py" '${1+"$@"}' > "$INSTALL_DIR/onifw"
 if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/src/bin/onifw" "$BIN_DIR"
-    #cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
-    #cp -r "$INSTALL_DIR/src/core" "$BIN_DIR"
-    #cp launcher "$BIN_DIR" onifw
+
 else
     sudo cp "$INSTALL_DIR/src/bin/onifw" "$BIN_DIR"
-    #sudo cp -r "$INSTALL_DIR/src/core" "$BIN_DIR"
-    #sudo cp -r "$INSTALL_DIR/src/data" "$BIN_DIR"
-    #sudo cp launcher "$BIN_DIR" onifw
 fi
 #For merged
 curl https://raw.githubusercontent.com/w0bos/onifw/master/src/uninstall > uninstall
@@ -85,7 +78,6 @@ if [ $# -eq 1 ]
             echo "[!] - unkown flag $1"
         fi
 fi
-
 
 
 if [ -d "$INSTALL_DIR" ] ;

@@ -2,15 +2,26 @@
 # -*- coding: utf-8 -*-
 '''
     TODO:
-        ! Commands
+        * Commands
             - help [command] ==> Show more help
 
         * Configuration
+            - Add custom path for onirc file
+            - Change default path for onirc :
+                ==> $HOME/.onirc
 
         * Fix
             ! Some tools require modules (python pip)
+            !
 
         * Misc
+            ? Add argument handler to simplify oni.py
+            ? Place all text data in db ?
+            ? Add display manager for messages
+            - Add session manager
+            - Add docstring (PEP8)
+            - Prepare for python 3.9 type hinting
+
 
     DONE:
         * Commands
@@ -59,22 +70,7 @@ import core.logHandler      as logger
 import core.toolLauncher    as tl
 from   core.loading         import thread_loading
 from   core.gui             import color
-from   core.onilib          import clearScr, readfile, loadtools, del_cache    
-
-
-def pkgmgrhelp():
-    print(color.NOTICE)
-    print("[*] - Usage : pkg [cmd] [package]")
-    print("Multiple packages can be installed at once.")
-    print("Use the [list] commad to see what packages are available")
-    print("Flags:")
-    print("-a --all             install all packages")
-    print("-i --install         install named package")
-    print("-r --remove          remove package")
-    print("-da --delete-all     removes all installed packages")
-    print("-f --force           forces the removal (when installed in sudo)")
-    print("-c --custom          add custom package")
-    print(color.WHITE)
+from   core.onilib          import clearScr, readfile, loadtools, del_cache, pkgmgrhelp    
 
 
 # Data
@@ -88,24 +84,20 @@ debug = cfg.check_value(installDir, "debug", False)
 class main:
 
     def __init__(self):
-        #Check is path exists
         if not path.isdir(toolDir): mkdir(toolDir)
         if not path.isdir(logDir): mkdir(logDir)
         completer = auto.Autocomp(readfile(installDir + "data/dict.txt"))
         set_completer(completer.complete)
         parse_and_bind('tab: complete')
         prompt = input(color.BOLD + color.color_random[0] + onifw_cmd + color.END)
-        # Ask input
         cmd = prompt.split()
-        #Add input to log if enables
         logger.LogHandler(installDir, logDir, cmd)
         if len(cmd) == 0:
             pass
             #loopback
         else:
             marg = cmd[0]
-            # BASE COMMANDS
-            # PASS
+
             if marg in ["quit", "exit"]:
                 clearScr()
                 print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
@@ -125,7 +117,6 @@ class main:
                     pacman.show_recommended()
                 else:
                     print(color.WARNING + "ls[!] - %s : unknown command" % cmd[1])
-                    #generator in print?
             elif marg == "update":
                 update.Updater(installDir)
             elif marg in ["help", "?"]:
@@ -141,9 +132,6 @@ class main:
                     run("cd {} && . ../uninstall".format(installDir), shell=True)
                 else:
                     print(color.LOGGING + "[*] - Aborting uninstall process.")
-
-            # MISC
-            # PASS
             elif marg == "show_version":
                 print(color.color_random[randint(0, len(color.color_random)-1)])
                 with open("{}data/version.txt".format(installDir)) as f:
@@ -166,7 +154,6 @@ class main:
                 dictmgr.restoreDict(installDir)
             # TOOL LAUNCHER
             elif marg in loadtools(toolDir):
-                # Add dictionnary to array on launch instead of hard coded one
                 e = cmd[0]
                 if e == "microsploit":
                     tl.toolmanager("microsploit", "bash",
@@ -228,7 +215,6 @@ class main:
                 else:
                     try:
                         cfg.CustomTool(installDir, marg)
-                    # Else throw command as unknown
                     except:
                         print(color.WARNING +
                               "[!] - %s : unknown command" % cmd[0])

@@ -19,6 +19,7 @@ class Main:
         self.logDir = installDir + 'logs/'
         print(color.WARNING)
         print(color.BOLD + "[*] - Custom tool installer." + color.END)
+        print(color.OKBLUE + "Version {}".format(version) + color.END)
         print("The custom installer may not work properly and might break your current install of onifw.")
         print("[?] - What is the language of the tool?\n\r1 - Python\n\r2 - C\n3 - Other\n\nq - Return")
         ans = input(color.OKBLUE + "PackageManager> ")
