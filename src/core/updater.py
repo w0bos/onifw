@@ -6,7 +6,7 @@ from packaging import version
 
 from core.errorHandler import ErrorHandler
 from core.gui import color
-from core.onilib import check_branch
+from core.onilib import check_branch, return_colored_prefix
 
 
 class Updater:
@@ -28,22 +28,22 @@ class Updater:
                     "curl -s https://raw.githubusercontent.com/w0bos/onifw/master/src/data/version.txt", shell=True).decode("utf-8").strip('\r\n')
                 late = version.parse(latest_version)
                 if late > local_version:
-                    ans = input(
-                        color.NOTICE + "[*] - A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
+                    ans = input(return_colored_prefix(
+                        "*") + "- A new version is available\nDo you wish to install the new update? [y/N] :" + color.END)
                     if ans.lower() in ["yes", "y"]:
                         # Won't wipe old install
                         shell("cd {} && git pull".format(installDir))
                     else:
-                        print("[*] - Update aborted")
+                        print(return_colored_prefix("*") + "- Update aborted")
 
                 elif late == local_version:
-                    print(
-                        color.OKGREEN + "[*] - You're already running the latest version of onifw" + color.END)
+                    print(return_colored_prefix(
+                        "*") + "- You're already running the latest version of onifw" + color.END)
                 elif late < local_version:
-                    print(color.BOLD + color.IMPORTANT +
-                          "[+] - You are running an alpha version of onifw" + color.END)
+                    print(return_colored_prefix(
+                        "*") + "- You are running an alpha version of onifw" + color.END)
                 else:
-                    print(color.WARNING + "[!] - Unknown error" + color.END)
+                    ErrorHandler(err(), False, True)
 
                 shell("rm -rf {}/temp".format(installDir))
             except:

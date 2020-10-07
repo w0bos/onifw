@@ -49,11 +49,12 @@ def main(targ, timeout, ports):
                 sock = socket(AF_INET, SOCK_STREAM)
                 sock.setsockopt(IPPROTO_TCP, TCP_NODELAY, 1)
                 setdefaulttimeout(timeout)
-                sock.connect((targ, port))
-                flag = True
-                port_opens += "{}\t| open\n".format(port)
-                print_progress_bar(ports.index(port), len(ports), prefix='Progress:',
-                                 suffix='Complete')
+                r = sock.connect_ex((targ,port))
+                if r == 0:
+                    flag = True
+                    port_opens += "{}\t| open\n".format(port)
+                    print_progress_bar(ports.index(port), len(ports), prefix='Progress:',
+                                     suffix='Complete')
             except ConnectionError:
                 pass
             except TimeoutError:

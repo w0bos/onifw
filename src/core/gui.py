@@ -14,5 +14,7 @@ class color:
     #Text formatting
     BOLD = '\033[1m'
     UNDER = '\033[4m'
+    BLINK = '\033[5m'
+    ITALIC = '\033[3m'
     color_random = [HEADER, IMPORTANT, NOTICE, OKBLUE, OKGREEN, WARNING, RED, LOGGING]
     shuffle(color_random)

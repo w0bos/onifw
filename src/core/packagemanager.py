@@ -7,7 +7,7 @@ import core.dict as dictmgr
 from core.errorHandler import ErrorHandler
 from core.gui import color
 from core.onilib import readfile
-from core.onilib import abort, uninstall, remove_all
+from core.onilib import abort, uninstall, remove_all, return_colored_prefix
 
 # Dict to stop using absolute values
 pkg = {
@@ -58,14 +58,12 @@ class Install:
         self.toolDir = installDir + 'tools/'
         self.installDir = installDir
         self.args = args
-        if len(args)<1:
+        if len(args) < 1:
             if force:
                 self.install_all()
             else:
-                ans = input(
-                    color.IMPORTANT +
-                    "[*] - Installation process can be quite long.\nProceed anyways?\n[y/N] : " 
-                    + color.END).lower()
+                ans = input(return_colored_prefix(
+                    "!") + "- Installation process can be quite long.\nProceed anyways?\n[y/N] : " + color.END).lower()
                 if ans in ["y", "yes"]:
                     self.install_all()
         else:
@@ -78,7 +76,7 @@ class Install:
             if i in ["crips", "arachni", "brutex", "revsh", "nmap"]:
                 self.build_tools(i,temp_install_dir)
             else:
-                print(color.LOGGING + "[+] - Installing " +
+                print(return_colored_prefix("+") + "- Installing " +
                       color.NOTICE+"{}".format(i)+"...")
                 shell("git clone -q {0} {1}".format(pkg[i], temp_install_dir))
                 wordlist.append(i)
@@ -98,16 +96,18 @@ class Install:
             else:
                 # target is package
                 if target in pkg:
-                    print(color.LOGGING + "[+] - Installing " +
+                    print(return_colored_prefix("+") + "- Installing " +
                           color.NOTICE+"{}".format(target)+color.LOGGING+"...")
                     shell("git clone -q {0} {1}".format(pkg[target], tempDir[i]))
                 else:
-                    print(color.RED+"[*] - Unkown package. Please retry or use the custom package installer"+color.END)
+                    print(return_colored_prefix(
+                        "*") + " - Unkown package. Please retry or use the custom package installer"+color.END)
 
         self.add_words(self.args)
         
     def build_tools(self, target, tempDir):
-        print(color.LOGGING + "[+] - Installing "+color.NOTICE+"{}".format(target)+color.LOGGING+"...")
+        print(return_colored_prefix("+") + "- Installing " +
+              color.NOTICE+"{}".format(target)+color.LOGGING+"...")
         if target == "crips":
             shell("git clone -q %s %s" % (pkg[target], tempDir))
             shell("sudo chmod +x %s/install.sh" % (tempDir))
@@ -122,7 +122,8 @@ class Install:
 
         elif target == "revsh":
             #Configure OPENSSL
-            print(color.OKBLUE+"[+] - Configuring openssl for revsh..."+color.END)
+            print(return_colored_prefix("+") +
+                  "- Configuring openssl for revsh..."+color.END)
             shell("git clone -q %s %s" %
                   ("https://github.com/openssl/openssl", self.toolDir+"openssl"))
             shell("cd {0} && ./config no-shared -static && make && make test".format(self.toolDir+"openssl"))
@@ -146,7 +147,7 @@ class Install:
 
 
     def add_words(self, wordList=[]):
-        print(color.OKGREEN+"[*] - Done."+color.END)
+        print(return_colored_prefix("*") + "- Done."+color.END)
         if not(len(wordList)):
             for i in pkg:
                 wordList.append(i)

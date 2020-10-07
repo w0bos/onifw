@@ -12,7 +12,7 @@ from sys import exc_info as err
 from time import gmtime, strftime
 from core.gui import color
 from core.errorHandler import ErrorHandler
-from core.onilib import clearScr
+from core.onilib import clearScr, return_colored_prefix
 
 
 installDir = dirname(abspath(__file__)) + '/../'
@@ -36,16 +36,15 @@ class toolmanager:
         self.prefix = self.lang
         self.arg=""
         if not isdir(self.installDir):
-            print(color.IMPORTANT +
-                  "[!] - Tool not installed or not located in the tool/ directory" +
+            print(return_colored_prefix("!") + "- Tool not installed or not located in the tool/ directory" +
                   color.END)
             return
         for i in extensions:
             if i in self.lang:
                 self.extension = extensions[i]     
         if need_args:
-            print(color.LOGGING +
-                  "[?] - Please specify a target" + color.END)
+            print(return_colored_prefix("?") +
+                  "- Please specify a target" + color.END)
             self.arg = str(
                 input(color.HEADER + "onifw[{}]: ".format(self.tool_name) + color.END))
         if len(pre_cmd) > 1:
@@ -75,11 +74,11 @@ class doork:
         self.installDir = toolDir + "doork"
 
         if not self.installed():
-            print(
-                "[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
+            print(return_colored_prefix(
+                "!") + "- Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
             clearScr()
         else:
-            print("[?] - Enter a target")
+            print(return_colored_prefix("?") + "- Enter a target")
             target = input(color.LOGGING + "doork > " + color.WHITE)
             self.run(target)
 
@@ -101,8 +100,10 @@ class nxcrypt:
     def __init__(self):
         self.installDir = toolDir + "nxcrypt"
         if not self.installed():
-            print(
-                "[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
+            print(return_colored_prefix(
+                "!") + "- Tool not installed.")
+            print(return_colored_prefix("*") +
+                  "- Please use pkg -i [pkg] to install it.")
         else:
             clearScr()
             self.run()
@@ -118,8 +119,9 @@ class revsh:
     def __init__(self):
         self.installDir = toolDir + "revsh"
         if not self.installed():
-            print("[*] - Tool not installed.")
-            print("[*] - Please use pkg -i [pkg] to install it.")
+            print(return_colored_prefix("!") + "- Tool not installed.")
+            print(return_colored_prefix("*") +
+                  "- Please use pkg -i [pkg] to install it.")
         else:
             clearScr()
             self.run()
@@ -137,8 +139,8 @@ class brutex:
         self.installDir = toolDir + "brutex"
 
         if not self.installed():
-            print(
-                "[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
+            print(return_colored_prefix(
+                "*") + "- Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
             clearScr()
             self.run()
@@ -147,7 +149,7 @@ class brutex:
         return (isdir(self.installDir))
 
     def run(self):
-        print("[?] - Enter target IP")
+        print(return_colored_prefix("?") + "- Enter target IP")
         target = input(color.LOGGING + "BruteX > " + color.WHITE)
         system("brutex %s" % target)
 
@@ -161,13 +163,13 @@ class arachni:
     def __init__(self):
         self.installDir = toolDir + "arachni"
         if not isdir(self.installDir):
-            print(
-                "[*] - Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
+            print(return_colored_prefix(
+                "*") + "- Tool not installed.\n[*] - Please use pkg -i [pkg] to install it.")
         else:
             self.run()
 
     def run(self):
-        print("[?] - Enter target")
+        print(return_colored_prefix("?") + "- Enter target")
         target = input(color.LOGGING + "Arachni > " + color.LOGGING)
         system("sudo arachni %s" % (target))
 
@@ -196,7 +198,8 @@ class nmap:
         self.run()
 
     def run(self):
-        print("[?] - Enter target IP/Subnet/Range/Host")
+        print(return_colored_prefix("?") +
+              "- Enter target IP/Subnet/Range/Host")
         target = input(self.targetPrompt)
         self.menu(target)
 
@@ -249,7 +252,7 @@ class nmap:
 class wpscan:
     def __init__(self):
         self.installDir = toolDir + "wpscan"
-        print("[?] - Enter a target")
+        print(return_colored_prefix("?") + "- Enter a target")
         target = input(color.LOGGING + "wpscan > " + color.WHITE)
         self.menu(target)
 
@@ -290,15 +293,15 @@ class wpscan:
 
 class ipfind:
     def __init__(self):
-        print("[?] - Enter URL")
+        print(return_colored_prefix("?") + "- Enter URL")
         host = input(color.NOTICE +
                      "onifw/IPfinder > " + color.WHITE)
         ip = gethostbyname(host)
-        print("[*] - The IP of %s is: %s" % (host, ip))
+        print(return_colored_prefix("*") + "- The IP of %s is: %s" % (host, ip))
 
 class hashcheck:
     def __init__(self, logDir):
-        filepath = input(color.LOGGING+"[?] - Enter path of file: ")
+        filepath = input(return_colored_prefix("?") + "- Enter path of file: ")
         print("Hash checker")
         print("1 - MD5")
         print("2 - sha1")
@@ -322,8 +325,8 @@ class servicestatus:
             mkdir(self.logDir)  # Make folder
         print(color.LOGGING)
         system("ps -ef > {}/services.out".format(self.logDir))
-        print(color.END + color.NOTICE +
-              "[*] - Log saved in the .onifw/src/logs/ dir" + color.END)
+        print(return_colored_prefix("*") +
+              "- Log saved in the .onifw/src/logs/ dir" + color.END)
 
 class firewall:
     def __init__(self, logDir):
@@ -377,8 +380,8 @@ class networkmanaged:
                 system("sudo iwconfig {} mode monitor".format(inter_name))
                 system("sudo iwconfig {} up".format(inter_name))
             except:
-                print(
-                    color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
+                print(return_colored_prefix(
+                    "!") + "- An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
         elif ans == "2":
             inter_name = input("interface name: ")
             try:
@@ -386,18 +389,18 @@ class networkmanaged:
                 system("sudo iwconfig {} mode managed".format(inter_name))
                 system("sudo iwconfig {} up".format(inter_name))
             except:
-                print(
-                    color.IMPORTANT+"[!] - An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
+                print(return_colored_prefix(
+                    "!") + "- An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
 
 
 class onimap:
     def __init__(self, installDir, logDir):
         self.logDir = logDir
         self.installDir = installDir
-        target = input(
-            color.NOTICE + "[?] - Which target to scan\nonifw/onimap > " + color.END)
-        ports = input(
-            color.NOTICE + "[?] - Ports (separated by , ) [leave blank for auto]?\nonifw/onimap > " + color.END)
+        target = input(return_colored_prefix("?") +
+                       "- Which target to scan\nonifw/onimap > " + color.END)
+        ports = input(return_colored_prefix(
+            "?") + "- Ports (separated by , ) [leave blank for auto]?\nonifw/onimap > " + color.END)
         if len(ports)<1:
             system(
                 "python3 {0}core/onimap.py -r {1}".format(self.installDir, target))
@@ -409,13 +412,13 @@ class onibuster:
     def __init__(self, installDir, logDir):
         self.logDir = logDir
         self.installDir = installDir
-        print("[?] - Set target")
+        print(return_colored_prefix("?") + "- Set target")
         rhost = input("target > ")
-        print("[?] - Set port (default:80)")
+        print(return_colored_prefix("?") + "- Set port (default:80)")
         port = input("port > ")
         if len(port) < 1:
             port = 80
-        print("[?] - Which dictionnary file to use")
+        print(return_colored_prefix("?") + "- Which dictionnary file to use")
         dictf = input("dictionnary > ")
         system(
             "python3 {0}/core/onibuster.py {1} {2} {3}".format(installDir, rhost, port, dictf))
@@ -428,7 +431,7 @@ class bg:
 
 class run_shell:
     def __init__(self):
-        print(color.LOGGING+"[*] - Opening system prompt")
+        print(return_colored_prefix("*") + "- Opening system prompt")
         system_cmd = input(color.OKBLUE+"shell$ "+color.END)
         system(system_cmd)
 
@@ -448,12 +451,13 @@ class cd:
                     cmd[1]), shell=True).decode("utf-8").strip('\n')
                 flag = False
             try:
-                print(color.OKBLUE+"[+] - Changing current directory...")
+                print(return_colored_prefix("+") +
+                      "- Changing current directory...")
                 if flag:
                     chdir("/home/{}".format(getuser()) + "/" + value)
                 else:
                     chdir(value)
-                print(color.LOGGING+"[*] - Current directory: " +
+                print(return_colored_prefix("+") + "- Current directory: " +
                       color.NOTICE + getcwd() + color.END)
             except:
                 print("[!] - And unexpected error occurred")
@@ -462,22 +466,22 @@ class checkout:
     def __init__(self, cmd, installDir):
         if len(cmd) > 1:
             if cmd[1] == "dev":
-                ans = input(
-                    "[!] - Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
+                ans = input(return_colored_prefix(
+                    "!") + "- Switching to the dev branch might break onifw.\n[?] - Continue? [y/N]: ")
                 if ans.lower() in ["y", "yes"]:
                     system("cd {} && git checkout dev".format(installDir))
-                    print(
-                        "[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                    print(return_colored_prefix(
+                        "*") + "- Done.\n[*] - Restart onifw for changes to take effect")
             if cmd[1] == "master":
-                ans = input(
-                    "[!] - Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
+                ans = input(return_colored_prefix(
+                    "!") + "- Switching to the master branch might break onifw.\n[?] - Continue? [y/N]: ")
                 if ans.lower() in ["y", "yes"]:
                     system("cd {} && git checkout master".format(installDir))
-                    print(
-                        "[*] - Done.\n[*] - Restart onifw for changes to take effect")
+                    print(return_colored_prefix(
+                        "*") + "- Done.\n[*] - Restart onifw for changes to take effect")
         else:
-            print("[!] - No branch provided :: Usage: git checkout [branch]")
-            print("[!] - Branches available : master / dev")
+            print(return_colored_prefix("!") + "- No branch provided :: Usage: git checkout [branch]")
+            print(return_colored_prefix("!") + "- Branches available : master / dev")
 
 class status:
     def __init__(self, installDir):
@@ -487,7 +491,5 @@ class status:
             version = f.readlines()[0].rstrip("\n\r")
         f.close()
         if curr_branch == "dev":
-            print(color.NOTICE + "[+]" + color.HEADER +
-                  " - onifw {0} on {1} branch".format(version, curr_branch) + color.END)
-            print(color.NOTICE + "[+]" + color.HEADER +
-                  " - Installation location: {}".format(installDir) + color.END)
+            print(return_colored_prefix("+") + "- onifw {0} on {1} branch".format(version, curr_branch) + color.END)
+            print(return_colored_prefix("+") + " - Installation location: {}".format(installDir) + color.END)

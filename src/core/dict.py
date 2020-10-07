@@ -3,6 +3,7 @@
 from core.gui import color
 from sys import exc_info as err
 from core.errorHandler import ErrorHandler
+from core.onilib import return_colored_prefix
 
 def addWords(installDir, wordList):
     """Add words to dictionnary file
@@ -10,13 +11,13 @@ def addWords(installDir, wordList):
     Arguments:
         - wordList : Array of strings containing words to add
     """
-    print("[*] - Adding dictionnary words...")
+    print(return_colored_prefix("*") + "- Adding dictionnary words...")
     try:
         with open("{}data/dict.txt".format(installDir), "a") as f:
             for i in range(len(wordList)):
                 f.write(wordList[i] + "\n")
         f.close()
-        print("[*] - Done.")
+        print(return_colored_prefix("*") + "- Done.")
     except:
         ErrorHandler(err(), False)
 
@@ -24,7 +25,7 @@ def addWords(installDir, wordList):
 def restoreDict(installDir):
     """Restore default dictionnary file
     """
-    print("[*] - Restoring dictionnary to default...")
+    print(return_colored_prefix("*") + "- Restoring dictionnary to default...")
     try:
         f = open("{}data/dict.txt".format(installDir))
         out = []
@@ -53,12 +54,12 @@ def updateConfig(installDir, name, command):
         - name : name of the tool
         - command : command used to launch the tool
     """
-    print("[*] - Updating configuration...")
+    print(return_colored_prefix("*") + "- Updating configuration...")
     try:
         with open("{}onirc".format(installDir), "a") as f:
             f.write("{0} = {1}\n".format(name, command))
         f.close()
-        print("[*] - Done.")
+        print(return_colored_prefix("*") + "- Done.")
     except:
         print(color.LOGGING + "[!] - Unexpected error: ")
         ErrorHandler(err(), False)
@@ -69,11 +70,11 @@ def addCustomWords(installDir, name):
         - name : name of the custom tool
         - installDir : Directory of current install
     """
-    print("[*] - Adding custom words...")
+    print(return_colored_prefix("*") + "- Adding custom words...")
     try:
         with open("{}data/ctools.txt".format(installDir), "a") as f:
             f.write(name + "\n")
         f.close()
-        print("[*] - Done.")
+        print(return_colored_prefix("*") + "- Done.")
     except:
         ErrorHandler(err(), False)

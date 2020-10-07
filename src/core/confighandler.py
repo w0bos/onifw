@@ -4,7 +4,7 @@ from os import makedirs as mkdir
 from core.gui import color
 import core.logHandler as logh
 from configparser import ConfigParser
-from core.onilib import check_prompt, check_value, get_connection
+from core.onilib import check_prompt, check_value, get_connection, return_colored_prefix
 
 
 
@@ -35,12 +35,13 @@ class ConfigOnstart:
             print(color.color_random[0] + "\t\tVersion: " + self.version)
         if check_value(self.installDir, "check_connectivity", True):
             if get_connection():
-                print(color.OKGREEN + "\n[*] - Connected to a network")
+                print(return_colored_prefix("*") + "- Connected to a network")
             else:
                 print(color.BOLD)
-                print(color.RED + "[!] - No connectivity!" + color.WHITE)
-                print(
-                    color.RED + "[!] - Some tools might not work as intended" + color.END)
+                print(return_colored_prefix("!") +
+                      "- No connectivity!" + color.WHITE)
+                print(return_colored_prefix("!") +
+                      "- Some tools might not work as intended" + color.END)
         if check_value(self.installDir, "show_options", False):
             print(color.BOLD + color.LOGGING + "configuration:" + color.END)
             print("show_ascii: " + color.NOTICE + str(check_value(self.installDir, "show_ascii", True)) + color.END)

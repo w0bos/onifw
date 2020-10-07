@@ -5,7 +5,7 @@ from os import system as shell
 from core.gui import color
 from sys import exc_info as err
 from core.errorHandler import ErrorHandler
-
+from core.onilib import return_colored_prefix
 
 version = "0.2"
 
@@ -18,10 +18,12 @@ class Main:
         self.toolDir = installDir + 'tools/'
         self.logDir = installDir + 'logs/'
         print(color.WARNING)
-        print(color.BOLD + "[*] - Custom tool installer." + color.END)
+        print(return_colored_prefix(
+            "*") + "- Custom tool installer." + color.END)
         print(color.OKBLUE + "Version {}".format(version) + color.END)
         print("The custom installer may not work properly and might break your current install of onifw.")
-        print("[?] - What is the language of the tool?\n\r1 - Python\n\r2 - C\n3 - Other\n\nq - Return")
+        print(return_colored_prefix(
+            "?") + "- What is the language of the tool?\n\r1 - Python\n\r2 - C\n3 - Other\n\nq - Return")
         ans = input(color.OKBLUE + "PackageManager> ")
         if ans == "1":
             Pythonapp(self.installDir, self.toolDir)
@@ -32,7 +34,8 @@ class Main:
         elif ans.lower()=="q":
             pass 
         else:
-            print("[!] - Not yet implemented")
+            print(return_colored_prefix(
+                "!") + "- Not yet implemented")
 
 
 class Pythonapp:
@@ -64,7 +67,8 @@ class Pythonapp:
             dictmgr.addWords(self.installDir, [name])
             dictmgr.addCustomWords(self.installDir, name)
             dictmgr.updateConfig(self.installDir, name, cmds)
-            print("[*] - You may need to restart onifw in order to use the custom tool.")
+            print(return_colored_prefix(
+                "?") + "- You may need to restart onifw in order to use the custom tool.")
 
 
 class Capp:
@@ -76,7 +80,8 @@ class Capp:
         try:
             shell("git clone %s %s %s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % shell("pwd"))
+                print(return_colored_prefix(
+                    "*") + "- Current directory: % s" % shell("pwd"))
                 cmd = input("Custom command: ")
                 shell(cmd)
             cmds = input("Launch command: ")
@@ -114,7 +119,8 @@ class Otherapp:
         try:
             shell("git clone %s %s%s" % (link, self.toolDir, name))
             for i in range(nb_cmd):
-                print("[*] - Current directory: %s" % shell("pwd"))
+                print(return_colored_prefix(
+                    "*") + "- Current directory: % s" % shell("pwd"))
                 cmd = input("Custom command: ")
                 shell(cmd)
             if lang == "java":

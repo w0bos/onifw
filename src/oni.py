@@ -70,17 +70,15 @@ import core.logHandler      as logger
 import core.toolLauncher    as tl
 from   core.loading         import thread_loading
 from   core.gui             import color
-from   core.onilib          import clearScr, readfile, loadtools, del_cache, pkgmgrhelp    
+from   core.onilib          import clearScr, readfile, loadtools, del_cache, pkgmgrhelp, return_colored_prefix
 
-
-# Data
 installDir = path.dirname(path.abspath(__file__)) + '/'
 toolDir = installDir + 'tools/'
 logDir = installDir + 'logs/'
 onifw_cmd = cfg.check_prompt(installDir)
 debug = cfg.check_value(installDir, "debug", False)
 
-# Class
+
 class main:
 
     def __init__(self):
@@ -100,8 +98,8 @@ class main:
 
             if marg in ["quit", "exit"]:
                 clearScr()
-                print(color.BOLD + color.NOTICE + "[*] - Cleaning cache..." + color.END)
-                print(color.BOLD + color.OKGREEN + "[*] - Leaving onifw..." + color.END)
+                print(return_colored_prefix("*") + "- Cleaning cache..." + color.END)
+                print(return_colored_prefix("*") + "- Leaving onifw..." + color.END)
                 del_cache(installDir)
                 leave()
             elif marg == "clean_cache":
@@ -113,10 +111,10 @@ class main:
                     print(color.BOLD + color.HEADER +"List of installed tools" + color.END + color.LOGGING)
                     run("ls {}tools/".format(installDir), shell=True)
                     print("myip  ipfinder  hashcheck  servicestatus  firewall  viewtraffic  netmanager  onimap  onibuster "+color.END)
-                elif cmd[1] == "-r" or cmd[1] == "--recommended":
+                elif cmd[1] in ["-r", "--recommended"]:
                     pacman.show_recommended()
                 else:
-                    print(color.WARNING + "ls[!] - %s : unknown command" % cmd[1])
+                    print(return_colored_prefix("!") + "- %s : unknown command" % cmd[1])
             elif marg == "update":
                 update.Updater(installDir)
             elif marg in ["help", "?"]:
@@ -127,17 +125,17 @@ class main:
                 else:
                     print(color.WARNING+"[-] - WIP"+color.END)
             elif marg == "uninstall":
-                answer = input(color.WARNING + "[!] - Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
+                answer = input(return_colored_prefix("!") + "- Do you wish to remove onifw and all installed tools ?\n[y/N]").lower()
                 if answer.lower() in ["y", "yes"]:
                     run("cd {} && . ../uninstall".format(installDir), shell=True)
                 else:
-                    print(color.LOGGING + "[*] - Aborting uninstall process.")
+                    print(color.LOGGING + return_colored_prefix("*") + "- Aborting uninstall process.")
             elif marg == "show_version":
                 print(color.color_random[randint(0, len(color.color_random)-1)])
                 with open("{}data/version.txt".format(installDir)) as f:
                     version = f.readlines()[0].rstrip("\n\r")
                 f.close()
-                print("[*] - Installed version", version)
+                print(return_colored_prefix("*") + "- Installed version", version)
             elif marg == "show_title":
                 with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
                     print(color.color_random[0])
@@ -216,8 +214,7 @@ class main:
                     try:
                         cfg.CustomTool(installDir, marg)
                     except:
-                        print(color.WARNING +
-                              "[!] - %s : unknown command" % cmd[0])
+                        print(return_colored_prefix("!") + "- %s : unknown command" % cmd[0])
             # Package managment
             elif marg == "pkg":
                 if len(cmd) == 1:
@@ -231,14 +228,16 @@ class main:
                         if len(cmd) > 2:
                             pacman.uninstall(installDir, cmd[2:])
                         else:
-                            print("[!] - No arguments provided")
+                            print(return_colored_prefix("!") +
+                                  " - No arguments provided")
                     elif "-da" in cmd or "--delete-all" in cmd:
                         pacman.remove_all(installDir)
                     elif "-rf" in cmd or "-fr" in cmd or ("--force" and "--remove") in cmd:
                         if len(cmd) > 2:
                             pacman.uninstall(installDir, cmd, 1)
                         else:
-                            print("[!] - No arguments provided")
+                            print(return_colored_prefix("!") +
+                                  " - No arguments provided")
                     elif "-i" in cmd or "--install" in cmd:
                         pacman.Install(installDir, cmd[2:])
                         #.User_install(installDir, cmd)
@@ -246,8 +245,8 @@ class main:
                         pkgmgrhelp()
                     else:
                         if len(prompt.split(" ")[1:]) >= 1:
-                            print(
-                                color.WARNING + "PackageManager[!] %s : unknown command" % prompt.split(" ")[1:])
+                            print(return_colored_prefix(
+                                "!") + "- %s : unknown command" % prompt.split(" ")[1:])
 
             # Default scripts
             elif marg == "ipfinder":
@@ -280,7 +279,7 @@ class main:
                 tl.status(installDir)
             # Try custom package
             else:
-                print(color.WARNING +"[!] - %s : unknown command" % cmd[0])
+                print(return_colored_prefix("!") + "- %s: unknown command" % cmd[0])
         #loopback while no command
         self.__init__()
 if __name__ == '__main__':
@@ -294,7 +293,7 @@ if __name__ == '__main__':
         cfg.ConfigMisc(installDir)
         main()
     except KeyboardInterrupt:
-        print("\n" + color.LOGGING + color.BOLD)
-        print("[*] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
+        print("\n" + color.LOGGING + color.BOLD +
+              "[!] - Keyboard interruption. Leaving onifw...\n" + color.WHITE)
         if cfg.check_value(installDir, "delete_cache", True):
             del_cache(installDir)

@@ -42,7 +42,7 @@ def loadingUpper(importlib):
 			c = string[x]
 			c = c.upper()
 			string[x] = c
-			stdout.write("\r[*] - " + ''.join(string) + '...')
+			stdout.write("\r[*] -" + ''.join(string) + '...')
 			sleep(0.06)
 			c = string[x]
 			c = c.lower()

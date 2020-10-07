@@ -25,9 +25,15 @@ def readfile(file_dir):
     content = [line.rstrip('\n') for line in f]
     return content
 
-
-
-
+def return_colored_prefix(info_type):
+    if info_type == "+":
+        return color.OKBLUE + "[+] " + color.END
+    elif info_type == "*":
+        return color.OKGREEN + "[*] " + color.END
+    elif info_type == "?":
+        return color.NOTICE + "[?] " + color.END
+    elif info_type == "!":
+        return color.BOLD + color.WARNING + "[!] " + color.END
 """
 ONI.PY FUNCTIONS
 """
