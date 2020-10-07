@@ -15,11 +15,7 @@
             !
 
         * Misc
-            ? Add argument handler to simplify oni.py
-            ? Place all text data in db ?
-            ? Add display manager for messages
             - Add session manager
-            - Add docstring (PEP8)
             - Prepare for python 3.9 type hinting
 
 
@@ -48,6 +44,8 @@
             - Add port configuration when using onimap
             - Simplify help command
             - Rewrote the package manager
+            - Add display manager for messages
+            - Add docstring (PEP8)
 
 '''
 

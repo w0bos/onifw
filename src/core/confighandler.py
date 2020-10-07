@@ -1,7 +1,7 @@
 from os import system as cmd
 from os import path
 from os import makedirs as mkdir
-from core.gui import color
+from core.gui import color, logos
 import core.logHandler as logh
 from configparser import ConfigParser
 from core.onilib import check_prompt, check_value, get_connection, return_colored_prefix
@@ -24,10 +24,11 @@ class ConfigOnstart:
             fin.close()
         else:
             if check_value(self.installDir, "show_ascii", True):
-                with open("{}data/logo_ascii.txt".format(self.installDir), 'r') as fin:
-                    print(color.color_random[1] + fin.read())
-                    print(color.END)
-                fin.close()
+                #with open("{}data/logo_ascii.txt".format(self.installDir), 'r') as fin:
+                #    print(color.color_random[1] + fin.read())
+                #    print(color.END)
+                #fin.close()
+                print(color.color_random[1] + logos.ascii_art[0] + color.END)
         if check_value(self.installDir, "check_updates", False):
             from core.updater import Updater
             Updater(self.installDir)
