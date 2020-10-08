@@ -212,3 +212,22 @@ def remove_all(installDir, root=1):
         system("sudo rm -rf {}*".format(toolDir))
     else:
         system("rm -rf {}*".format(toolDir))
+
+
+"""
+PIP dependencies manager
+"""
+
+def load_deps(req_file, py_ver):
+    """
+    loads the dependencies of requirements.txt file
+    \nArguments:\n
+    req_file    : Required (str)
+    py_ver      : Required (int)
+    """
+    if py_ver == 2:
+        system("sudo pip2 install -r {}".format(req_file))
+    elif py_ver == 3:
+        system("sudo pip3 install -r {}".format(req_file))
+    else:
+        print(return_colored_prefix("!")+"- unkown python version")

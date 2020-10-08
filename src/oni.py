@@ -15,7 +15,7 @@
             !
 
         * Misc
-            - Add session manager
+            ? Add session manager
             - Prepare for python 3.9 type hinting
 
 
