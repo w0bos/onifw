@@ -12,7 +12,7 @@ from sys import exc_info as err
 from time import gmtime, strftime
 from core.gui import color
 from core.errorHandler import ErrorHandler
-from core.onilib import clearScr, return_colored_prefix
+from core.onilib import clearScr, return_colored_prefix, check_install
 
 
 installDir = dirname(abspath(__file__)) + '/../'
@@ -389,8 +389,9 @@ class networkmanaged:
                 system("sudo iwconfig {} mode managed".format(inter_name))
                 system("sudo iwconfig {} up".format(inter_name))
             except:
+                ErrorHandler(err())
                 print(return_colored_prefix(
-                    "!") + "- An error occurred, check if iwconfig is installed and the name of the interface"+color.END)
+                    "!") + "- Check if iwconfig is installed and the name of the interface"+color.END)
 
 
 class onimap:
@@ -460,7 +461,7 @@ class cd:
                 print(return_colored_prefix("+") + "- Current directory: " +
                       color.NOTICE + getcwd() + color.END)
             except:
-                print("[!] - And unexpected error occurred")
+                ErrorHandler(err())
 
 class checkout:
     def __init__(self, cmd, installDir):
@@ -492,4 +493,4 @@ class status:
         f.close()
         if curr_branch == "dev":
             print(return_colored_prefix("+") + "- onifw {0} on {1} branch".format(version, curr_branch) + color.END)
-            print(return_colored_prefix("+") + " - Installation location: {}".format(installDir) + color.END)
+            print(return_colored_prefix("+") + "- Installation location: {}".format(installDir) + color.END)

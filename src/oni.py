@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
+"""
     TODO:
         * Commands
             - help [command] ==> Show more help
@@ -47,7 +47,7 @@
             - Add display manager for messages
             - Add docstring (PEP8)
 
-'''
+"""
 
 # From
 from os import path
@@ -67,7 +67,7 @@ import core.confighandler   as cfg
 import core.logHandler      as logger
 import core.toolLauncher    as tl
 from   core.loading         import thread_loading
-from   core.gui             import color
+from   core.gui             import color, logos
 from   core.onilib          import clearScr, readfile, loadtools, del_cache, pkgmgrhelp, return_colored_prefix
 
 installDir = path.dirname(path.abspath(__file__)) + '/'
@@ -88,10 +88,7 @@ class main:
         prompt = input(color.BOLD + color.color_random[0] + onifw_cmd + color.END)
         cmd = prompt.split()
         logger.LogHandler(installDir, logDir, cmd)
-        if len(cmd) == 0:
-            pass
-            #loopback
-        else:
+        if len(cmd) != 0:
             marg = cmd[0]
 
             if marg in ["quit", "exit"]:
@@ -135,11 +132,12 @@ class main:
                 f.close()
                 print(return_colored_prefix("*") + "- Installed version", version)
             elif marg == "show_title":
-                with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
-                    print(color.color_random[0])
-                    print(fin.read())
-                    print(color.END)
-                fin.close()
+                print(color.color_random[2] + logos.ascii_art[0] + color.END)
+                #with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
+                #    print(color.color_random[0])
+                #    print(fin.read())
+                #    print(color.END)
+                #fin.close()
             elif marg == "show_agreement":
                 with open("{}data/agreement.txt".format(installDir), 'r') as fin:
                     print(color.BOLD + color.IMPORTANT)

@@ -1,4 +1,5 @@
 from os import system, getpid
+from os.path import isdir
 from subprocess import PIPE, check_output, run
 from socket import create_connection
 from configparser import ConfigParser
@@ -231,3 +232,18 @@ def load_deps(req_file, py_ver):
         system("sudo pip3 install -r {}".format(req_file))
     else:
         print(return_colored_prefix("!")+"- unkown python version")
+
+
+"""
+TOOL LAUNCHER
+"""
+
+def check_install(toolDir):
+    """
+    Checks if the requested tool is installed
+    \nArguments:\n
+    toolDir : Required (str)
+    """
+    if not isdir(toolDir):
+        print(return_colored_prefix("!") + "- Tool not installed")
+        print(return_colored_prefix("+") + "- Use pkg -i [pkg] to install it")
