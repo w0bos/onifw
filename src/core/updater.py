@@ -12,8 +12,8 @@ from core.onilib import check_branch, return_colored_prefix
 class Updater:
     """
     The update manager class of onifw
-
-    Arguments: None
+    \nArguments:\n 
+    None
     """
     def __init__(self, installDir):
         self.installDir = installDir

@@ -67,6 +67,9 @@ class ConfigOnQuit:
         self.onleave()
 
     def onleave(self):
+        """
+        Check if cache must be deleted on leave
+        """
         if check_value(self.installDir, "delete_cache", True):
             cmd("rm -rf {}core/__pycache__".format(self.installDir))
             cmd("rm -rf {}__pycache__".format(self.installDir))
@@ -86,6 +89,9 @@ class CustomTool:
         self.custom()
 
     def custom(self):
+        """
+        Loads the custom tools
+        """
         launch_cmd = self.parser.get('custom', self.name)
         cmd(launch_cmd)
 
@@ -96,6 +102,9 @@ class ConfigMisc:
         self.loadMisc()
 
     def loadMisc(self):
+        """
+        Loads the misc config options
+        """
         if check_value(self.installDir, "save_session", False):
             if not path.isdir(self.logDir): mkdir(self.logDir) # Make the dir
             if not path.isfile(self.logDir + "oni.log"): cmd("touch {}/oni.log".format(self.logDir))

@@ -75,21 +75,14 @@ def main(targ, timeout, ports):
 def print_progress_bar(iteration, total, prefix='', suffix=''):
     """
     Call in a loop to create terminal progress bar
-    @params:
+    \n@params:\n
         iteration   - Required  : current iteration (int)
-
         total       - Required  : total iterations (int)
-
         prefix      - Optional  : prefix string (str)
-
         suffix      - Optional  : suffix string (str)
-
         decimals    - Optional  : positive number of decimals (int)
-
         length      - Optional  : character length of bar (int)
-
         fill        - Optional  : bar fill character (str)
-
         printEnd    - Optional  : end character (e.g. "\\r", "\\r\\n") (str)
     """
     decimals = 1

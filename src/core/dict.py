@@ -6,10 +6,11 @@ from core.errorHandler import ErrorHandler
 from core.onilib import return_colored_prefix
 
 def addWords(installDir, wordList):
-    """Add words to dictionnary file
-    
-    Arguments:
-        - wordList : Array of strings containing words to add
+    """
+    Add words to dictionnary file
+    \nArguments:\n
+    installDir  : Required (str)
+    wordList    : Required Array(str)
     """
     print(return_colored_prefix("*") + "- Adding dictionnary words...")
     try:
@@ -23,7 +24,10 @@ def addWords(installDir, wordList):
 
 
 def restoreDict(installDir):
-    """Restore default dictionnary file
+    """
+    Restore default dictionnary file
+    \nArguments:\n
+    installDir  : Required (str)
     """
     print(return_colored_prefix("*") + "- Restoring dictionnary to default...")
     try:
@@ -48,11 +52,12 @@ def restoreDict(installDir):
 
 
 def updateConfig(installDir, name, command):
-    """Add launch command to the onirc file
-    Arguments:
-        - installDir : directory of current install
-        - name : name of the tool
-        - command : command used to launch the tool
+    """
+    Add launch command to the onirc file
+    \nArguments:\n
+    installDir  : Required (str)
+    name        : Required (str)
+    command     : Required (str)
     """
     print(return_colored_prefix("*") + "- Updating configuration...")
     try:
@@ -65,10 +70,11 @@ def updateConfig(installDir, name, command):
         ErrorHandler(err(), False)
     
 def addCustomWords(installDir, name):
-    """Add words to the custom dictionnary
+    """
+    Add words to the custom dictionnary
     Arguments:
-        - name : name of the custom tool
-        - installDir : Directory of current install
+    name        : Required (str)
+    installDir  : Required (str)
     """
     print(return_colored_prefix("*") + "- Adding custom words...")
     try:

@@ -137,6 +137,9 @@ class Install:
     def install_dependencies(self, targetDir, target):
         """
         Install dependecies with pip
+        \nArguments:\n
+        targetDir   : Required (str)
+        target      : Required (str)
         """
         tool_req_file = targetDir + "requiremets.txt"
         try:
