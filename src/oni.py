@@ -6,18 +6,13 @@
             - help [command] ==> Show more help
 
         * Configuration
-            - Add custom path for onirc file
-            - Change default path for onirc :
-                ==> $HOME/.onirc
 
         * Fix
             ! Some tools require modules (python pip)
-            !
 
         * Misc
             ? Add session manager
             - Prepare for python 3.9 type hinting
-
 
     DONE:
         * Commands
@@ -29,7 +24,9 @@
 
         * Configuration
             - Complete log output of onifw in log/oni.log file
-
+            - Change default path for onirc:
+                ==> $HOME/.onirc
+                ==> $HOME/.onifw/src/onirc
         * Fix
             - Fixed packages that didn't make make install
             - Fix logging when doing multiple argument input
@@ -90,7 +87,6 @@ class main:
         logger.LogHandler(installDir, logDir, cmd)
         if len(cmd) != 0:
             marg = cmd[0]
-
             if marg in ["quit", "exit"]:
                 clearScr()
                 print(return_colored_prefix("*") + "- Cleaning cache..." + color.END)
@@ -133,11 +129,6 @@ class main:
                 print(return_colored_prefix("*") + "- Installed version", version)
             elif marg == "show_title":
                 print(color.color_random[2] + logos.ascii_art[0] + color.END)
-                #with open("{}data/logo_ascii.txt".format(installDir), 'r') as fin:
-                #    print(color.color_random[0])
-                #    print(fin.read())
-                #    print(color.END)
-                #fin.close()
             elif marg == "show_agreement":
                 with open("{}data/agreement.txt".format(installDir), 'r') as fin:
                     print(color.BOLD + color.IMPORTANT)
@@ -198,9 +189,6 @@ class main:
                     tl.arachni()
                 elif e == "slowloris":
                     tl.toolmanager("slowloris", "python3", True, False)
-                
-                # OLD INSTALLER
-            #TOOLS THAT MUST BE COMPILED
                 elif e == "revsh":
                     tl.revsh()
                 elif e == "brutex":

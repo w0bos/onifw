@@ -1,5 +1,5 @@
-from os import system, getpid
-from os.path import isdir
+from os import system, getpid, getlogin
+from os.path import isdir, isfile
 from subprocess import PIPE, check_output, run
 from socket import create_connection
 from configparser import ConfigParser
@@ -84,6 +84,23 @@ def del_cache(installDir):
 CONFIGHANDLER.PY FUNCTIONS
 """
 
+def find_config(installDir):
+    """
+    Finds a onirc file either in the default location
+    \n/home/user/.onifw/src/onirc
+    \nor
+    \n/home/user/.onirc
+    \nArguments:\n
+    installDir : Required (str)
+    """
+    possible_configs = [
+            "/home/" + getlogin() + "/.onirc",
+            installDir + "onirc"
+            ]
+    for conf in possible_configs:
+        if isfile(conf):
+            return conf
+
 
 def get_connection():
     """
@@ -108,7 +125,8 @@ def check_value(installDir, value, default, boolean=True):
     default       : Required (str)
     boolean       : Optional (bool)
     """
-    configFile = installDir + "onirc"
+    #configFile = installDir + "onirc"
+    configFile = find_config(installDir)
     parser = ConfigParser()
     parser.read(configFile)
     if boolean:
@@ -129,7 +147,8 @@ def check_prompt(installDir):
     \nArguments:\n
     installDir : Required (str)
     """
-    configFile = installDir + "onirc"
+    #configFile = installDir + "onirc"
+    configFile = find_config(installDir)
     parser = ConfigParser()
     parser.read(configFile)
     if parser.has_option('config', 'prompt'):
@@ -177,7 +196,7 @@ def uninstall(installDir, cmd, root=0):
     Uninstall a package
     \nArguments:\n
     installDir  : Required (str)
-    cmd         : Required (Array(str))
+    cmd         : Required Array(str)
     root        : Optional (int)
     """
     print("[*] - Removing folder")

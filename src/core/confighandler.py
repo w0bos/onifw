@@ -1,5 +1,5 @@
 from os import system as cmd
-from os import path
+from os import path, getlogin
 from os import makedirs as mkdir
 from core.gui import color, logos
 import core.logHandler as logh
@@ -88,7 +88,7 @@ class CustomTool:
     def custom(self):
         launch_cmd = self.parser.get('custom', self.name)
         cmd(launch_cmd)
-        
+
 class ConfigMisc:
     def __init__(self, installDir):
         self.installDir = installDir
